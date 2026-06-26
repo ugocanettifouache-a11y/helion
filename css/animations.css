@@ -1,0 +1,100 @@
+/* ── Sun rings rotation ── */
+.sun-ring:nth-child(1) {
+  width: 100%; height: 100%;
+  animation: rotate-slow 60s linear infinite;
+}
+.sun-ring:nth-child(2) {
+  width: 75%; height: 75%;
+  animation: rotate-slow 40s linear infinite reverse;
+}
+.sun-ring:nth-child(3) {
+  width: 50%; height: 50%;
+  animation: rotate-slow 25s linear infinite;
+}
+
+@keyframes rotate-slow {
+  from { transform: translate(-50%, -50%) rotate(0deg); }
+  to   { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+/* ── Floating orbs ── */
+.hero-orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  pointer-events: none;
+}
+
+.hero-orb-1 {
+  width: 400px; height: 400px;
+  background: radial-gradient(circle, rgba(200,147,58,.12) 0%, transparent 70%);
+  top: -100px; right: -100px;
+  animation: float-1 8s ease-in-out infinite;
+}
+
+.hero-orb-2 {
+  width: 250px; height: 250px;
+  background: radial-gradient(circle, rgba(200,147,58,.07) 0%, transparent 70%);
+  bottom: 100px; right: 300px;
+  animation: float-2 10s ease-in-out infinite;
+}
+
+@keyframes float-1 {
+  0%, 100% { transform: translateY(0) scale(1); }
+  50% { transform: translateY(-30px) scale(1.05); }
+}
+
+@keyframes float-2 {
+  0%, 100% { transform: translateY(0) scale(1); }
+  50% { transform: translateY(20px) scale(.95); }
+}
+
+/* ── Counter animation ── */
+.stat-num.counting { opacity: 1; }
+
+/* ── Page transition ── */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: none; }
+}
+
+.page-enter {
+  animation: fadeInUp .6s cubic-bezier(.4, 0, .2, 1) both;
+}
+
+/* ── Shimmer effect on cards ── */
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+.service-card:hover .service-icon {
+  animation: glow-pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes glow-pulse {
+  0%, 100% { filter: drop-shadow(0 0 0 rgba(200,147,58,0)); }
+  50% { filter: drop-shadow(0 0 12px rgba(200,147,58,.5)); }
+}
+
+/* ── Nav logo animation ── */
+.logo:hover .logo-icon {
+  animation: spin-once .5s cubic-bezier(.4,0,.2,1);
+}
+
+@keyframes spin-once {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(45deg); }
+}
+
+/* ── Stagger children ── */
+.stagger > * {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity .6s, transform .6s;
+}
+
+.stagger.visible > *:nth-child(1) { opacity: 1; transform: none; transition-delay: 0s; }
+.stagger.visible > *:nth-child(2) { opacity: 1; transform: none; transition-delay: .12s; }
+.stagger.visible > *:nth-child(3) { opacity: 1; transform: none; transition-delay: .24s; }
+.stagger.visible > *:nth-child(4) { opacity: 1; transform: none; transition-delay: .36s; }

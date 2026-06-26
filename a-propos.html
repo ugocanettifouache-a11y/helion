@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>À propos — Hélio</title>
+  <meta name="description" content="L'histoire, les valeurs et l'équipe derrière Hélio, la société de développement commercial basée à Paris."/>
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg"/>
+  <link rel="stylesheet" href="css/main.css"/>
+  <link rel="stylesheet" href="css/animations.css"/>
+</head>
+<body>
+
+<header>
+  <div class="container nav-inner">
+    <a href="index.html" class="logo" aria-label="Hélio accueil">
+      <svg class="logo-icon" viewBox="0 0 100 100" fill="none" aria-hidden="true">
+        <circle cx="50" cy="50" r="16" fill="#C8933A"/>
+        <g stroke="#C8933A" stroke-width="3.5" stroke-linecap="round">
+          <line x1="50" y1="10" x2="50" y2="22"/><line x1="50" y1="78" x2="50" y2="90"/>
+          <line x1="10" y1="50" x2="22" y2="50"/><line x1="78" y1="50" x2="90" y2="50"/>
+          <line x1="21" y1="21" x2="29" y2="29"/><line x1="71" y1="71" x2="79" y2="79"/>
+          <line x1="79" y1="21" x2="71" y2="29"/><line x1="29" y1="71" x2="21" y2="79"/>
+        </g>
+      </svg>
+      <span class="logo-text">H<span>é</span>lion</span>
+    </a>
+    <nav aria-label="Navigation principale">
+      <ul>
+        <li><a href="index.html">Accueil</a></li>
+        <li><a href="services.html">Services</a></li>
+        <li><a href="a-propos.html" class="active">À propos</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </nav>
+    <a href="contact.html" class="btn nav-cta"><span>Démarrer un projet</span></a>
+    <button class="hamburger" aria-label="Menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<nav class="mobile-nav" aria-label="Navigation mobile">
+  <a href="index.html">Accueil</a>
+  <a href="services.html">Services</a>
+  <a href="a-propos.html">À propos</a>
+  <a href="contact.html">Contact</a>
+  <a href="contact.html" class="btn btn-solid"><span>Démarrer un projet</span></a>
+</nav>
+
+<main>
+  <!-- ── Page Hero ── -->
+  <section class="page-hero" aria-labelledby="page-title">
+    <div class="page-hero-bg" aria-hidden="true"></div>
+    <div class="container page-hero-content">
+      <span class="section-label">Notre histoire</span>
+      <h1 id="page-title">Nés pour faire<br/><span class="gold">rayonner vos ventes</span></h1>
+      <p>Hélio, du grec Hélios — le dieu du soleil. Une métaphore qui nous définit : illuminer, propulser, réchauffer la croissance de nos clients.</p>
+    </div>
+  </section>
+
+  <!-- ── Intro ── -->
+  <section style="padding:7rem 0; background:var(--night);">
+    <div class="container about-intro">
+      <div class="reveal">
+        <span class="section-label">Qui sommes-nous</span>
+        <span class="gold-line"></span>
+        <h2 class="section-title">Une équipe qui a<br/>vécu la vente de l'intérieur</h2>
+        <p style="color:var(--text-muted);margin-bottom:1.5rem">Fondée en 2019 à Paris par d'anciens directeurs commerciaux et consultants en stratégie, Hélio est née d'un constat simple : trop d'entreprises prometteuses échouent non par manque de produit, mais par manque d'exécution commerciale.</p>
+        <p style="color:var(--text-muted);margin-bottom:1.5rem">Notre équipe a construit et dirigé des forces de vente dans des secteurs aussi variés que la SaaS B2B, l'industrie, les services financiers et les medtech. Nous parlons le langage de la vente parce que nous l'avons pratiqué pendant des années.</p>
+        <p style="color:var(--text-muted)">Aujourd'hui, nous mettons cette expérience au service de nos clients — avec la rigueur d'un cabinet de conseil et l'agilité d'une startup.</p>
+      </div>
+      <div class="reveal reveal-delay-2">
+        <div style="background:var(--night-2);border:1px solid rgba(200,147,58,.15);padding:3rem;position:relative;overflow:hidden;">
+          <div style="position:absolute;top:-40px;right:-40px;width:200px;height:200px;border-radius:50%;background:radial-gradient(circle,rgba(200,147,58,.08),transparent);"></div>
+          <blockquote style="font-family:'Cormorant Garamond',serif;font-size:1.5rem;font-style:italic;color:var(--white);line-height:1.5;margin-bottom:2rem;">
+            "Nous ne vendons pas des services, nous co-construisons votre succès commercial."
+          </blockquote>
+          <div style="display:flex;align-items:center;gap:1rem;">
+            <div style="width:50px;height:50px;border-radius:50%;background:linear-gradient(135deg,var(--gold),var(--night-4));display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:1.2rem;font-weight:700;color:var(--night);">CL</div>
+            <div>
+              <div style="color:var(--white);font-weight:500;font-size:.95rem;">Camille Lefèvre</div>
+              <div style="color:var(--gold);font-size:.8rem;letter-spacing:.06em;">Fondatrice & CEO</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Values ── -->
+  <section class="about-values" aria-labelledby="values-title">
+    <div class="container">
+      <span class="section-label reveal">Ce qui nous guide</span>
+      <h2 class="section-title reveal reveal-delay-1" id="values-title">Nos valeurs</h2>
+      <p class="section-intro reveal reveal-delay-2" style="margin-bottom:0">Des principes non négociables qui façonnent chaque décision, chaque mission, chaque interaction.</p>
+
+      <div class="values-grid stagger">
+        <div class="value-card">
+          <svg class="value-icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+            <path d="M24 6l4 12h12l-10 7 4 12-10-7-10 7 4-12L8 18h12z"/>
+          </svg>
+          <h3>Excellence</h3>
+          <p>Nous ne faisons pas dans la médiocrité. Chaque livrable, chaque call, chaque stratégie est soumis à nos standards les plus élevés.</p>
+        </div>
+        <div class="value-card">
+          <svg class="value-icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+            <circle cx="24" cy="24" r="18"/>
+            <path d="M24 12v12l8 8"/>
+          </svg>
+          <h3>Résultats</h3>
+          <p>Nous sommes obsédés par les métriques qui comptent. Pas les indicateurs de vanité — le chiffre d'affaires, le pipeline, le ROI.</p>
+        </div>
+        <div class="value-card">
+          <svg class="value-icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+            <path d="M16 8h16l8 8v24H8V16z"/>
+            <path d="M16 8v8h-8"/>
+            <line x1="16" y1="24" x2="32" y2="24"/>
+            <line x1="16" y1="32" x2="32" y2="32"/>
+          </svg>
+          <h3>Transparence</h3>
+          <p>Reporting complet, communication directe, zéro bullshit. Vous savez exactement où en est votre mission, à tout moment.</p>
+        </div>
+        <div class="value-card">
+          <svg class="value-icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+            <circle cx="18" cy="20" r="8"/>
+            <circle cx="30" cy="20" r="8"/>
+            <path d="M10 40c0-6 3.6-10 8-10h12c4.4 0 8 4 8 10"/>
+          </svg>
+          <h3>Partenariat</h3>
+          <p>Nous nous comportons comme votre associé commercial, pas comme un prestataire externe. Votre succès est notre succès.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Team ── -->
+  <section class="team-section" aria-labelledby="team-title">
+    <div class="container">
+      <span class="section-label reveal">L'équipe</span>
+      <h2 class="section-title reveal reveal-delay-1" id="team-title">Des experts passionnés<br/>par la performance commerciale</h2>
+
+      <div class="team-grid stagger">
+        <article class="team-card">
+          <div class="team-photo" aria-label="Photo de Camille Lefèvre">
+            <span class="team-photo-initial" aria-hidden="true">CL</span>
+          </div>
+          <h4>Camille Lefèvre</h4>
+          <div class="role">Fondatrice & CEO</div>
+          <p>15 ans de direction commerciale chez des scale-ups SaaS. Ex-VP Sales chez Dataflow et Nexia. Spécialiste des stratégies go-to-market Europe.</p>
+        </article>
+
+        <article class="team-card">
+          <div class="team-photo" aria-label="Photo de Raphaël Morin">
+            <span class="team-photo-initial" aria-hidden="true">RM</span>
+          </div>
+          <h4>Raphaël Morin</h4>
+          <div class="role">Directeur des Opérations</div>
+          <p>Ancien consultant McKinsey. Expert en structuration de processus commerciaux et en déploiement de CRM à grande échelle. MBA HEC Paris.</p>
+        </article>
+
+        <article class="team-card">
+          <div class="team-photo" aria-label="Photo de Inès Charpentier">
+            <span class="team-photo-initial" aria-hidden="true">IC</span>
+          </div>
+          <h4>Inès Charpentier</h4>
+          <div class="role">Head of Prospection</div>
+          <p>Pionnière du cold outbound en France. A généré plus de 50M€ de pipeline qualifié pour des clients du secteur tech et industriel au cours des 8 dernières années.</p>
+        </article>
+
+        <article class="team-card">
+          <div class="team-photo" aria-label="Photo de Lucas Bernard">
+            <span class="team-photo-initial" aria-hidden="true">LB</span>
+          </div>
+          <h4>Lucas Bernard</h4>
+          <div class="role">Directeur Formation</div>
+          <p>Coach commercial certifié, ancien responsable national des ventes chez Salesforce France. Formé plus de 300 commerciaux en 5 ans d'exercice chez Hélio.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── CTA ── -->
+  <section class="cta-banner" aria-labelledby="cta-about">
+    <div class="container">
+      <span class="section-label reveal" style="display:block;text-align:center;">Rejoignez l'aventure</span>
+      <h2 class="reveal reveal-delay-1" id="cta-about">Travaillons ensemble</h2>
+      <p class="reveal reveal-delay-2">Que vous soyez une startup en hypercroissance ou un groupe établi cherchant à réinventer sa performance commerciale, nous avons une solution pour vous.</p>
+      <div class="reveal reveal-delay-3">
+        <a href="contact.html" class="btn btn-solid"><span>Prendre rendez-vous</span></a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="index.html" class="logo" aria-label="Hélio">
+          <svg style="width:32px;height:32px" viewBox="0 0 100 100" fill="none" aria-hidden="true">
+            <circle cx="50" cy="50" r="16" fill="#C8933A"/>
+            <g stroke="#C8933A" stroke-width="3.5" stroke-linecap="round">
+              <line x1="50" y1="10" x2="50" y2="22"/><line x1="50" y1="78" x2="50" y2="90"/>
+              <line x1="10" y1="50" x2="22" y2="50"/><line x1="78" y1="50" x2="90" y2="50"/>
+              <line x1="21" y1="21" x2="29" y2="29"/><line x1="71" y1="71" x2="79" y2="79"/>
+              <line x1="79" y1="21" x2="71" y2="29"/><line x1="29" y1="71" x2="21" y2="79"/>
+            </g>
+          </svg>
+          <span class="logo-text" style="font-size:1.4rem">H<span>é</span>lion</span>
+        </a>
+        <p>Nous illuminons et propulsons le développement commercial de nos clients depuis Paris.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Navigation</h4>
+        <ul>
+          <li><a href="index.html">Accueil</a></li>
+          <li><a href="services.html">Services</a></li>
+          <li><a href="a-propos.html">À propos</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Services</h4>
+        <ul>
+          <li><a href="services.html">Prospection B2B</a></li>
+          <li><a href="services.html">Externalisation commerciale</a></li>
+          <li><a href="services.html">Formation équipes</a></li>
+          <li><a href="services.html">Conseil stratégique</a></li>
+        </ul>
+      </div>
+      <div class="footer-col footer-contact">
+        <h4>Contact</h4>
+        <p>12 Avenue des Champs-Élysées<br/>75008 Paris</p>
+        <p>contact@helion-commercial.fr</p>
+        <p>+33 1 23 45 67 89</p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2024 Hélio. Tous droits réservés.</p>
+      <p>Paris · Développement commercial B2B</p>
+    </div>
+  </div>
+</footer>
+
+<script src="js/main.js"></script>
+</body>
+</html>
