@@ -1,100 +1,105 @@
-/* ── Sun rings rotation ── */
-.sun-ring:nth-child(1) {
-  width: 100%; height: 100%;
-  animation: rotate-slow 60s linear infinite;
-}
-.sun-ring:nth-child(2) {
-  width: 75%; height: 75%;
-  animation: rotate-slow 40s linear infinite reverse;
-}
-.sun-ring:nth-child(3) {
-  width: 50%; height: 50%;
-  animation: rotate-slow 25s linear infinite;
+/* ── Entrée hero (texte) ── */
+@keyframes hero-fade-up {
+  from { opacity: 0; transform: translateY(28px); }
+  to   { opacity: 1; transform: none; }
 }
 
-@keyframes rotate-slow {
-  from { transform: translate(-50%, -50%) rotate(0deg); }
-  to   { transform: translate(-50%, -50%) rotate(360deg); }
+@keyframes hero-fade-in {
+  from { opacity: 0; transform: scale(.96); }
+  to   { opacity: 1; transform: none; }
 }
 
-/* ── Floating orbs ── */
-.hero-orb {
-  position: absolute;
-  border-radius: 50%;
-  filter: blur(80px);
-  pointer-events: none;
+/* ── Soleil ── */
+@keyframes sun-pulse {
+  0%, 100% {
+    box-shadow:
+      0 0 16px rgba(245,166,35,.95),
+      0 0 36px rgba(245,166,35,.65),
+      0 0 70px rgba(200,112,26,.45),
+      0 0 120px rgba(200,112,26,.2);
+    transform: scale(1);
+  }
+  50% {
+    box-shadow:
+      0 0 24px rgba(245,166,35,1),
+      0 0 55px rgba(245,166,35,.75),
+      0 0 100px rgba(200,112,26,.55),
+      0 0 160px rgba(200,112,26,.28);
+    transform: scale(1.05);
+  }
 }
 
-.hero-orb-1 {
-  width: 400px; height: 400px;
-  background: radial-gradient(circle, rgba(200,147,58,.12) 0%, transparent 70%);
-  top: -100px; right: -100px;
-  animation: float-1 8s ease-in-out infinite;
+/* ── Couronnes ── */
+@keyframes corona-breathe {
+  0%, 100% { transform: translate(-50%,-50%) scale(1);   opacity: 1; }
+  50%       { transform: translate(-50%,-50%) scale(1.14); opacity: .7; }
 }
 
-.hero-orb-2 {
-  width: 250px; height: 250px;
-  background: radial-gradient(circle, rgba(200,147,58,.07) 0%, transparent 70%);
-  bottom: 100px; right: 300px;
-  animation: float-2 10s ease-in-out infinite;
+/* ── Halos ambiants ── */
+@keyframes halo-pulse {
+  0%, 100% { transform: translate(-50%,-50%) scale(1);   opacity: 1; }
+  50%       { transform: translate(-50%,-50%) scale(1.12); opacity: .6; }
 }
 
-@keyframes float-1 {
-  0%, 100% { transform: translateY(0) scale(1); }
-  50% { transform: translateY(-30px) scale(1.05); }
+/* ── Orbites ── */
+@keyframes orbit-rotate {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
 }
 
-@keyframes float-2 {
-  0%, 100% { transform: translateY(0) scale(1); }
-  50% { transform: translateY(20px) scale(.95); }
-}
-
-/* ── Counter animation ── */
-.stat-num.counting { opacity: 1; }
-
-/* ── Page transition ── */
+/* ── Reveal au scroll (sections) ── */
 @keyframes fadeInUp {
   from { opacity: 0; transform: translateY(24px); }
   to   { opacity: 1; transform: none; }
 }
 
-.page-enter {
-  animation: fadeInUp .6s cubic-bezier(.4, 0, .2, 1) both;
-}
-
-/* ── Shimmer effect on cards ── */
-@keyframes shimmer {
-  0% { background-position: -200% 0; }
-  100% { background-position: 200% 0; }
-}
-
+/* ── Icônes service (glow au hover) ── */
 .service-card:hover .service-icon {
-  animation: glow-pulse 1.5s ease-in-out infinite;
+  animation: icon-glow 1.5s ease-in-out infinite;
 }
 
-@keyframes glow-pulse {
+@keyframes icon-glow {
   0%, 100% { filter: drop-shadow(0 0 0 rgba(200,147,58,0)); }
-  50% { filter: drop-shadow(0 0 12px rgba(200,147,58,.5)); }
+  50%       { filter: drop-shadow(0 0 10px rgba(200,147,58,.55)); }
 }
 
-/* ── Nav logo animation ── */
+/* ── Logo hover ── */
 .logo:hover .logo-icon {
-  animation: spin-once .5s cubic-bezier(.4,0,.2,1);
+  animation: spin-once .45s cubic-bezier(.4,0,.2,1);
 }
 
 @keyframes spin-once {
   from { transform: rotate(0deg); }
-  to { transform: rotate(45deg); }
+  to   { transform: rotate(45deg); }
 }
 
-/* ── Stagger children ── */
+/* ── Stagger children (sections) ── */
 .stagger > * {
   opacity: 0;
   transform: translateY(24px);
   transition: opacity .6s, transform .6s;
 }
 
-.stagger.visible > *:nth-child(1) { opacity: 1; transform: none; transition-delay: 0s; }
-.stagger.visible > *:nth-child(2) { opacity: 1; transform: none; transition-delay: .12s; }
-.stagger.visible > *:nth-child(3) { opacity: 1; transform: none; transition-delay: .24s; }
-.stagger.visible > *:nth-child(4) { opacity: 1; transform: none; transition-delay: .36s; }
+.stagger.visible > *:nth-child(1) { opacity:1; transform:none; transition-delay:0s; }
+.stagger.visible > *:nth-child(2) { opacity:1; transform:none; transition-delay:.12s; }
+.stagger.visible > *:nth-child(3) { opacity:1; transform:none; transition-delay:.24s; }
+.stagger.visible > *:nth-child(4) { opacity:1; transform:none; transition-delay:.36s; }
+
+/* ── prefers-reduced-motion ── */
+@media (prefers-reduced-motion: reduce) {
+  .hero-content,
+  .hero-content *,
+  .hero-solar,
+  .sun-body,
+  .sun-corona,
+  .solar-orbit,
+  .solar-planet,
+  .solar-halo,
+  .hero-badge-dot,
+  .stagger > * {
+    animation: none !important;
+    transition: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}

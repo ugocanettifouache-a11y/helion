@@ -233,124 +233,320 @@ nav a:hover::after, nav a.active::after { width: 100%; }
   align-items: center;
   position: relative;
   overflow: hidden;
-  padding: 8rem 0 5rem;
-}
-
-.hero-bg {
-  position: absolute;
-  inset: 0;
+  padding: 7rem 0 4rem;
   background:
-    radial-gradient(ellipse 80% 60% at 70% 40%, rgba(200,147,58,.08) 0%, transparent 60%),
-    radial-gradient(ellipse 50% 40% at 20% 80%, rgba(200,147,58,.05) 0%, transparent 50%);
+    radial-gradient(ellipse 70% 90% at 75% 55%, rgba(200,120,28,.14) 0%, transparent 55%),
+    radial-gradient(ellipse 50% 60% at 15% 30%, rgba(180,140,50,.05) 0%, transparent 50%),
+    linear-gradient(150deg, #070B18 0%, #0B1225 35%, #0F1830 65%, #090D1C 100%);
 }
 
-.hero-grid {
+/* Canvas particules / étoiles */
+.hero-particles {
   position: absolute;
   inset: 0;
-  background-image:
-    linear-gradient(rgba(200,147,58,.04) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(200,147,58,.04) 1px, transparent 1px);
-  background-size: 60px 60px;
-  mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 0%, transparent 70%);
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 0;
 }
 
+/* Halo chaud général */
+.hero-warm-glow {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse 55% 65% at 72% 52%, rgba(220,140,40,.07) 0%, transparent 60%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Layout deux colonnes */
+.hero-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3rem;
+  align-items: center;
+  position: relative;
+  z-index: 2;
+}
+
+/* ── Contenu texte ── */
 .hero-content {
   position: relative;
-  max-width: 760px;
+  animation: hero-fade-up .9s .1s both;
 }
 
 .hero-badge {
   display: inline-flex;
   align-items: center;
-  gap: .5rem;
-  border: 1px solid rgba(200,147,58,.3);
-  padding: .4rem 1rem;
+  gap: .6rem;
+  border: 1px solid rgba(200,147,58,.35);
+  background: rgba(200,147,58,.06);
+  padding: .45rem 1.1rem;
   border-radius: 100px;
-  font-size: .78rem;
+  font-size: .75rem;
   font-weight: 500;
-  letter-spacing: .12em;
+  letter-spacing: .14em;
   text-transform: uppercase;
   color: var(--gold);
   margin-bottom: 2rem;
+  backdrop-filter: blur(4px);
 }
 
-.hero-badge::before {
-  content: '';
+.hero-badge-dot {
   display: block;
   width: 6px; height: 6px;
   border-radius: 50%;
   background: var(--gold);
-  animation: pulse 2s infinite;
+  box-shadow: 0 0 6px var(--gold);
+  animation: badge-pulse 2s ease-in-out infinite;
+  flex-shrink: 0;
 }
 
-@keyframes pulse {
+@keyframes badge-pulse {
   0%, 100% { opacity: 1; transform: scale(1); }
-  50% { opacity: .5; transform: scale(.7); }
+  50% { opacity: .4; transform: scale(.65); }
 }
 
 .hero h1 {
   margin-bottom: 1.5rem;
   color: var(--white);
+  animation: hero-fade-up .9s .25s both;
 }
 
 .hero h1 em {
   font-style: italic;
   color: var(--gold);
+  text-shadow: 0 0 40px rgba(200,147,58,.3);
 }
 
 .hero-sub {
-  font-size: 1.1rem;
+  font-size: 1.05rem;
   color: var(--text-muted);
-  margin-bottom: 3rem;
-  max-width: 50ch;
+  margin-bottom: 2.5rem;
+  max-width: 48ch;
+  animation: hero-fade-up .9s .4s both;
 }
 
 .hero-ctas {
   display: flex;
-  gap: 1.25rem;
+  gap: 1.1rem;
   flex-wrap: wrap;
-  margin-bottom: 5rem;
+  margin-bottom: 4rem;
+  animation: hero-fade-up .9s .55s both;
 }
+
+/* Bouton outline pour le 2e CTA hero */
+.btn-outline {
+  border: 1px solid rgba(200,147,58,.45);
+  color: var(--gold);
+  background: rgba(200,147,58,.05);
+  backdrop-filter: blur(6px);
+  transition: background .3s, border-color .3s, box-shadow .3s;
+}
+.btn-outline:hover {
+  background: rgba(200,147,58,.12);
+  border-color: var(--gold);
+  box-shadow: 0 0 24px rgba(200,147,58,.15);
+  color: var(--gold);
+}
+.btn-outline::before { display: none; }
 
 .hero-stats {
   display: flex;
-  gap: 3rem;
+  gap: 2.5rem;
   flex-wrap: wrap;
-  padding-top: 3rem;
+  padding-top: 2.5rem;
   border-top: 1px solid rgba(200,147,58,.15);
+  animation: hero-fade-up .9s .7s both;
 }
 
-.stat-item {}
 .stat-num {
   font-family: 'Cormorant Garamond', serif;
   font-size: 2.4rem;
   font-weight: 700;
   color: var(--gold);
   line-height: 1;
+  text-shadow: 0 0 30px rgba(200,147,58,.2);
 }
+
 .stat-label {
-  font-size: .82rem;
+  font-size: .8rem;
   color: var(--text-muted);
   letter-spacing: .06em;
   margin-top: .3rem;
 }
 
-.hero-visual {
-  position: absolute;
-  right: -60px;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 520px;
-  height: 520px;
-  opacity: .12;
+/* ── Système solaire ── */
+.hero-solar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: hero-fade-in 1.2s .4s both;
 }
 
-.sun-ring {
+.solar-scene {
+  position: relative;
+  width: 460px;
+  height: 460px;
+  flex-shrink: 0;
+}
+
+/* Halos ambiants */
+.solar-halo {
   position: absolute;
   border-radius: 50%;
-  border: 1px solid var(--gold);
   top: 50%; left: 50%;
-  transform: translate(-50%,-50%);
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+
+.solar-halo-1 {
+  width: 180px; height: 180px;
+  background: radial-gradient(circle, rgba(245,166,35,.18) 0%, transparent 70%);
+  animation: halo-pulse 3.5s ease-in-out infinite;
+}
+
+.solar-halo-2 {
+  width: 340px; height: 340px;
+  background: radial-gradient(circle, rgba(200,147,58,.1) 0%, transparent 65%);
+  animation: halo-pulse 5s ease-in-out infinite reverse;
+}
+
+.solar-halo-3 {
+  width: 500px; height: 500px;
+  background: radial-gradient(circle, rgba(180,100,20,.06) 0%, transparent 60%);
+}
+
+/* Soleil */
+.sun-wrap {
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  width: 76px; height: 76px;
+  z-index: 10;
+}
+
+.sun-body {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: radial-gradient(circle at 38% 32%, #FFF0B0 0%, #F5A623 40%, #C8701A 72%, #8B4010 100%);
+  box-shadow:
+    0 0 16px rgba(245,166,35,.95),
+    0 0 36px rgba(245,166,35,.65),
+    0 0 70px rgba(200,112,26,.45),
+    0 0 120px rgba(200,112,26,.2);
+  animation: sun-pulse 4s ease-in-out infinite;
+  z-index: 3;
+}
+
+.sun-shine {
+  position: absolute;
+  top: 12%; left: 16%;
+  width: 38%; height: 28%;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255,248,200,.75) 0%, transparent 70%);
+}
+
+.sun-corona {
+  position: absolute;
+  border-radius: 50%;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.sun-corona-1 {
+  width: 108px; height: 108px;
+  background: radial-gradient(circle, rgba(245,166,35,.22) 40%, transparent 70%);
+  animation: corona-breathe 3s ease-in-out infinite;
+  z-index: 2;
+}
+
+.sun-corona-2 {
+  width: 148px; height: 148px;
+  background: radial-gradient(circle, rgba(245,166,35,.12) 30%, transparent 68%);
+  animation: corona-breathe 4.5s ease-in-out infinite reverse;
+  z-index: 1;
+}
+
+.sun-corona-3 {
+  width: 200px; height: 200px;
+  background: radial-gradient(circle, rgba(200,120,30,.07) 20%, transparent 65%);
+  animation: corona-breathe 6s ease-in-out infinite;
+  z-index: 0;
+}
+
+/* Orbites */
+.solar-orbit {
+  position: absolute;
+  border-radius: 50%;
+  top: 50%; left: 50%;
+  border: 1px solid rgba(200,147,58,.2);
+  transform-origin: 0 0;
+}
+
+.so-1 {
+  width: 180px; height: 180px;
+  margin: -90px 0 0 -90px;
+  border-color: rgba(200,147,58,.3);
+  animation: orbit-rotate 13s linear infinite;
+}
+
+.so-2 {
+  width: 290px; height: 290px;
+  margin: -145px 0 0 -145px;
+  border-color: rgba(200,147,58,.18);
+  animation: orbit-rotate 26s linear infinite reverse;
+}
+
+.so-3 {
+  width: 420px; height: 420px;
+  margin: -210px 0 0 -210px;
+  border-color: rgba(200,147,58,.1);
+  animation: orbit-rotate 44s linear infinite;
+}
+
+/* Planètes */
+.solar-planet {
+  position: absolute;
+  border-radius: 50%;
+  top: 0; left: 50%;
+}
+
+/* Orbite 1 — planète dorée chaude */
+.spl-1 {
+  width: 14px; height: 14px;
+  margin: -7px 0 0 -7px;
+  background: radial-gradient(circle at 35% 30%, #FFE080, #C8933A);
+  box-shadow: 0 0 8px rgba(200,147,58,.9), 0 0 20px rgba(200,147,58,.5);
+  animation: orbit-rotate 13s linear infinite reverse;
+}
+
+/* Orbite 2 — planète ambrée + petite lune */
+.spl-2 {
+  width: 10px; height: 10px;
+  margin: -5px 0 0 -5px;
+  background: radial-gradient(circle at 35% 30%, #E8C880, #8B6020);
+  box-shadow: 0 0 6px rgba(200,147,58,.6);
+  animation: orbit-rotate 26s linear infinite;
+}
+
+.spl-2b {
+  width: 7px; height: 7px;
+  margin: -3.5px 0 0 -3.5px;
+  top: auto; bottom: 0;
+  background: radial-gradient(circle at 35% 30%, #D0B870, #7A5818);
+  box-shadow: 0 0 5px rgba(200,147,58,.4);
+  animation: orbit-rotate 26s linear infinite;
+}
+
+/* Orbite 3 — planète bleue-froide pour contraste */
+.spl-3 {
+  width: 11px; height: 11px;
+  margin: -5.5px 0 0 -5.5px;
+  background: radial-gradient(circle at 35% 30%, #B0D0F8, #3A60A0);
+  box-shadow: 0 0 8px rgba(80,140,220,.7), 0 0 18px rgba(80,140,220,.3);
+  animation: orbit-rotate 44s linear infinite reverse;
 }
 
 /* ── Section commons ── */
@@ -856,12 +1052,37 @@ footer {
   .footer-grid { grid-template-columns: 1fr 1fr; }
   .team-grid { grid-template-columns: repeat(2, 1fr); }
   .values-grid { grid-template-columns: repeat(2, 1fr); }
+  .solar-scene { width: 360px; height: 360px; }
+  .so-3 { width: 320px; height: 320px; margin: -160px 0 0 -160px; }
+  .so-2 { width: 220px; height: 220px; margin: -110px 0 0 -110px; }
+  .so-1 { width: 138px; height: 138px; margin: -69px 0 0 -69px; }
+  .solar-halo-3 { width: 380px; height: 380px; }
 }
 
 @media (max-width: 768px) {
   nav ul, .nav-cta { display: none; }
   .hamburger { display: flex; }
   .mobile-nav { display: flex; }
+
+  .hero-layout { grid-template-columns: 1fr; gap: 0; }
+  .hero-solar {
+    order: -1;
+    margin-bottom: 2rem;
+  }
+  .solar-scene { width: 260px; height: 260px; }
+  .so-3 { width: 230px; height: 230px; margin: -115px 0 0 -115px; }
+  .so-2 { width: 155px; height: 155px; margin: -77.5px 0 0 -77.5px; }
+  .so-1 { width: 100px; height: 100px; margin: -50px 0 0 -50px; }
+  .solar-halo-3 { width: 280px; height: 280px; }
+  .solar-halo-2 { width: 200px; height: 200px; }
+  .sun-wrap { width: 52px; height: 52px; }
+  .sun-corona-1 { width: 76px; height: 76px; }
+  .sun-corona-2 { width: 106px; height: 106px; }
+  .sun-corona-3 { width: 140px; height: 140px; }
+  .spl-1 { width: 10px; height: 10px; margin: -5px 0 0 -5px; }
+  .spl-2 { width: 7px; height: 7px; margin: -3.5px 0 0 -3.5px; }
+  .spl-3 { width: 8px; height: 8px; margin: -4px 0 0 -4px; }
+  .hero-stats { gap: 1.8rem; }
 
   .services-grid { grid-template-columns: 1fr; }
   .testimonials-grid { grid-template-columns: 1fr; }
@@ -871,9 +1092,13 @@ footer {
   .contact-layout { grid-template-columns: 1fr; gap: 3rem; }
   .form-row { grid-template-columns: 1fr; }
   .footer-grid { grid-template-columns: 1fr; gap: 2rem; }
-  .hero-visual { display: none; }
-  .hero-stats { gap: 2rem; }
   .team-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 375px) {
+  .hero-ctas { flex-direction: column; }
+  .team-grid { grid-template-columns: 1fr; }
+  .values-grid { grid-template-columns: 1fr; }
 }
 
 @media (max-width: 375px) {

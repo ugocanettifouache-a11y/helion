@@ -16,7 +16,6 @@ if (hamburger && mobileNav) {
     mobileNav.classList.toggle('open', isOpen);
     document.body.style.overflow = isOpen ? 'hidden' : '';
   });
-
   mobileNav.querySelectorAll('a').forEach(a => {
     a.addEventListener('click', () => {
       hamburger.classList.remove('open');
@@ -38,10 +37,10 @@ const revealObserver = new IntersectionObserver((entries) => {
 
 document.querySelectorAll('.reveal, .stagger').forEach(el => revealObserver.observe(el));
 
-/* ── Animated counters ── */
+/* ── Compteurs animés ── */
 function animateCounter(el) {
   const raw = el.dataset.target;
-  const isX = raw.startsWith('x');
+  const isX   = raw.startsWith('x');
   const hasPct = raw.includes('%');
   const hasPlus = raw.includes('+');
   const num = parseFloat(raw.replace(/[^0-9.]/g, ''));
@@ -50,13 +49,11 @@ function animateCounter(el) {
 
   function tick(now) {
     const elapsed = now - start;
-    const progress = Math.min(elapsed / duration, 1);
-    const ease = 1 - Math.pow(1 - progress, 3);
+    const ease = 1 - Math.pow(1 - Math.min(elapsed / duration, 1), 3);
     const current = Math.round(ease * num);
     el.textContent = (hasPlus ? '+' : '') + (isX ? 'x' : '') + current + (hasPct ? '%' : '');
-    if (progress < 1) requestAnimationFrame(tick);
+    if (elapsed < duration) requestAnimationFrame(tick);
   }
-
   requestAnimationFrame(tick);
 }
 
@@ -80,7 +77,7 @@ document.querySelectorAll('nav a, .mobile-nav a').forEach(a => {
   }
 });
 
-/* ── Contact form validation ── */
+/* ── Validation formulaire contact ── */
 const form = document.getElementById('contactForm');
 if (form) {
   const successMsg = document.getElementById('formSuccess');
@@ -98,7 +95,7 @@ if (form) {
       if (errorEl) errorEl.textContent = 'Adresse email invalide.';
     } else if (input.name === 'phone' && val && !/^[\d\s\+\-\(\)]{7,20}$/.test(val)) {
       valid = false;
-      if (errorEl) errorEl.textContent = 'Numéro de téléphone invalide.';
+      if (errorEl) errorEl.textContent = 'Numéro invalide.';
     }
 
     group.classList.toggle('error', !valid);
@@ -108,20 +105,17 @@ if (form) {
   form.querySelectorAll('input, select, textarea').forEach(input => {
     input.addEventListener('blur', () => validateField(input.closest('.form-group'), input));
     input.addEventListener('input', () => {
-      if (input.closest('.form-group').classList.contains('error')) {
+      if (input.closest('.form-group').classList.contains('error'))
         validateField(input.closest('.form-group'), input);
-      }
     });
   });
 
   form.addEventListener('submit', (e) => {
     e.preventDefault();
     let allValid = true;
-
     form.querySelectorAll('input, select, textarea').forEach(input => {
       if (!validateField(input.closest('.form-group'), input)) allValid = false;
     });
-
     if (allValid) {
       form.style.display = 'none';
       if (successMsg) successMsg.style.display = 'block';
@@ -129,36 +123,80 @@ if (form) {
   });
 }
 
-/* ── Sun visual animation ── */
-const heroVisual = document.querySelector('.hero-visual');
-if (heroVisual) {
-  const rings = [520, 380, 240].map((size, i) => {
-    const ring = document.createElement('div');
-    ring.className = 'sun-ring';
-    ring.style.width = size + 'px';
-    ring.style.height = size + 'px';
-    const dotCount = 6 + i * 4;
-    for (let d = 0; d < dotCount; d++) {
-      const dot = document.createElement('div');
-      dot.style.cssText = `
-        position:absolute;
-        width:3px;height:3px;border-radius:50%;
-        background:var(--gold);
-        top:50%;left:50%;
-        transform-origin:0 0;
-        transform:rotate(${d * (360 / dotCount)}deg) translateX(${size / 2}px) translateY(-50%);
-      `;
-      ring.appendChild(dot);
-    }
-    return ring;
-  });
-  rings.forEach(r => heroVisual.appendChild(r));
+/* ── Particules canvas (hero) ── */
+function initHeroParticles() {
+  const canvas = document.getElementById('heroParticles');
+  if (!canvas) return;
 
-  const core = document.createElement('div');
-  core.style.cssText = `
-    position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
-    width:60px;height:60px;border-radius:50%;
-    background:radial-gradient(circle,rgba(200,147,58,.5),transparent);
-  `;
-  heroVisual.appendChild(core);
+  const ctx = canvas.getContext('2d');
+  let W, H, particles = [], raf;
+
+  const GOLD  = [200, 147, 58];
+  const WHITE = [255, 255, 255];
+  const COUNT = 90;
+
+  function resize() {
+    W = canvas.width  = canvas.offsetWidth;
+    H = canvas.height = canvas.offsetHeight;
+  }
+
+  function makeParticle() {
+    const isGold = Math.random() > .55;
+    return {
+      x:  Math.random() * W,
+      y:  Math.random() * H,
+      r:  Math.random() * 1.4 + .2,
+      o:  Math.random() * .45 + .05,
+      vx: (Math.random() - .5) * .12,
+      vy: (Math.random() - .5) * .12,
+      c:  isGold ? GOLD : WHITE,
+      twinkleSpeed: Math.random() * .015 + .005,
+      twinklePhase: Math.random() * Math.PI * 2,
+    };
+  }
+
+  resize();
+  window.addEventListener('resize', () => { resize(); }, { passive: true });
+
+  for (let i = 0; i < COUNT; i++) particles.push(makeParticle());
+
+  let t = 0;
+  function draw() {
+    ctx.clearRect(0, 0, W, H);
+    t += 1;
+
+    particles.forEach(p => {
+      p.x += p.vx;
+      p.y += p.vy;
+      if (p.x < 0) p.x = W;
+      if (p.x > W) p.x = 0;
+      if (p.y < 0) p.y = H;
+      if (p.y > H) p.y = 0;
+
+      /* scintillement doux */
+      const alpha = p.o * (.6 + .4 * Math.sin(t * p.twinkleSpeed + p.twinklePhase));
+
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(${p.c[0]},${p.c[1]},${p.c[2]},${alpha.toFixed(2)})`;
+      ctx.fill();
+    });
+
+    raf = requestAnimationFrame(draw);
+  }
+
+  /* Respecter prefers-reduced-motion */
+  if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    draw();
+  } else {
+    /* Dessiner une fois statique */
+    particles.forEach(p => {
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(${p.c[0]},${p.c[1]},${p.c[2]},${p.o.toFixed(2)})`;
+      ctx.fill();
+    });
+  }
 }
+
+initHeroParticles();
