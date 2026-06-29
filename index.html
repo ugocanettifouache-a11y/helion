@@ -57,31 +57,55 @@
 <!-- ── Hero ── -->
 <main>
   <section class="hero" aria-labelledby="hero-title">
-    <canvas class="hero-particles" id="heroParticles" aria-hidden="true"></canvas>
-    <div class="hero-warm-glow" aria-hidden="true"></div>
 
     <div class="container hero-layout">
 
-      <!-- Colonne gauche : texte -->
+      <!-- ── Gauche : contenu ── -->
       <div class="hero-content">
-        <div class="hero-badge" aria-label="Experts en développement commercial">
+
+        <div class="hero-badge">
           <span class="hero-badge-dot"></span>
-          Experts en développement commercial
+          Développement commercial B2B · Paris
         </div>
 
         <h1 id="hero-title">
-          Nous propulsons<br/>
-          votre <em>croissance</em><br/>
+          Illuminez<br/>
+          votre <em>trajectoire</em><br/>
           commerciale
         </h1>
 
         <p class="hero-sub">
-          Hélio met son énergie au service de votre performance. Prospection ciblée, externalisation des ventes, formation d'équipes — nous sommes le moteur de votre ambition.
+          Hélion propulse la croissance des entreprises ambitieuses. Prospection, externalisation, conseil stratégique — nous sommes l'énergie qui fait vendre.
         </p>
 
         <div class="hero-ctas">
-          <a href="services.html" class="btn btn-solid"><span>Découvrir nos services</span></a>
+          <a href="services.html" class="btn btn-solid"><span>Découvrir mes services</span></a>
           <a href="contact.html" class="btn btn-outline"><span>Prendre rendez-vous</span></a>
+        </div>
+
+        <!-- ── Carte de présentation ── -->
+        <!-- EDIT : remplissez vos informations personnelles ci-dessous -->
+        <div class="profile-card">
+          <div class="profile-avatar" aria-label="Ugo Canetti">
+            <!-- EDIT : remplacez "UC" par une balise <img> si vous avez une photo -->
+            UC
+          </div>
+          <div class="profile-body">
+            <!-- EDIT : votre nom complet -->
+            <div class="profile-name">Ugo Canetti</div>
+            <!-- EDIT : votre titre exact (ex: Fondateur & Directeur Commercial) -->
+            <div class="profile-role">Fondateur · Hélion</div>
+            <!-- EDIT : vos 3 compétences clés LinkedIn -->
+            <div class="profile-tags">
+              <span>Développement B2B</span>
+              <span>Go-to-Market</span>
+              <span>Prospection</span>
+            </div>
+            <!-- EDIT : votre accroche personnelle (2-3 phrases, parcours + valeur ajoutée) -->
+            <p class="profile-bio">
+              Expert en développement commercial B2B, j'accompagne les entreprises dans l'accélération de leur croissance. Mon approche combine rigueur analytique et exécution terrain pour des résultats mesurables et durables.
+            </p>
+          </div>
         </div>
 
         <div class="hero-stats" aria-label="Chiffres clés">
@@ -90,52 +114,20 @@
             <div class="stat-label">Clients accompagnés</div>
           </div>
           <div class="stat-item">
-            <div class="stat-num" data-target="94%" aria-label="94 pourcent de satisfaction">0%</div>
+            <div class="stat-num" data-target="94%" aria-label="94% satisfaction">0%</div>
             <div class="stat-label">Taux de satisfaction</div>
           </div>
           <div class="stat-item">
-            <div class="stat-num" data-target="x3" aria-label="ROI multiplié par 3">x0</div>
+            <div class="stat-num" data-target="x3" aria-label="ROI x3">x0</div>
             <div class="stat-label">ROI moyen constaté</div>
           </div>
         </div>
+
       </div>
 
-      <!-- Colonne droite : système solaire -->
+      <!-- ── Droite : système solaire canvas ── -->
       <div class="hero-solar" aria-hidden="true">
-        <div class="solar-scene">
-
-          <!-- Halos ambiants -->
-          <div class="solar-halo solar-halo-1"></div>
-          <div class="solar-halo solar-halo-2"></div>
-          <div class="solar-halo solar-halo-3"></div>
-
-          <!-- Soleil central -->
-          <div class="sun-wrap">
-            <div class="sun-corona sun-corona-3"></div>
-            <div class="sun-corona sun-corona-2"></div>
-            <div class="sun-corona sun-corona-1"></div>
-            <div class="sun-body">
-              <div class="sun-shine"></div>
-            </div>
-          </div>
-
-          <!-- Orbite 1 — rapide, proche -->
-          <div class="solar-orbit so-1">
-            <div class="solar-planet spl-1"></div>
-          </div>
-
-          <!-- Orbite 2 — moyenne, 2 planètes -->
-          <div class="solar-orbit so-2">
-            <div class="solar-planet spl-2"></div>
-            <div class="solar-planet spl-2b"></div>
-          </div>
-
-          <!-- Orbite 3 — lente, externe -->
-          <div class="solar-orbit so-3">
-            <div class="solar-planet spl-3"></div>
-          </div>
-
-        </div>
+        <canvas id="solarCanvas"></canvas>
       </div>
 
     </div>
@@ -330,5 +322,6 @@
 </footer>
 
 <script src="js/main.js"></script>
+<script src="js/solar.js"></script>
 </body>
 </html>

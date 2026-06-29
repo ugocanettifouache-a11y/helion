@@ -234,36 +234,15 @@ nav a:hover::after, nav a.active::after { width: 100%; }
   position: relative;
   overflow: hidden;
   padding: 7rem 0 4rem;
-  background:
-    radial-gradient(ellipse 70% 90% at 75% 55%, rgba(200,120,28,.14) 0%, transparent 55%),
-    radial-gradient(ellipse 50% 60% at 15% 30%, rgba(180,140,50,.05) 0%, transparent 50%),
-    linear-gradient(150deg, #070B18 0%, #0B1225 35%, #0F1830 65%, #090D1C 100%);
-}
-
-/* Canvas particules / étoiles */
-.hero-particles {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-  z-index: 0;
-}
-
-/* Halo chaud général */
-.hero-warm-glow {
-  position: absolute;
-  inset: 0;
-  background: radial-gradient(ellipse 55% 65% at 72% 52%, rgba(220,140,40,.07) 0%, transparent 60%);
-  pointer-events: none;
-  z-index: 0;
+  /* Deep space — le canvas gère le fond visuel, on garde juste le noir de base */
+  background: #030508;
 }
 
 /* Layout deux colonnes */
 .hero-layout {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 3rem;
+  gap: 2rem;
   align-items: center;
   position: relative;
   z-index: 2;
@@ -272,7 +251,7 @@ nav a:hover::after, nav a.active::after { width: 100%; }
 /* ── Contenu texte ── */
 .hero-content {
   position: relative;
-  animation: hero-fade-up .9s .1s both;
+  animation: hero-fade-up .9s .15s both;
 }
 
 .hero-badge {
@@ -288,7 +267,7 @@ nav a:hover::after, nav a.active::after { width: 100%; }
   letter-spacing: .14em;
   text-transform: uppercase;
   color: var(--gold);
-  margin-bottom: 2rem;
+  margin-bottom: 1.75rem;
   backdrop-filter: blur(4px);
 }
 
@@ -308,40 +287,40 @@ nav a:hover::after, nav a.active::after { width: 100%; }
 }
 
 .hero h1 {
-  margin-bottom: 1.5rem;
+  margin-bottom: 1.25rem;
   color: var(--white);
-  animation: hero-fade-up .9s .25s both;
+  animation: hero-fade-up .9s .28s both;
 }
 
 .hero h1 em {
   font-style: italic;
   color: var(--gold);
-  text-shadow: 0 0 40px rgba(200,147,58,.3);
+  text-shadow: 0 0 40px rgba(200,147,58,.35);
 }
 
 .hero-sub {
   font-size: 1.05rem;
   color: var(--text-muted);
-  margin-bottom: 2.5rem;
+  margin-bottom: 2rem;
   max-width: 48ch;
-  animation: hero-fade-up .9s .4s both;
+  animation: hero-fade-up .9s .42s both;
 }
 
 .hero-ctas {
   display: flex;
-  gap: 1.1rem;
+  gap: 1rem;
   flex-wrap: wrap;
-  margin-bottom: 4rem;
-  animation: hero-fade-up .9s .55s both;
+  margin-bottom: 2rem;
+  animation: hero-fade-up .9s .56s both;
 }
 
-/* Bouton outline pour le 2e CTA hero */
+/* Bouton outline (2e CTA) */
 .btn-outline {
   border: 1px solid rgba(200,147,58,.45);
   color: var(--gold);
   background: rgba(200,147,58,.05);
   backdrop-filter: blur(6px);
-  transition: background .3s, border-color .3s, box-shadow .3s;
+  transition: background .3s, border-color .3s, box-shadow .3s, color .3s;
 }
 .btn-outline:hover {
   background: rgba(200,147,58,.12);
@@ -351,13 +330,98 @@ nav a:hover::after, nav a.active::after { width: 100%; }
 }
 .btn-outline::before { display: none; }
 
+/* ── Carte de profil ── */
+.profile-card {
+  display: flex;
+  gap: 1.25rem;
+  align-items: flex-start;
+  background: rgba(255,255,255,.04);
+  border: 1px solid rgba(200,147,58,.18);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  padding: 1.4rem 1.5rem;
+  margin-bottom: 2rem;
+  animation: hero-fade-up .9s .68s both;
+  position: relative;
+  overflow: hidden;
+}
+
+.profile-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(200,147,58,.04) 0%, transparent 60%);
+  pointer-events: none;
+}
+
+.profile-avatar {
+  width: 54px; height: 54px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #C8933A 0%, #2A3860 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--white);
+  flex-shrink: 0;
+  border: 2px solid rgba(200,147,58,.35);
+  overflow: hidden;
+}
+
+.profile-avatar img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+.profile-body { flex: 1; min-width: 0; }
+
+.profile-name {
+  font-weight: 600;
+  font-size: .95rem;
+  color: var(--white);
+  margin-bottom: .18rem;
+}
+
+.profile-role {
+  font-size: .78rem;
+  color: var(--gold);
+  letter-spacing: .09em;
+  margin-bottom: .65rem;
+}
+
+.profile-tags {
+  display: flex;
+  gap: .38rem;
+  flex-wrap: wrap;
+  margin-bottom: .75rem;
+}
+
+.profile-tags span {
+  font-size: .7rem;
+  padding: .18rem .65rem;
+  border: 1px solid rgba(200,147,58,.28);
+  color: var(--text-muted);
+  letter-spacing: .06em;
+}
+
+.profile-bio {
+  font-size: .85rem;
+  color: var(--text-muted);
+  line-height: 1.65;
+  max-width: none;
+}
+
+/* ── Stats ── */
 .hero-stats {
   display: flex;
-  gap: 2.5rem;
+  gap: 2.2rem;
   flex-wrap: wrap;
-  padding-top: 2.5rem;
+  padding-top: 2rem;
   border-top: 1px solid rgba(200,147,58,.15);
-  animation: hero-fade-up .9s .7s both;
+  animation: hero-fade-up .9s .82s both;
 }
 
 .stat-num {
@@ -366,187 +430,27 @@ nav a:hover::after, nav a.active::after { width: 100%; }
   font-weight: 700;
   color: var(--gold);
   line-height: 1;
-  text-shadow: 0 0 30px rgba(200,147,58,.2);
+  text-shadow: 0 0 30px rgba(200,147,58,.22);
 }
 
 .stat-label {
-  font-size: .8rem;
+  font-size: .78rem;
   color: var(--text-muted);
   letter-spacing: .06em;
   margin-top: .3rem;
 }
 
-/* ── Système solaire ── */
+/* ── Canvas solaire ── */
 .hero-solar {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  animation: hero-fade-in 1.2s .4s both;
-}
-
-.solar-scene {
   position: relative;
-  width: 460px;
-  height: 460px;
-  flex-shrink: 0;
+  height: clamp(400px, 56vh, 620px);
+  animation: hero-fade-in 1.4s .3s both;
 }
 
-/* Halos ambiants */
-.solar-halo {
-  position: absolute;
-  border-radius: 50%;
-  top: 50%; left: 50%;
-  transform: translate(-50%, -50%);
-  pointer-events: none;
-}
-
-.solar-halo-1 {
-  width: 180px; height: 180px;
-  background: radial-gradient(circle, rgba(245,166,35,.18) 0%, transparent 70%);
-  animation: halo-pulse 3.5s ease-in-out infinite;
-}
-
-.solar-halo-2 {
-  width: 340px; height: 340px;
-  background: radial-gradient(circle, rgba(200,147,58,.1) 0%, transparent 65%);
-  animation: halo-pulse 5s ease-in-out infinite reverse;
-}
-
-.solar-halo-3 {
-  width: 500px; height: 500px;
-  background: radial-gradient(circle, rgba(180,100,20,.06) 0%, transparent 60%);
-}
-
-/* Soleil */
-.sun-wrap {
-  position: absolute;
-  top: 50%; left: 50%;
-  transform: translate(-50%, -50%);
-  width: 76px; height: 76px;
-  z-index: 10;
-}
-
-.sun-body {
-  position: absolute;
-  inset: 0;
-  border-radius: 50%;
-  background: radial-gradient(circle at 38% 32%, #FFF0B0 0%, #F5A623 40%, #C8701A 72%, #8B4010 100%);
-  box-shadow:
-    0 0 16px rgba(245,166,35,.95),
-    0 0 36px rgba(245,166,35,.65),
-    0 0 70px rgba(200,112,26,.45),
-    0 0 120px rgba(200,112,26,.2);
-  animation: sun-pulse 4s ease-in-out infinite;
-  z-index: 3;
-}
-
-.sun-shine {
-  position: absolute;
-  top: 12%; left: 16%;
-  width: 38%; height: 28%;
-  border-radius: 50%;
-  background: radial-gradient(circle, rgba(255,248,200,.75) 0%, transparent 70%);
-}
-
-.sun-corona {
-  position: absolute;
-  border-radius: 50%;
-  top: 50%; left: 50%;
-  transform: translate(-50%, -50%);
-}
-
-.sun-corona-1 {
-  width: 108px; height: 108px;
-  background: radial-gradient(circle, rgba(245,166,35,.22) 40%, transparent 70%);
-  animation: corona-breathe 3s ease-in-out infinite;
-  z-index: 2;
-}
-
-.sun-corona-2 {
-  width: 148px; height: 148px;
-  background: radial-gradient(circle, rgba(245,166,35,.12) 30%, transparent 68%);
-  animation: corona-breathe 4.5s ease-in-out infinite reverse;
-  z-index: 1;
-}
-
-.sun-corona-3 {
-  width: 200px; height: 200px;
-  background: radial-gradient(circle, rgba(200,120,30,.07) 20%, transparent 65%);
-  animation: corona-breathe 6s ease-in-out infinite;
-  z-index: 0;
-}
-
-/* Orbites */
-.solar-orbit {
-  position: absolute;
-  border-radius: 50%;
-  top: 50%; left: 50%;
-  border: 1px solid rgba(200,147,58,.2);
-  transform-origin: 0 0;
-}
-
-.so-1 {
-  width: 180px; height: 180px;
-  margin: -90px 0 0 -90px;
-  border-color: rgba(200,147,58,.3);
-  animation: orbit-rotate 13s linear infinite;
-}
-
-.so-2 {
-  width: 290px; height: 290px;
-  margin: -145px 0 0 -145px;
-  border-color: rgba(200,147,58,.18);
-  animation: orbit-rotate 26s linear infinite reverse;
-}
-
-.so-3 {
-  width: 420px; height: 420px;
-  margin: -210px 0 0 -210px;
-  border-color: rgba(200,147,58,.1);
-  animation: orbit-rotate 44s linear infinite;
-}
-
-/* Planètes */
-.solar-planet {
-  position: absolute;
-  border-radius: 50%;
-  top: 0; left: 50%;
-}
-
-/* Orbite 1 — planète dorée chaude */
-.spl-1 {
-  width: 14px; height: 14px;
-  margin: -7px 0 0 -7px;
-  background: radial-gradient(circle at 35% 30%, #FFE080, #C8933A);
-  box-shadow: 0 0 8px rgba(200,147,58,.9), 0 0 20px rgba(200,147,58,.5);
-  animation: orbit-rotate 13s linear infinite reverse;
-}
-
-/* Orbite 2 — planète ambrée + petite lune */
-.spl-2 {
-  width: 10px; height: 10px;
-  margin: -5px 0 0 -5px;
-  background: radial-gradient(circle at 35% 30%, #E8C880, #8B6020);
-  box-shadow: 0 0 6px rgba(200,147,58,.6);
-  animation: orbit-rotate 26s linear infinite;
-}
-
-.spl-2b {
-  width: 7px; height: 7px;
-  margin: -3.5px 0 0 -3.5px;
-  top: auto; bottom: 0;
-  background: radial-gradient(circle at 35% 30%, #D0B870, #7A5818);
-  box-shadow: 0 0 5px rgba(200,147,58,.4);
-  animation: orbit-rotate 26s linear infinite;
-}
-
-/* Orbite 3 — planète bleue-froide pour contraste */
-.spl-3 {
-  width: 11px; height: 11px;
-  margin: -5.5px 0 0 -5.5px;
-  background: radial-gradient(circle at 35% 30%, #B0D0F8, #3A60A0);
-  box-shadow: 0 0 8px rgba(80,140,220,.7), 0 0 18px rgba(80,140,220,.3);
-  animation: orbit-rotate 44s linear infinite reverse;
+#solarCanvas {
+  display: block;
+  width: 100%;
+  height: 100%;
 }
 
 /* ── Section commons ── */
@@ -1049,60 +953,39 @@ footer {
 
 /* ── Responsive ── */
 @media (max-width: 1200px) {
-  .footer-grid { grid-template-columns: 1fr 1fr; }
-  .team-grid { grid-template-columns: repeat(2, 1fr); }
-  .values-grid { grid-template-columns: repeat(2, 1fr); }
-  .solar-scene { width: 360px; height: 360px; }
-  .so-3 { width: 320px; height: 320px; margin: -160px 0 0 -160px; }
-  .so-2 { width: 220px; height: 220px; margin: -110px 0 0 -110px; }
-  .so-1 { width: 138px; height: 138px; margin: -69px 0 0 -69px; }
-  .solar-halo-3 { width: 380px; height: 380px; }
+  .footer-grid  { grid-template-columns: 1fr 1fr; }
+  .team-grid    { grid-template-columns: repeat(2, 1fr); }
+  .values-grid  { grid-template-columns: repeat(2, 1fr); }
+  .hero-solar   { height: clamp(340px, 48vh, 520px); }
 }
 
 @media (max-width: 768px) {
   nav ul, .nav-cta { display: none; }
-  .hamburger { display: flex; }
-  .mobile-nav { display: flex; }
+  .hamburger   { display: flex; }
+  .mobile-nav  { display: flex; }
 
+  /* Hero : une colonne, canvas au-dessus */
   .hero-layout { grid-template-columns: 1fr; gap: 0; }
-  .hero-solar {
-    order: -1;
-    margin-bottom: 2rem;
-  }
-  .solar-scene { width: 260px; height: 260px; }
-  .so-3 { width: 230px; height: 230px; margin: -115px 0 0 -115px; }
-  .so-2 { width: 155px; height: 155px; margin: -77.5px 0 0 -77.5px; }
-  .so-1 { width: 100px; height: 100px; margin: -50px 0 0 -50px; }
-  .solar-halo-3 { width: 280px; height: 280px; }
-  .solar-halo-2 { width: 200px; height: 200px; }
-  .sun-wrap { width: 52px; height: 52px; }
-  .sun-corona-1 { width: 76px; height: 76px; }
-  .sun-corona-2 { width: 106px; height: 106px; }
-  .sun-corona-3 { width: 140px; height: 140px; }
-  .spl-1 { width: 10px; height: 10px; margin: -5px 0 0 -5px; }
-  .spl-2 { width: 7px; height: 7px; margin: -3.5px 0 0 -3.5px; }
-  .spl-3 { width: 8px; height: 8px; margin: -4px 0 0 -4px; }
-  .hero-stats { gap: 1.8rem; }
+  .hero-solar  { order: -1; height: 280px; margin-bottom: 1.5rem; }
 
-  .services-grid { grid-template-columns: 1fr; }
+  .hero-stats  { gap: 1.6rem; }
+  .hero-ctas   { margin-bottom: 1.5rem; }
+  .profile-card { flex-direction: column; gap: .9rem; }
+
+  .services-grid     { grid-template-columns: 1fr; }
   .testimonials-grid { grid-template-columns: 1fr; }
-  .service-row { grid-template-columns: 1fr; gap: 2.5rem; }
+  .service-row       { grid-template-columns: 1fr; gap: 2.5rem; }
   .service-row.reverse { direction: ltr; }
-  .about-intro { grid-template-columns: 1fr; gap: 3rem; }
-  .contact-layout { grid-template-columns: 1fr; gap: 3rem; }
-  .form-row { grid-template-columns: 1fr; }
-  .footer-grid { grid-template-columns: 1fr; gap: 2rem; }
-  .team-grid { grid-template-columns: repeat(2, 1fr); }
+  .about-intro       { grid-template-columns: 1fr; gap: 3rem; }
+  .contact-layout    { grid-template-columns: 1fr; gap: 3rem; }
+  .form-row          { grid-template-columns: 1fr; }
+  .footer-grid       { grid-template-columns: 1fr; gap: 2rem; }
+  .team-grid         { grid-template-columns: repeat(2, 1fr); }
 }
 
 @media (max-width: 375px) {
-  .hero-ctas { flex-direction: column; }
-  .team-grid { grid-template-columns: 1fr; }
-  .values-grid { grid-template-columns: 1fr; }
-}
-
-@media (max-width: 375px) {
-  .hero-ctas { flex-direction: column; }
-  .team-grid { grid-template-columns: 1fr; }
-  .values-grid { grid-template-columns: 1fr; }
+  .hero-ctas  { flex-direction: column; }
+  .hero-solar { height: 240px; }
+  .team-grid  { grid-template-columns: 1fr; }
+  .values-grid{ grid-template-columns: 1fr; }
 }

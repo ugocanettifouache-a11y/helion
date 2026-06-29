@@ -1,59 +1,15 @@
-/* ── Entrée hero (texte) ── */
+/* ── Entrée hero ── */
 @keyframes hero-fade-up {
   from { opacity: 0; transform: translateY(28px); }
   to   { opacity: 1; transform: none; }
 }
 
 @keyframes hero-fade-in {
-  from { opacity: 0; transform: scale(.96); }
-  to   { opacity: 1; transform: none; }
+  from { opacity: 0; }
+  to   { opacity: 1; }
 }
 
-/* ── Soleil ── */
-@keyframes sun-pulse {
-  0%, 100% {
-    box-shadow:
-      0 0 16px rgba(245,166,35,.95),
-      0 0 36px rgba(245,166,35,.65),
-      0 0 70px rgba(200,112,26,.45),
-      0 0 120px rgba(200,112,26,.2);
-    transform: scale(1);
-  }
-  50% {
-    box-shadow:
-      0 0 24px rgba(245,166,35,1),
-      0 0 55px rgba(245,166,35,.75),
-      0 0 100px rgba(200,112,26,.55),
-      0 0 160px rgba(200,112,26,.28);
-    transform: scale(1.05);
-  }
-}
-
-/* ── Couronnes ── */
-@keyframes corona-breathe {
-  0%, 100% { transform: translate(-50%,-50%) scale(1);   opacity: 1; }
-  50%       { transform: translate(-50%,-50%) scale(1.14); opacity: .7; }
-}
-
-/* ── Halos ambiants ── */
-@keyframes halo-pulse {
-  0%, 100% { transform: translate(-50%,-50%) scale(1);   opacity: 1; }
-  50%       { transform: translate(-50%,-50%) scale(1.12); opacity: .6; }
-}
-
-/* ── Orbites ── */
-@keyframes orbit-rotate {
-  from { transform: rotate(0deg); }
-  to   { transform: rotate(360deg); }
-}
-
-/* ── Reveal au scroll (sections) ── */
-@keyframes fadeInUp {
-  from { opacity: 0; transform: translateY(24px); }
-  to   { opacity: 1; transform: none; }
-}
-
-/* ── Icônes service (glow au hover) ── */
+/* ── Icônes service (hover) ── */
 .service-card:hover .service-icon {
   animation: icon-glow 1.5s ease-in-out infinite;
 }
@@ -73,33 +29,31 @@
   to   { transform: rotate(45deg); }
 }
 
-/* ── Stagger children (sections) ── */
+/* ── Reveal sections (Intersection Observer) ── */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: none; }
+}
+
+/* ── Stagger grids ── */
 .stagger > * {
   opacity: 0;
   transform: translateY(24px);
   transition: opacity .6s, transform .6s;
 }
 
-.stagger.visible > *:nth-child(1) { opacity:1; transform:none; transition-delay:0s; }
+.stagger.visible > *:nth-child(1) { opacity:1; transform:none; transition-delay:0s;   }
 .stagger.visible > *:nth-child(2) { opacity:1; transform:none; transition-delay:.12s; }
 .stagger.visible > *:nth-child(3) { opacity:1; transform:none; transition-delay:.24s; }
 .stagger.visible > *:nth-child(4) { opacity:1; transform:none; transition-delay:.36s; }
 
 /* ── prefers-reduced-motion ── */
 @media (prefers-reduced-motion: reduce) {
-  .hero-content,
-  .hero-content *,
-  .hero-solar,
-  .sun-body,
-  .sun-corona,
-  .solar-orbit,
-  .solar-planet,
-  .solar-halo,
-  .hero-badge-dot,
-  .stagger > * {
-    animation: none !important;
-    transition: none !important;
-    opacity: 1 !important;
-    transform: none !important;
+  *,
+  *::before,
+  *::after {
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
   }
 }
