@@ -228,30 +228,61 @@ nav a:hover::after, nav a.active::after { width: 100%; }
 
 /* ── Hero ── */
 .hero {
+  position: relative;
   min-height: 100vh;
+  overflow: hidden;
   display: flex;
   align-items: center;
-  position: relative;
-  overflow: hidden;
-  padding: 7rem 0 4rem;
-  /* Deep space — le canvas gère le fond visuel, on garde juste le noir de base */
   background: #030508;
 }
 
-/* Layout deux colonnes */
-.hero-layout {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 2rem;
-  align-items: center;
-  position: relative;
-  z-index: 2;
+/* Canvas : fond absolu plein-écran — PAS de boîte, PAS de rectangle visible */
+.hero-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  z-index: 0;
 }
 
-/* ── Contenu texte ── */
-.hero-content {
+/* Voile dégradé : gauche sombre (lisibilité texte) → droite transparent (scène spatiale) */
+.hero-veil {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background:
+    linear-gradient(
+      90deg,
+      rgba(3,5,14,0.96) 0%,
+      rgba(3,5,14,0.86) 20%,
+      rgba(3,5,14,0.62) 40%,
+      rgba(3,5,14,0.24) 58%,
+      rgba(3,5,14,0.06) 74%,
+      transparent 88%
+    ),
+    linear-gradient(
+      180deg,
+      rgba(3,5,14,0.55) 0%,
+      transparent 14%,
+      transparent 78%,
+      rgba(3,5,14,0.65) 100%
+    );
+}
+
+/* Couche foreground : texte au-dessus du canvas et du voile */
+.hero-fg {
   position: relative;
-  animation: hero-fade-up .9s .15s both;
+  z-index: 2;
+  width: 100%;
+  padding: 7rem 0 5rem;
+}
+
+/* Bloc texte : colonne gauche uniquement */
+.hero-inner {
+  max-width: 560px;
+  animation: hero-fade-up .9s .12s both;
 }
 
 .hero-badge {
@@ -440,18 +471,6 @@ nav a:hover::after, nav a.active::after { width: 100%; }
   margin-top: .3rem;
 }
 
-/* ── Canvas solaire ── */
-.hero-solar {
-  position: relative;
-  height: clamp(400px, 56vh, 620px);
-  animation: hero-fade-in 1.4s .3s both;
-}
-
-#solarCanvas {
-  display: block;
-  width: 100%;
-  height: 100%;
-}
 
 /* ── Section commons ── */
 section { padding: 7rem 0; }
@@ -956,7 +975,6 @@ footer {
   .footer-grid  { grid-template-columns: 1fr 1fr; }
   .team-grid    { grid-template-columns: repeat(2, 1fr); }
   .values-grid  { grid-template-columns: repeat(2, 1fr); }
-  .hero-solar   { height: clamp(340px, 48vh, 520px); }
 }
 
 @media (max-width: 768px) {
@@ -964,9 +982,17 @@ footer {
   .hamburger   { display: flex; }
   .mobile-nav  { display: flex; }
 
-  /* Hero : une colonne, canvas au-dessus */
-  .hero-layout { grid-template-columns: 1fr; gap: 0; }
-  .hero-solar  { order: -1; height: 280px; margin-bottom: 1.5rem; }
+  /* Hero mobile : voile plus dense + bloc texte pleine largeur */
+  .hero-veil {
+    background: linear-gradient(
+      180deg,
+      rgba(3,5,14,0.92) 0%,
+      rgba(3,5,14,0.80) 55%,
+      rgba(3,5,14,0.72) 100%
+    );
+  }
+  .hero-inner { max-width: 100%; }
+  .hero-fg    { padding: 6rem 0 4rem; }
 
   .hero-stats  { gap: 1.6rem; }
   .hero-ctas   { margin-bottom: 1.5rem; }
@@ -984,8 +1010,7 @@ footer {
 }
 
 @media (max-width: 375px) {
-  .hero-ctas  { flex-direction: column; }
-  .hero-solar { height: 240px; }
-  .team-grid  { grid-template-columns: 1fr; }
-  .values-grid{ grid-template-columns: 1fr; }
+  .hero-ctas   { flex-direction: column; }
+  .team-grid   { grid-template-columns: 1fr; }
+  .values-grid { grid-template-columns: 1fr; }
 }

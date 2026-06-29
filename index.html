@@ -58,79 +58,73 @@
 <main>
   <section class="hero" aria-labelledby="hero-title">
 
-    <div class="container hero-layout">
+    <!-- Couche 0 : canvas plein-fond (position absolute, couvre toute la section) -->
+    <canvas id="solarCanvas" class="hero-canvas" aria-hidden="true"></canvas>
 
-      <!-- ── Gauche : contenu ── -->
-      <div class="hero-content">
+    <!-- Couche 1 : voile dégradé pour lisibilité du texte à gauche -->
+    <div class="hero-veil" aria-hidden="true"></div>
 
-        <div class="hero-badge">
-          <span class="hero-badge-dot"></span>
-          Développement commercial B2B · Paris
-        </div>
+    <!-- Couche 2 : contenu texte superposé -->
+    <div class="hero-fg">
+      <div class="container">
+        <div class="hero-inner">
 
-        <h1 id="hero-title">
-          Illuminez<br/>
-          votre <em>trajectoire</em><br/>
-          commerciale
-        </h1>
-
-        <p class="hero-sub">
-          Hélion propulse la croissance des entreprises ambitieuses. Prospection, externalisation, conseil stratégique — nous sommes l'énergie qui fait vendre.
-        </p>
-
-        <div class="hero-ctas">
-          <a href="services.html" class="btn btn-solid"><span>Découvrir mes services</span></a>
-          <a href="contact.html" class="btn btn-outline"><span>Prendre rendez-vous</span></a>
-        </div>
-
-        <!-- ── Carte de présentation ── -->
-        <!-- EDIT : remplissez vos informations personnelles ci-dessous -->
-        <div class="profile-card">
-          <div class="profile-avatar" aria-label="Ugo Canetti">
-            <!-- EDIT : remplacez "UC" par une balise <img> si vous avez une photo -->
-            UC
+          <div class="hero-badge">
+            <span class="hero-badge-dot"></span>
+            Développement commercial B2B · Paris
           </div>
-          <div class="profile-body">
-            <!-- EDIT : votre nom complet -->
-            <div class="profile-name">Ugo Canetti</div>
-            <!-- EDIT : votre titre exact (ex: Fondateur & Directeur Commercial) -->
-            <div class="profile-role">Fondateur · Hélion</div>
-            <!-- EDIT : vos 3 compétences clés LinkedIn -->
-            <div class="profile-tags">
-              <span>Développement B2B</span>
-              <span>Go-to-Market</span>
-              <span>Prospection</span>
+
+          <h1 id="hero-title">
+            Illuminez<br/>
+            votre <em>trajectoire</em><br/>
+            commerciale
+          </h1>
+
+          <p class="hero-sub">
+            Hélion propulse la croissance des entreprises ambitieuses. Prospection, externalisation, conseil stratégique — nous sommes l'énergie qui fait vendre.
+          </p>
+
+          <div class="hero-ctas">
+            <a href="services.html" class="btn btn-solid"><span>Découvrir mes services</span></a>
+            <a href="contact.html" class="btn btn-outline"><span>Prendre rendez-vous</span></a>
+          </div>
+
+          <!-- Carte profil — remplacez "UC" par <img src="…"> si vous avez une photo -->
+          <div class="profile-card">
+            <div class="profile-avatar" aria-label="Ugo Canetti">UC</div>
+            <div class="profile-body">
+              <div class="profile-name">Ugo Canetti</div>
+              <div class="profile-role">Fondateur · Hélion</div>
+              <div class="profile-tags">
+                <span>Développement B2B</span>
+                <span>Go-to-Market</span>
+                <span>Prospection</span>
+              </div>
+              <p class="profile-bio">
+                Expert en développement commercial B2B, j'accompagne les entreprises dans l'accélération de leur croissance. Mon approche combine rigueur analytique et exécution terrain pour des résultats mesurables et durables.
+              </p>
             </div>
-            <!-- EDIT : votre accroche personnelle (2-3 phrases, parcours + valeur ajoutée) -->
-            <p class="profile-bio">
-              Expert en développement commercial B2B, j'accompagne les entreprises dans l'accélération de leur croissance. Mon approche combine rigueur analytique et exécution terrain pour des résultats mesurables et durables.
-            </p>
           </div>
+
+          <div class="hero-stats" aria-label="Chiffres clés">
+            <div class="stat-item">
+              <div class="stat-num" data-target="+200" aria-label="Plus de 200 clients accompagnés">+0</div>
+              <div class="stat-label">Clients accompagnés</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-num" data-target="94%" aria-label="94% satisfaction">0%</div>
+              <div class="stat-label">Taux de satisfaction</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-num" data-target="x3" aria-label="ROI x3">x0</div>
+              <div class="stat-label">ROI moyen constaté</div>
+            </div>
+          </div>
+
         </div>
-
-        <div class="hero-stats" aria-label="Chiffres clés">
-          <div class="stat-item">
-            <div class="stat-num" data-target="+200" aria-label="Plus de 200 clients accompagnés">+0</div>
-            <div class="stat-label">Clients accompagnés</div>
-          </div>
-          <div class="stat-item">
-            <div class="stat-num" data-target="94%" aria-label="94% satisfaction">0%</div>
-            <div class="stat-label">Taux de satisfaction</div>
-          </div>
-          <div class="stat-item">
-            <div class="stat-num" data-target="x3" aria-label="ROI x3">x0</div>
-            <div class="stat-label">ROI moyen constaté</div>
-          </div>
-        </div>
-
       </div>
-
-      <!-- ── Droite : système solaire canvas ── -->
-      <div class="hero-solar" aria-hidden="true">
-        <canvas id="solarCanvas"></canvas>
-      </div>
-
     </div>
+
   </section>
 
   <!-- ── Services phares ── -->
