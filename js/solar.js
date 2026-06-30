@@ -1,6 +1,6 @@
 /*!
- * Hélion — Galaxie spirale cinématographique (Canvas 2D)
- * Cœur lumineux doré · Bras spiraux étoilés · Poussière cosmique
+ * Hélion — Terre vue de l'espace + Voie lactée (Canvas 2D, scène originale)
+ * Limbe terrestre jour/nuit, lumières de villes, flare solaire, bande galactique
  */
 (function () {
   'use strict';
@@ -15,211 +15,273 @@
   const reduced  = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const isMobile = window.innerWidth < 768;
 
-  /* ── Galaxie offscreen (générée une fois, redessinée au resize majeur) ── */
-  const GS = isMobile ? 1100 : 1700; // taille de la texture galaxie
-
-  // Couche "brute" (bras + poussière + halo) — sera adoucie par un flou,
-  // pour un rendu nébuleux/photographique plutôt que des points nets.
-  const rawCanvas = document.createElement('canvas');
-  rawCanvas.width = rawCanvas.height = GS;
-  const rctx = rawCanvas.getContext('2d');
-
-  // Couche finale composée (brute floutée + cœur net + aigrettes nettes)
-  const galaxyCanvas = document.createElement('canvas');
-  galaxyCanvas.width = galaxyCanvas.height = GS;
-  const gctx = galaxyCanvas.getContext('2d');
-
   function rand(min, max) { return min + Math.random() * (max - min); }
-  // Approximation gaussienne (somme de 3 uniformes) : queue plus naturelle qu'un random() plat
   function gauss() { return ((Math.random() + Math.random() + Math.random()) / 3 - 0.5) * 2; }
 
-  function buildGalaxy() {
-    rctx.clearRect(0, 0, GS, GS);
-    gctx.clearRect(0, 0, GS, GS);
-    const cx = GS / 2, cy = GS / 2;
-    const ellipse = 0.58; // aplatissement vertical (vue en angle)
+  /* ════════════════════════════════════════════════════════════════
+   * TERRE — texture circulaire générée une fois (offscreen)
+   * ════════════════════════════════════════════════════════════════ */
+  const ES = isMobile ? 1500 : 2200;
+  const earthCanvas = document.createElement('canvas');
+  earthCanvas.width = earthCanvas.height = ES;
+  const ectx = earthCanvas.getContext('2d');
 
-    rctx.globalCompositeOperation = 'lighter';
+  const ecx = ES / 2, ecy = ES / 2;
+  const ER  = ES * 0.40; // rayon du globe dans la texture
 
-    /* Voile de disque diffus (sous les bras) — évite l'effet "rubans" trop nets */
-    rctx.save();
-    rctx.translate(cx, cy);
-    rctx.scale(1, ellipse);
-    const diskLayers = [
-      { r: GS * 0.46, col: '120,140,210', a: 0.07 },
-      { r: GS * 0.34, col: '160,150,200', a: 0.09 },
-      { r: GS * 0.20, col: '230,190,140', a: 0.13 },
-    ];
-    diskLayers.forEach(({ r, col, a }) => {
-      const g = rctx.createRadialGradient(0, 0, 0, 0, 0, r);
-      g.addColorStop(0,   `rgba(${col},${a})`);
-      g.addColorStop(0.7, `rgba(${col},${(a*0.4).toFixed(3)})`);
-      g.addColorStop(1,   'rgba(0,0,0,0)');
-      rctx.fillStyle = g;
-      rctx.beginPath();
-      rctx.arc(0, 0, r, 0, Math.PI * 2);
-      rctx.fill();
-    });
-    rctx.restore();
+  // Point du terminateur (où le soleil affleure) : sur le bord gauche du globe, sous le centre
+  // (décalé pour laisser une large zone "jour" visible au-dessus, comme une vraie photo orbitale)
+  const THETA0 = Math.PI - 0.38;
+  const termX = ecx + Math.cos(THETA0) * ER;
+  const termY = ecy + Math.sin(THETA0) * ER;
+  // Direction "jour" perpendiculaire à l'axe centre→terminateur (jour = vers le haut)
+  const dayDir = { x: -Math.sin(THETA0), y: Math.cos(THETA0) };
 
-    /* Bras spiraux : poussière + étoiles */
-    const ARMS = 4;
-    const turns = 1.85;
-    const maxR  = GS * 0.47;
-    const starsPerArm = isMobile ? 3400 : 6000;
+  function buildEarth() {
+    ectx.clearRect(0, 0, ES, ES);
 
-    /* Poussière fine éparpillée dans tout le disque (comble les vides entre bras) */
-    const haze = isMobile ? 3200 : 6000;
-    for (let i = 0; i < haze; i++) {
-      const t = Math.pow(Math.random(), 0.5);
-      const theta = Math.random() * Math.PI * 2;
-      const r = 20 + t * maxR;
-      const x = cx + Math.cos(theta) * r;
-      const y = cy + Math.sin(theta) * r * ellipse;
-      if (x < 0 || x > GS || y < 0 || y > GS) continue;
-      const b = rand(0.05, 0.20) * (1 - t * 0.5);
-      rctx.fillStyle = `rgba(${rand(150,255)|0},${rand(160,230)|0},${rand(190,255)|0},${b})`;
-      rctx.beginPath();
-      rctx.arc(x, y, rand(0.4, 1.3), 0, Math.PI * 2);
-      rctx.fill();
+    ectx.save();
+    ectx.beginPath();
+    ectx.arc(ecx, ecy, ER, 0, Math.PI * 2);
+    ectx.clip();
+
+    /* Base jour/nuit : dégradé linéaire le long de l'axe jour↔nuit */
+    const dGrad = ectx.createLinearGradient(
+      ecx + dayDir.x * ER, ecy + dayDir.y * ER,
+      ecx - dayDir.x * ER, ecy - dayDir.y * ER
+    );
+    dGrad.addColorStop(0.00, '#1E6FB8');
+    dGrad.addColorStop(0.30, '#155A99');
+    dGrad.addColorStop(0.46, '#0C3F73');
+    dGrad.addColorStop(0.495,'#FFD9A8'); // fine bande chaude (diffusion atmosphérique au terminateur)
+    dGrad.addColorStop(0.52, '#1A2233');
+    dGrad.addColorStop(0.62, '#070B14');
+    dGrad.addColorStop(1.00, '#020308');
+    ectx.fillStyle = dGrad;
+    ectx.fillRect(0, 0, ES, ES);
+
+    function dayFactor(x, y) {
+      return (x - ecx) * dayDir.x + (y - ecy) * dayDir.y; // >0 = jour, <0 = nuit
     }
 
-    for (let a = 0; a < ARMS; a++) {
-      const phase = (a / ARMS) * Math.PI * 2 + rand(-0.1, 0.1);
-      for (let i = 0; i < starsPerArm; i++) {
-        const t = Math.pow(Math.random(), 0.62); // densité plus forte près du centre
-        const theta = phase + t * turns * Math.PI * 2;
-        const baseR = 18 + t * maxR;
+    /* Continents flous sur la face jour (sous les nuages) */
+    for (let i = 0; i < 26; i++) {
+      const ang = rand(0, Math.PI * 2), rr = rand(ER * 0.15, ER * 0.85);
+      const x = ecx + Math.cos(ang) * rr, y = ecy + Math.sin(ang) * rr;
+      if (dayFactor(x, y) < ER * 0.08) continue;
+      const rad = rand(ER * 0.10, ER * 0.26);
+      const g = ectx.createRadialGradient(x, y, 0, x, y, rad);
+      g.addColorStop(0,   'rgba(60,86,52,0.45)');
+      g.addColorStop(0.7, 'rgba(50,72,46,0.18)');
+      g.addColorStop(1,   'rgba(0,0,0,0)');
+      ectx.fillStyle = g;
+      ectx.beginPath(); ectx.ellipse(x, y, rad, rad * rand(0.6, 0.9), ang, 0, Math.PI * 2); ectx.fill();
+    }
 
-        const x0 = cx + Math.cos(theta) * baseR;
-        const y0 = cy + Math.sin(theta) * baseR * ellipse;
-
-        // dispersion 2D isotrope autour de l'axe du bras (largeur croît avec le rayon)
-        const armWidth = 14 + t * 95;
-        const x = x0 + gauss() * armWidth;
-        const y = y0 + gauss() * armWidth * ellipse;
-
-        if (x < 0 || x > GS || y < 0 || y > GS) continue;
-
-        // couleur : centre doré → bras bleu/blanc, quelques poches roses (régions HII)
-        const distFactor = Math.min(1, baseR / maxR);
-        const hueRoll = Math.random();
-        let col;
-        if (hueRoll < 0.10 && distFactor > 0.25) {
-          col = `rgba(255,170,190,${rand(0.10, 0.30)})`;   // rose nébuleuse
-        } else if (hueRoll < 0.55) {
-          col = `rgba(${190 + Math.floor(distFactor*60)},${205 + Math.floor(distFactor*40)},255,${rand(0.18, 0.55)})`; // bleu-blanc
-        } else {
-          col = `rgba(255,${235 - Math.floor(distFactor*40)},${200 - Math.floor(distFactor*80)},${rand(0.15, 0.45)})`; // blanc-doré
-        }
-
-        const size = (1 - distFactor) * rand(0.6, 1.6) + rand(0.35, 1.1);
-        rctx.fillStyle = col;
-        rctx.beginPath();
-        rctx.arc(x, y, Math.max(0.35, size), 0, Math.PI * 2);
-        rctx.fill();
+    /* Nuages — uniquement face jour, blobs organiques (plusieurs touches par amas) */
+    for (let i = 0; i < 130; i++) {
+      const ang = rand(0, Math.PI * 2), rr = rand(0, ER * 0.97);
+      const bx2 = ecx + Math.cos(ang) * rr, by2 = ecy + Math.sin(ang) * rr;
+      if (dayFactor(bx2, by2) < ER * 0.04) continue;
+      const puffs = Math.floor(rand(2, 5));
+      for (let p = 0; p < puffs; p++) {
+        const x = bx2 + gauss() * ER * 0.04;
+        const y = by2 + gauss() * ER * 0.04;
+        const rad = rand(ER * 0.035, ER * 0.10);
+        const alpha = rand(0.22, 0.48);
+        const g = ectx.createRadialGradient(x, y, 0, x, y, rad);
+        g.addColorStop(0,   `rgba(255,255,255,${alpha})`);
+        g.addColorStop(0.6, `rgba(255,255,255,${alpha * 0.4})`);
+        g.addColorStop(1,   'rgba(255,255,255,0)');
+        ectx.fillStyle = g;
+        ectx.beginPath();
+        ectx.ellipse(x, y, rad, rad * rand(0.4, 0.7), rand(0, Math.PI), 0, Math.PI * 2);
+        ectx.fill();
       }
     }
 
-    /* Nuages de poussière diffuse le long des bras */
-    const dustClouds = isMobile ? 40 : 70;
-    for (let i = 0; i < dustClouds; i++) {
-      const t = Math.pow(Math.random(), 0.7);
-      const arm = Math.floor(Math.random() * ARMS);
-      const phase = (arm / ARMS) * Math.PI * 2;
-      const theta = phase + t * turns * Math.PI * 2 + rand(-0.3, 0.3);
-      const r = 60 + t * maxR;
-      const x = cx + Math.cos(theta) * r;
-      const y = cy + Math.sin(theta) * r * ellipse;
-      const rad = rand(50, 160) * (0.4 + t);
-
-      const g = rctx.createRadialGradient(x, y, 0, x, y, rad);
-      const isPink = Math.random() < 0.3;
-      const c = isPink ? '200,90,120' : '70,100,190';
-      g.addColorStop(0,   `rgba(${c},${rand(0.06, 0.16)})`);
-      g.addColorStop(0.6, `rgba(${c},${rand(0.03, 0.07)})`);
-      g.addColorStop(1,   'rgba(0,0,0,0)');
-      rctx.fillStyle = g;
-      rctx.beginPath();
-      rctx.arc(x, y, rad, 0, Math.PI * 2);
-      rctx.fill();
+    /* Lumières de villes — uniquement face nuit, en amas (façon côtes/métropoles) */
+    const clusters = isMobile ? 34 : 56;
+    ectx.globalCompositeOperation = 'lighter';
+    for (let c = 0; c < clusters; c++) {
+      const ang = rand(0, Math.PI * 2), rr = rand(ER * 0.10, ER * 0.94);
+      const cx2 = ecx + Math.cos(ang) * rr, cy2 = ecy + Math.sin(ang) * rr;
+      if (dayFactor(cx2, cy2) > -ER * 0.03) continue;
+      const n = Math.floor(rand(16, 42));
+      const spread = rand(ER * 0.025, ER * 0.085);
+      for (let i = 0; i < n; i++) {
+        const x = cx2 + gauss() * spread;
+        const y = cy2 + gauss() * spread;
+        if (dayFactor(x, y) > -ER * 0.01) continue;
+        const big = Math.random() < 0.12;
+        ectx.fillStyle = Math.random() < 0.7
+          ? `rgba(255,200,120,${rand(0.5, 0.95)})`
+          : `rgba(255,235,190,${rand(0.4, 0.8)})`;
+        ectx.beginPath();
+        ectx.arc(x, y, big ? rand(1.4, 2.4) : rand(0.5, 1.1), 0, Math.PI * 2);
+        ectx.fill();
+      }
     }
+    ectx.globalCompositeOperation = 'source-over';
 
-    rctx.globalCompositeOperation = 'source-over';
+    /* Vignettage de rondeur (assombrit le limbe pour le volume sphérique) */
+    const vg = ectx.createRadialGradient(ecx, ecy, ER * 0.68, ecx, ecy, ER);
+    vg.addColorStop(0, 'rgba(0,0,0,0)');
+    vg.addColorStop(1, 'rgba(0,0,0,0.40)');
+    ectx.fillStyle = vg;
+    ectx.beginPath(); ectx.arc(ecx, ecy, ER, 0, Math.PI * 2); ectx.fill();
 
-    /* Composite : couche brute adoucie (nébuleuse) dans la texture finale */
-    gctx.save();
-    gctx.filter = `blur(${(GS * 0.0034).toFixed(1)}px)`;
-    gctx.drawImage(rawCanvas, 0, 0);
-    gctx.restore();
-    // seconde passe plus fine pour garder un peu de texture stellaire (moins lissée)
-    gctx.save();
-    gctx.globalAlpha = 0.55;
-    gctx.filter = `blur(${(GS * 0.0009).toFixed(1)}px)`;
-    gctx.drawImage(rawCanvas, 0, 0);
-    gctx.restore();
+    ectx.restore(); // fin du clip circulaire
 
-    /* Cœur galactique lumineux (par-dessus, en mode lighter pour le glow) */
-    gctx.globalCompositeOperation = 'lighter';
-    const coreLayers = [
-      { r: GS * 0.018, col: '255,252,240', a: 1.00 },
-      { r: GS * 0.045, col: '255,236,190', a: 0.95 },
-      { r: GS * 0.090, col: '255,205,120', a: 0.55 },
-      { r: GS * 0.165, col: '255,180,90',  a: 0.30 },
-      { r: GS * 0.260, col: '255,160,70',  a: 0.14 },
-      { r: GS * 0.380, col: '230,150,90',  a: 0.06 },
-    ];
-    coreLayers.forEach(({ r, col, a }) => {
-      const g = gctx.createRadialGradient(cx, cy, 0, cx, cy, r);
+    /* Halo atmosphérique (hors du disque) */
+    ectx.globalCompositeOperation = 'lighter';
+    [
+      { r: ER * 1.015, w: ER * 0.018, col: '120,180,255', a: 0.55 },
+      { r: ER * 1.05,  w: ER * 0.05,  col: '90,150,255',  a: 0.22 },
+      { r: ER * 1.12,  w: ER * 0.10,  col: '70,120,220',  a: 0.10 },
+    ].forEach(({ r, w, col, a }) => {
+      ectx.strokeStyle = `rgba(${col},${a})`;
+      ectx.lineWidth = w;
+      ectx.beginPath();
+      ectx.arc(ecx, ecy, r, 0, Math.PI * 2);
+      ectx.stroke();
+    });
+
+    /* Flare solaire au point du terminateur — cœur net + halos + aigrettes */
+    [
+      { r: ER * 0.018, col: '255,255,250', a: 1.00 },
+      { r: ER * 0.045, col: '230,245,255', a: 0.85 },
+      { r: ER * 0.095, col: '150,210,255', a: 0.45 },
+      { r: ER * 0.18,  col: '90,170,255',  a: 0.22 },
+      { r: ER * 0.32,  col: '60,130,230',  a: 0.10 },
+    ].forEach(({ r, col, a }) => {
+      const g = ectx.createRadialGradient(termX, termY, 0, termX, termY, r);
       g.addColorStop(0,   `rgba(${col},${a})`);
       g.addColorStop(0.5, `rgba(${col},${(a*0.35).toFixed(3)})`);
       g.addColorStop(1,   'rgba(0,0,0,0)');
-      gctx.fillStyle = g;
-      gctx.beginPath();
-      gctx.arc(cx, cy, r, 0, Math.PI * 2);
-      gctx.fill();
+      ectx.fillStyle = g;
+      ectx.beginPath(); ectx.arc(termX, termY, r, 0, Math.PI * 2); ectx.fill();
     });
 
-    /* Aigrettes de diffraction — signature optique des photos d'étoiles réelles */
-    const spikeLen = GS * 0.30;
-    [0, Math.PI/2, Math.PI*0.78, Math.PI*1.28].forEach((ang, i) => {
-      const len = i < 2 ? spikeLen : spikeLen * 0.55;
-      const w   = i < 2 ? 2.4 : 1.3;
-      const g = gctx.createLinearGradient(
-        cx - Math.cos(ang) * len, cy - Math.sin(ang) * len,
-        cx + Math.cos(ang) * len, cy + Math.sin(ang) * len
+    const spikeLen = ER * 0.55;
+    [0, Math.PI / 2, Math.PI * 0.5 + 0.5, Math.PI * 0.5 - 0.5].forEach((ang, i) => {
+      const len = i < 2 ? spikeLen : spikeLen * 0.5;
+      const w   = i < 2 ? 2.6 : 1.2;
+      const g = ectx.createLinearGradient(
+        termX - Math.cos(ang) * len, termY - Math.sin(ang) * len,
+        termX + Math.cos(ang) * len, termY + Math.sin(ang) * len
       );
-      g.addColorStop(0,   'rgba(255,235,200,0)');
-      g.addColorStop(0.46,'rgba(255,235,200,0.10)');
-      g.addColorStop(0.5, 'rgba(255,248,230,0.55)');
-      g.addColorStop(0.54,'rgba(255,235,200,0.10)');
-      g.addColorStop(1,   'rgba(255,235,200,0)');
-      gctx.strokeStyle = g;
-      gctx.lineWidth = w;
-      gctx.beginPath();
-      gctx.moveTo(cx - Math.cos(ang) * len, cy - Math.sin(ang) * len);
-      gctx.lineTo(cx + Math.cos(ang) * len, cy + Math.sin(ang) * len);
-      gctx.stroke();
+      g.addColorStop(0,   'rgba(200,225,255,0)');
+      g.addColorStop(0.47,'rgba(200,225,255,0.12)');
+      g.addColorStop(0.5, 'rgba(255,255,255,0.65)');
+      g.addColorStop(0.53,'rgba(200,225,255,0.12)');
+      g.addColorStop(1,   'rgba(200,225,255,0)');
+      ectx.strokeStyle = g;
+      ectx.lineWidth = w;
+      ectx.beginPath();
+      ectx.moveTo(termX - Math.cos(ang) * len, termY - Math.sin(ang) * len);
+      ectx.lineTo(termX + Math.cos(ang) * len, termY + Math.sin(ang) * len);
+      ectx.stroke();
     });
-
-    gctx.globalCompositeOperation = 'source-over';
+    ectx.globalCompositeOperation = 'source-over';
   }
 
-  buildGalaxy();
+  buildEarth();
 
-  /* ── Champ d'étoiles d'arrière-plan (couche séparée, parallax + scintillement) ── */
+  /* ════════════════════════════════════════════════════════════════
+   * VOIE LACTÉE — bande diagonale (couche brute + flou, comme une nébuleuse)
+   * ════════════════════════════════════════════════════════════════ */
+  let mwRaw, mwCtx, mwFinal, mwFctx, MW_W = 0, MW_H = 0;
+
+  function buildMilkyWay(W, H) {
+    MW_W = W; MW_H = H;
+    mwRaw = document.createElement('canvas');
+    mwRaw.width = W; mwRaw.height = H;
+    mwCtx = mwRaw.getContext('2d');
+
+    mwFinal = document.createElement('canvas');
+    mwFinal.width = W; mwFinal.height = H;
+    mwFctx = mwFinal.getContext('2d');
+
+    // Ligne de bande : diagonale, ancrée dans le tiers gauche
+    const bx = W * 0.30, by = H * 0.46;
+    const bAngle = -1.22; // radians, quasi verticale, légère inclinaison
+    const dirX = Math.cos(bAngle), dirY = Math.sin(bAngle);
+    const bandLen = Math.max(W, H) * 1.7;
+
+    mwCtx.globalCompositeOperation = 'lighter';
+
+    const n = isMobile ? 4200 : 7800;
+    for (let i = 0; i < n; i++) {
+      const t = rand(-0.55, 0.55); // position le long de la bande
+      const core = Math.exp(-Math.pow(t * 2.1, 2)); // densité plus forte au centre de bande
+      const width = (18 + (1 - core) * 70) * (isMobile ? 0.8 : 1);
+      const along = t * bandLen;
+      const px = bx + dirX * along - dirY * (gauss() * width);
+      const py = by + dirY * along + dirX * (gauss() * width);
+      if (px < -50 || px > W + 50 || py < -50 || py > H + 50) continue;
+
+      const hueRoll = Math.random();
+      let col;
+      if (hueRoll < 0.14) col = `rgba(255,200,150,${rand(0.10, 0.28) * (0.4+core)})`; // poussière chaude
+      else if (hueRoll < 0.65) col = `rgba(${210+rand(-20,20)|0},${220+rand(-15,15)|0},255,${rand(0.15,0.45)*(0.4+core)})`;
+      else col = `rgba(255,238,220,${rand(0.12,0.35)*(0.4+core)})`;
+
+      mwCtx.fillStyle = col;
+      mwCtx.beginPath();
+      mwCtx.arc(px, py, rand(0.4, 1.4), 0, Math.PI * 2);
+      mwCtx.fill();
+    }
+
+    // nuages de poussière le long de la bande
+    const dustN = isMobile ? 30 : 55;
+    for (let i = 0; i < dustN; i++) {
+      const t = rand(-0.5, 0.5);
+      const core = Math.exp(-Math.pow(t * 2.1, 2));
+      const along = t * bandLen;
+      const perp = gauss() * (20 + (1-core) * 60);
+      const x = bx + dirX * along - dirY * perp;
+      const y = by + dirY * along + dirX * perp;
+      const rad = rand(40, 130) * (0.5 + core);
+      const isWarm = Math.random() < 0.45;
+      const c = isWarm ? '160,110,70' : '60,90,160';
+      const g = mwCtx.createRadialGradient(x, y, 0, x, y, rad);
+      g.addColorStop(0,   `rgba(${c},${rand(0.05,0.13)})`);
+      g.addColorStop(0.6, `rgba(${c},${rand(0.02,0.05)})`);
+      g.addColorStop(1,   'rgba(0,0,0,0)');
+      mwCtx.fillStyle = g;
+      mwCtx.beginPath(); mwCtx.arc(x, y, rad, 0, Math.PI * 2); mwCtx.fill();
+    }
+
+    mwCtx.globalCompositeOperation = 'source-over';
+
+    // composite flouté dans la couche finale
+    mwFctx.save();
+    mwFctx.filter = 'blur(2.2px)';
+    mwFctx.drawImage(mwRaw, 0, 0);
+    mwFctx.restore();
+    mwFctx.save();
+    mwFctx.globalAlpha = 0.5;
+    mwFctx.filter = 'blur(0.6px)';
+    mwFctx.drawImage(mwRaw, 0, 0);
+    mwFctx.restore();
+  }
+
+  /* ════════════════════════════════════════════════════════════════
+   * Champ d'étoiles d'arrière-plan
+   * ════════════════════════════════════════════════════════════════ */
   let bgStars = [];
   function buildBgStars(W, H) {
-    const n = isMobile ? 180 : 340;
+    const n = isMobile ? 160 : 300;
     bgStars = [];
     for (let i = 0; i < n; i++) {
       bgStars.push({
         x: Math.random() * W,
         y: Math.random() * H,
-        r: Math.random() < 0.15 ? rand(1.1, 1.8) : rand(0.4, 0.9),
+        r: Math.random() < 0.15 ? rand(1.0, 1.7) : rand(0.4, 0.9),
         phase: Math.random() * Math.PI * 2,
         speed: rand(0.4, 1.1),
-        warm: Math.random() < 0.25,
+        warm: Math.random() < 0.2,
       });
     }
   }
@@ -238,6 +300,7 @@
     canvas.style.height = H + 'px';
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     buildBgStars(W, H);
+    buildMilkyWay(W, H);
   }
   window.addEventListener('resize', resize);
 
@@ -248,19 +311,20 @@
     mouseY = (e.clientY / window.innerHeight - 0.5) * 2.0;
   });
 
-  /* ── Position de la galaxie dans la scène (composition façon hero) ── */
-  // Centre placé à droite, légèrement en hauteur — bleed hors cadre comme une vraie photo.
-  function galaxyCenter() {
-    return { x: W * 0.74, y: H * 0.46 };
+  /* ── Position de la Terre (bord droit, hors-champ, façon photo orbitale) ──
+   * Échelle basée sur la hauteur de viewport VISIBLE, pas sur la hauteur totale
+   * du hero (qui peut dépasser 100vh si le contenu textuel est long). ── */
+  function viewH() {
+    return Math.min(H, window.innerHeight || H);
   }
-  function galaxyScale() {
-    // La texture doit couvrir largement le viewport (effet immersif, recadré)
-    const base = Math.max(W, H) * (isMobile ? 1.55 : 1.35);
-    return base / GS;
+  function earthScale() {
+    return (viewH() * (isMobile ? 0.70 : 0.80)) / ER;
+  }
+  function earthCenter() {
+    return { x: W * (isMobile ? 1.16 : 1.06), y: viewH() * 0.50 };
   }
 
   /* ── Boucle de rendu ─────────────────────────────────────────────── */
-  let angle = 0;
   let animId = null;
   let lastTs = performance.now();
 
@@ -271,54 +335,56 @@
     const time = ts * 0.001;
 
     ctx.clearRect(0, 0, W, H);
-
-    // fond nuit profonde
-    ctx.fillStyle = '#020308';
+    ctx.fillStyle = '#02040a';
     ctx.fillRect(0, 0, W, H);
 
     if (!reduced) {
       camX += (mouseX - camX) * 0.03;
       camY += (mouseY - camY) * 0.03;
-      angle += dt * 0.000018; // rotation lente mais perceptible
     }
 
-    // étoiles d'arrière-plan (parallax léger + scintillement)
-    const starParallaxX = camX * 14;
-    const starParallaxY = camY * 9;
+    /* Voie lactée (parallax léger, légère dérive) */
+    if (mwFinal) {
+      const mwPx = camX * 10, mwPy = camY * 7;
+      ctx.globalAlpha = 0.9;
+      ctx.drawImage(mwFinal, mwPx, mwPy);
+      ctx.globalAlpha = 1;
+    }
+
+    /* Étoiles d'arrière-plan (scintillement + parallax) */
+    const starPx = camX * 16, starPy = camY * 10;
     bgStars.forEach(s => {
-      const tw = reduced ? 1 : 0.55 + 0.45 * Math.sin(time * s.speed + s.phase);
+      const tw = reduced ? 1 : 0.5 + 0.5 * Math.sin(time * s.speed + s.phase);
       ctx.globalAlpha = tw;
       ctx.fillStyle = s.warm ? '#FFE3B0' : '#EAF0FF';
       ctx.beginPath();
-      ctx.arc(s.x + starParallaxX, s.y + starParallaxY, s.r, 0, Math.PI * 2);
+      ctx.arc(s.x + starPx, s.y + starPy, s.r, 0, Math.PI * 2);
       ctx.fill();
     });
     ctx.globalAlpha = 1;
 
-    // galaxie (rotation lente + parallax plus prononcé que les étoiles lointaines)
-    const { x: gx, y: gy } = galaxyCenter();
-    const scale = galaxyScale();
-    const galParallaxX = camX * 26;
-    const galParallaxY = camY * 16;
+    /* Terre (parallax plus marqué = plus proche) */
+    const { x: gx, y: gy } = earthCenter();
+    const scale = earthScale();
+    const ePx = camX * 22, ePy = camY * 14;
 
     ctx.save();
-    ctx.translate(gx + galParallaxX, gy + galParallaxY);
-    ctx.rotate(angle);
+    ctx.translate(gx + ePx, gy + ePy);
     ctx.scale(scale, scale);
-    ctx.drawImage(galaxyCanvas, -GS / 2, -GS / 2);
+    ctx.drawImage(earthCanvas, -ecx, -ecy);
     ctx.restore();
 
-    // pulsation douce du cœur (halo additionnel, repère l'œil)
+    /* Pulsation douce du flare solaire */
     if (!reduced) {
-      const pulse = 0.85 + 0.15 * Math.sin(time * 0.5);
-      const coreR = GS * 0.07 * scale * pulse;
-      const g = ctx.createRadialGradient(gx + galParallaxX, gy + galParallaxY, 0, gx + galParallaxX, gy + galParallaxY, coreR);
-      g.addColorStop(0, 'rgba(255,225,170,0.18)');
-      g.addColorStop(1, 'rgba(255,225,170,0)');
+      const pulse = 0.85 + 0.15 * Math.sin(time * 0.45);
+      const fx = gx + ePx + (termX - ecx) * scale;
+      const fy = gy + ePy + (termY - ecy) * scale;
+      const r = ER * 0.10 * scale * pulse;
+      const g = ctx.createRadialGradient(fx, fy, 0, fx, fy, r);
+      g.addColorStop(0, 'rgba(220,240,255,0.20)');
+      g.addColorStop(1, 'rgba(220,240,255,0)');
       ctx.fillStyle = g;
-      ctx.beginPath();
-      ctx.arc(gx + galParallaxX, gy + galParallaxY, coreR, 0, Math.PI * 2);
-      ctx.fill();
+      ctx.beginPath(); ctx.arc(fx, fy, r, 0, Math.PI * 2); ctx.fill();
     }
   }
 
