@@ -17,24 +17,72 @@
 
   /* ── Galaxie offscreen (générée une fois, redessinée au resize majeur) ── */
   const GS = isMobile ? 1100 : 1700; // taille de la texture galaxie
+
+  // Couche "brute" (bras + poussière + halo) — sera adoucie par un flou,
+  // pour un rendu nébuleux/photographique plutôt que des points nets.
+  const rawCanvas = document.createElement('canvas');
+  rawCanvas.width = rawCanvas.height = GS;
+  const rctx = rawCanvas.getContext('2d');
+
+  // Couche finale composée (brute floutée + cœur net + aigrettes nettes)
   const galaxyCanvas = document.createElement('canvas');
   galaxyCanvas.width = galaxyCanvas.height = GS;
   const gctx = galaxyCanvas.getContext('2d');
 
   function rand(min, max) { return min + Math.random() * (max - min); }
+  // Approximation gaussienne (somme de 3 uniformes) : queue plus naturelle qu'un random() plat
+  function gauss() { return ((Math.random() + Math.random() + Math.random()) / 3 - 0.5) * 2; }
 
   function buildGalaxy() {
+    rctx.clearRect(0, 0, GS, GS);
     gctx.clearRect(0, 0, GS, GS);
     const cx = GS / 2, cy = GS / 2;
     const ellipse = 0.58; // aplatissement vertical (vue en angle)
+
+    rctx.globalCompositeOperation = 'lighter';
+
+    /* Voile de disque diffus (sous les bras) — évite l'effet "rubans" trop nets */
+    rctx.save();
+    rctx.translate(cx, cy);
+    rctx.scale(1, ellipse);
+    const diskLayers = [
+      { r: GS * 0.46, col: '120,140,210', a: 0.07 },
+      { r: GS * 0.34, col: '160,150,200', a: 0.09 },
+      { r: GS * 0.20, col: '230,190,140', a: 0.13 },
+    ];
+    diskLayers.forEach(({ r, col, a }) => {
+      const g = rctx.createRadialGradient(0, 0, 0, 0, 0, r);
+      g.addColorStop(0,   `rgba(${col},${a})`);
+      g.addColorStop(0.7, `rgba(${col},${(a*0.4).toFixed(3)})`);
+      g.addColorStop(1,   'rgba(0,0,0,0)');
+      rctx.fillStyle = g;
+      rctx.beginPath();
+      rctx.arc(0, 0, r, 0, Math.PI * 2);
+      rctx.fill();
+    });
+    rctx.restore();
 
     /* Bras spiraux : poussière + étoiles */
     const ARMS = 4;
     const turns = 1.85;
     const maxR  = GS * 0.47;
-    const starsPerArm = isMobile ? 2600 : 4600;
+    const starsPerArm = isMobile ? 3400 : 6000;
 
-    gctx.globalCompositeOperation = 'lighter';
+    /* Poussière fine éparpillée dans tout le disque (comble les vides entre bras) */
+    const haze = isMobile ? 3200 : 6000;
+    for (let i = 0; i < haze; i++) {
+      const t = Math.pow(Math.random(), 0.5);
+      const theta = Math.random() * Math.PI * 2;
+      const r = 20 + t * maxR;
+      const x = cx + Math.cos(theta) * r;
+      const y = cy + Math.sin(theta) * r * ellipse;
+      if (x < 0 || x > GS || y < 0 || y > GS) continue;
+      const b = rand(0.05, 0.20) * (1 - t * 0.5);
+      rctx.fillStyle = `rgba(${rand(150,255)|0},${rand(160,230)|0},${rand(190,255)|0},${b})`;
+      rctx.beginPath();
+      rctx.arc(x, y, rand(0.4, 1.3), 0, Math.PI * 2);
+      rctx.fill();
+    }
 
     for (let a = 0; a < ARMS; a++) {
       const phase = (a / ARMS) * Math.PI * 2 + rand(-0.1, 0.1);
@@ -43,18 +91,18 @@
         const theta = phase + t * turns * Math.PI * 2;
         const baseR = 18 + t * maxR;
 
-        // dispersion perpendiculaire au bras (plus large en périphérie)
-        const spread = (8 + t * 70) * (Math.random() - 0.5) * 2 * Math.pow(Math.random(), 1.4);
-        const r = baseR + spread * 0.35;
-        const thetaJ = theta + spread * 0.0018;
+        const x0 = cx + Math.cos(theta) * baseR;
+        const y0 = cy + Math.sin(theta) * baseR * ellipse;
 
-        const x = cx + Math.cos(thetaJ) * r;
-        const y = cy + Math.sin(thetaJ) * r * ellipse;
+        // dispersion 2D isotrope autour de l'axe du bras (largeur croît avec le rayon)
+        const armWidth = 14 + t * 95;
+        const x = x0 + gauss() * armWidth;
+        const y = y0 + gauss() * armWidth * ellipse;
 
         if (x < 0 || x > GS || y < 0 || y > GS) continue;
 
         // couleur : centre doré → bras bleu/blanc, quelques poches roses (régions HII)
-        const distFactor = Math.min(1, r / maxR);
+        const distFactor = Math.min(1, baseR / maxR);
         const hueRoll = Math.random();
         let col;
         if (hueRoll < 0.10 && distFactor > 0.25) {
@@ -66,15 +114,15 @@
         }
 
         const size = (1 - distFactor) * rand(0.6, 1.6) + rand(0.35, 1.1);
-        gctx.fillStyle = col;
-        gctx.beginPath();
-        gctx.arc(x, y, Math.max(0.35, size), 0, Math.PI * 2);
-        gctx.fill();
+        rctx.fillStyle = col;
+        rctx.beginPath();
+        rctx.arc(x, y, Math.max(0.35, size), 0, Math.PI * 2);
+        rctx.fill();
       }
     }
 
     /* Nuages de poussière diffuse le long des bras */
-    const dustClouds = isMobile ? 26 : 46;
+    const dustClouds = isMobile ? 40 : 70;
     for (let i = 0; i < dustClouds; i++) {
       const t = Math.pow(Math.random(), 0.7);
       const arm = Math.floor(Math.random() * ARMS);
@@ -83,21 +131,33 @@
       const r = 60 + t * maxR;
       const x = cx + Math.cos(theta) * r;
       const y = cy + Math.sin(theta) * r * ellipse;
-      const rad = rand(40, 130) * (0.4 + t);
+      const rad = rand(50, 160) * (0.4 + t);
 
-      const g = gctx.createRadialGradient(x, y, 0, x, y, rad);
+      const g = rctx.createRadialGradient(x, y, 0, x, y, rad);
       const isPink = Math.random() < 0.3;
       const c = isPink ? '200,90,120' : '70,100,190';
-      g.addColorStop(0,   `rgba(${c},${rand(0.05, 0.12)})`);
-      g.addColorStop(0.6, `rgba(${c},${rand(0.02, 0.05)})`);
+      g.addColorStop(0,   `rgba(${c},${rand(0.06, 0.16)})`);
+      g.addColorStop(0.6, `rgba(${c},${rand(0.03, 0.07)})`);
       g.addColorStop(1,   'rgba(0,0,0,0)');
-      gctx.fillStyle = g;
-      gctx.beginPath();
-      gctx.arc(x, y, rad, 0, Math.PI * 2);
-      gctx.fill();
+      rctx.fillStyle = g;
+      rctx.beginPath();
+      rctx.arc(x, y, rad, 0, Math.PI * 2);
+      rctx.fill();
     }
 
-    gctx.globalCompositeOperation = 'source-over';
+    rctx.globalCompositeOperation = 'source-over';
+
+    /* Composite : couche brute adoucie (nébuleuse) dans la texture finale */
+    gctx.save();
+    gctx.filter = `blur(${(GS * 0.0034).toFixed(1)}px)`;
+    gctx.drawImage(rawCanvas, 0, 0);
+    gctx.restore();
+    // seconde passe plus fine pour garder un peu de texture stellaire (moins lissée)
+    gctx.save();
+    gctx.globalAlpha = 0.55;
+    gctx.filter = `blur(${(GS * 0.0009).toFixed(1)}px)`;
+    gctx.drawImage(rawCanvas, 0, 0);
+    gctx.restore();
 
     /* Cœur galactique lumineux (par-dessus, en mode lighter pour le glow) */
     gctx.globalCompositeOperation = 'lighter';
@@ -119,6 +179,29 @@
       gctx.arc(cx, cy, r, 0, Math.PI * 2);
       gctx.fill();
     });
+
+    /* Aigrettes de diffraction — signature optique des photos d'étoiles réelles */
+    const spikeLen = GS * 0.30;
+    [0, Math.PI/2, Math.PI*0.78, Math.PI*1.28].forEach((ang, i) => {
+      const len = i < 2 ? spikeLen : spikeLen * 0.55;
+      const w   = i < 2 ? 2.4 : 1.3;
+      const g = gctx.createLinearGradient(
+        cx - Math.cos(ang) * len, cy - Math.sin(ang) * len,
+        cx + Math.cos(ang) * len, cy + Math.sin(ang) * len
+      );
+      g.addColorStop(0,   'rgba(255,235,200,0)');
+      g.addColorStop(0.46,'rgba(255,235,200,0.10)');
+      g.addColorStop(0.5, 'rgba(255,248,230,0.55)');
+      g.addColorStop(0.54,'rgba(255,235,200,0.10)');
+      g.addColorStop(1,   'rgba(255,235,200,0)');
+      gctx.strokeStyle = g;
+      gctx.lineWidth = w;
+      gctx.beginPath();
+      gctx.moveTo(cx - Math.cos(ang) * len, cy - Math.sin(ang) * len);
+      gctx.lineTo(cx + Math.cos(ang) * len, cy + Math.sin(ang) * len);
+      gctx.stroke();
+    });
+
     gctx.globalCompositeOperation = 'source-over';
   }
 
@@ -196,7 +279,7 @@
     if (!reduced) {
       camX += (mouseX - camX) * 0.03;
       camY += (mouseY - camY) * 0.03;
-      angle += dt * 0.0000035; // rotation très lente
+      angle += dt * 0.000018; // rotation lente mais perceptible
     }
 
     // étoiles d'arrière-plan (parallax léger + scintillement)
