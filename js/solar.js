@@ -315,17 +315,30 @@
    * Champ d'étoiles d'arrière-plan
    * ════════════════════════════════════════════════════════════════ */
   let bgStars = [];
+  let dustMotes = [];
   function buildBgStars(W, H) {
-    const n = isMobile ? 170 : 320;
+    const n = isMobile ? 280 : 520;
     bgStars = [];
     for (let i = 0; i < n; i++) {
       bgStars.push({
         x: Math.random() * W,
         y: Math.random() * H,
-        r: Math.random() < 0.15 ? rand(1.0, 1.7) : rand(0.4, 0.9),
+        r: Math.random() < 0.12 ? rand(1.0, 1.8) : rand(0.4, 0.9),
         phase: Math.random() * Math.PI * 2,
         speed: rand(0.4, 1.1),
         warm: Math.random() < 0.2,
+      });
+    }
+    const dn = isMobile ? 30 : 60;
+    dustMotes = [];
+    for (let i = 0; i < dn; i++) {
+      dustMotes.push({
+        x: Math.random() * W,
+        y: Math.random() * H,
+        r: rand(40, 140),
+        phase: Math.random() * Math.PI * 2,
+        speed: rand(0.08, 0.2),
+        warm: Math.random() < 0.6,
       });
     }
   }
@@ -338,12 +351,12 @@
 
   function layoutScene() {
     const vh = viewH();
-    // Position du soleil (référence pour l'éclairage de toutes les planètes)
-    const sunPos = { x: W * (isMobile ? 0.62 : 0.74), y: vh * 0.30 };
+    // Position du soleil : grand et dominant, déborde du cadre en haut/à droite
+    const sunPos = { x: W * (isMobile ? 0.68 : 0.78), y: vh * 0.22 };
 
-    const earthPos = { x: W * (isMobile ? 0.50 : 0.56), y: vh * 0.80 };
-    const marsPos  = { x: W * (isMobile ? 0.95 : 0.95), y: vh * 0.14 };
-    const moonPos  = { x: W * (isMobile ? 0.94 : 0.94), y: vh * 0.92 };
+    const earthPos = { x: W * (isMobile ? 0.52 : 0.60), y: vh * 0.86 };
+    const marsPos  = { x: W * (isMobile ? 0.97 : 0.985), y: vh * 0.10 };
+    const moonPos  = { x: W * (isMobile ? 0.96 : 0.97), y: vh * 0.98 };
 
     function dirTo(from, to) {
       const dx = to.x - from.x, dy = to.y - from.y;
@@ -386,12 +399,21 @@
     });
 
     bodies = [
-      { tex: marsTex,  R: marsR,  pos: marsPos,  screenR: vh*(isMobile?0.075:0.085), parallax: 18 },
-      { tex: moonTex,  R: moonR,  pos: moonPos,  screenR: vh*(isMobile?0.060:0.062), parallax: 24 },
-      { tex: earthTex, R: earthR, pos: earthPos, screenR: vh*(isMobile?0.205:0.225), parallax: 22 },
+      {
+        tex: marsTex, R: marsR, basePos: marsPos, screenR: vh*(isMobile?0.080:0.090), parallax: 18,
+        orbit: { angle: 0.9,  speed: 0.00006, rH: vh*0.020, rV: vh*0.014 },
+      },
+      {
+        tex: moonTex, R: moonR, basePos: moonPos, screenR: vh*(isMobile?0.062:0.066), parallax: 24,
+        orbit: { angle: 2.4,  speed: 0.00009, rH: vh*0.016, rV: vh*0.011 },
+      },
+      {
+        tex: earthTex, R: earthR, basePos: earthPos, screenR: vh*(isMobile?0.215:0.235), parallax: 22,
+        orbit: { angle: 4.1,  speed: 0.00004, rH: vh*0.026, rV: vh*0.018 },
+      },
     ];
 
-    return { sunPos, sunScreenR: vh * (isMobile ? 0.40 : 0.50) };
+    return { sunPos, sunScreenR: vh * (isMobile ? 0.52 : 0.66) };
   }
 
   let sunPos = { x: 0, y: 0 }, sunScreenR = 0;
@@ -440,6 +462,18 @@
       camY += (mouseY - camY) * 0.03;
     }
 
+    /* Poussière cosmique (très lente, derrière les étoiles, donne de la profondeur) */
+    const dustPx = camX * 6, dustPy = camY * 4;
+    dustMotes.forEach(d => {
+      const drift = reduced ? 0 : Math.sin(time * d.speed + d.phase) * 18;
+      const g = ctx.createRadialGradient(d.x+dustPx+drift, d.y+dustPy, 0, d.x+dustPx+drift, d.y+dustPy, d.r);
+      const col = d.warm ? '120,90,60' : '60,80,140';
+      g.addColorStop(0, `rgba(${col},0.05)`);
+      g.addColorStop(1, 'rgba(0,0,0,0)');
+      ctx.fillStyle = g;
+      ctx.beginPath(); ctx.arc(d.x+dustPx+drift, d.y+dustPy, d.r, 0, Math.PI*2); ctx.fill();
+    });
+
     /* Étoiles d'arrière-plan */
     const starPx = camX * 14, starPy = camY * 9;
     bgStars.forEach(s => {
@@ -452,33 +486,56 @@
     });
     ctx.globalAlpha = 1;
 
-    /* Soleil (parallax faible, le plus "lointain" des objets lumineux) */
-    const sunPx = camX * 10, sunPy = camY * 6;
+    /* Soleil — légère dérive de position + rotation lente + pulsation vivante */
+    const sunDriftX = reduced ? 0 : Math.sin(time * 0.05) * sunScreenR * 0.012;
+    const sunDriftY = reduced ? 0 : Math.cos(time * 0.04) * sunScreenR * 0.010;
+    const sunPx = camX * 10 + sunDriftX, sunPy = camY * 6 + sunDriftY;
     const sunScale = (sunScreenR * 2) / SS;
+    const sunCx = sunPos.x + sunPx, sunCy = sunPos.y + sunPy;
+
     ctx.save();
-    ctx.translate(sunPos.x + sunPx, sunPos.y + sunPy);
-    ctx.rotate(reduced ? 0 : time * 0.004);
+    ctx.translate(sunCx, sunCy);
+    ctx.rotate(reduced ? 0 : time * 0.0035);
     ctx.scale(sunScale, sunScale);
     ctx.drawImage(sunCanvas, -scx, -scy);
     ctx.restore();
 
-    // pulsation douce de la couronne
+    // pulsation douce de la couronne (respiration)
     if (!reduced) {
-      const pulse = 0.9 + 0.1 * Math.sin(time * 0.6);
-      const r = sunScreenR * 1.3 * pulse;
-      const g = ctx.createRadialGradient(sunPos.x+sunPx, sunPos.y+sunPy, sunScreenR*0.7, sunPos.x+sunPx, sunPos.y+sunPy, r);
-      g.addColorStop(0, 'rgba(255,160,60,0.10)');
+      const pulse = 0.92 + 0.08 * Math.sin(time * 0.55);
+      const r = sunScreenR * 1.35 * pulse;
+      const g = ctx.createRadialGradient(sunCx, sunCy, sunScreenR*0.7, sunCx, sunCy, r);
+      g.addColorStop(0, 'rgba(255,160,60,0.12)');
       g.addColorStop(1, 'rgba(255,160,60,0)');
       ctx.fillStyle = g;
-      ctx.beginPath(); ctx.arc(sunPos.x+sunPx, sunPos.y+sunPy, r, 0, Math.PI*2); ctx.fill();
+      ctx.beginPath(); ctx.arc(sunCx, sunCy, r, 0, Math.PI*2); ctx.fill();
+
+      // frémissement vivant : 3 jets de plasma scintillants au limbe, non figés dans la texture
+      ctx.globalCompositeOperation = 'lighter';
+      for (let i = 0; i < 3; i++) {
+        const a = time * 0.12 + i * 2.4;
+        const flicker = 0.4 + 0.6 * Math.max(0, Math.sin(time * (1.3 + i*0.4) + i));
+        const fx = sunCx + Math.cos(a) * sunScreenR * 0.96;
+        const fy = sunCy + Math.sin(a) * sunScreenR * 0.96;
+        const fr = sunScreenR * 0.14 * flicker;
+        const g2 = ctx.createRadialGradient(fx, fy, 0, fx, fy, fr);
+        g2.addColorStop(0, `rgba(255,190,90,${0.30*flicker})`);
+        g2.addColorStop(1, 'rgba(255,120,30,0)');
+        ctx.fillStyle = g2;
+        ctx.beginPath(); ctx.arc(fx, fy, fr, 0, Math.PI*2); ctx.fill();
+      }
+      ctx.globalCompositeOperation = 'source-over';
     }
 
-    /* Planètes (devant le soleil, parallax plus marqué = plus proches) */
+    /* Planètes — orbite lente autour du soleil + parallax (plus proches) */
     bodies.forEach(b => {
+      if (!reduced) b.orbit.angle += b.orbit.speed * dt;
+      const ox = Math.cos(b.orbit.angle) * b.orbit.rH;
+      const oy = Math.sin(b.orbit.angle) * b.orbit.rV;
       const px = camX * b.parallax, py = camY * (b.parallax * 0.65);
       const scale = (b.screenR * 2) / (b.R * 2);
       ctx.save();
-      ctx.translate(b.pos.x + px, b.pos.y + py);
+      ctx.translate(b.basePos.x + ox + px, b.basePos.y + oy + py);
       ctx.scale(scale, scale);
       ctx.drawImage(b.tex, -b.tex.width/2, -b.tex.height/2);
       ctx.restore();

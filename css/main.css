@@ -855,10 +855,17 @@ footer {
 
   .hero-veil {
     background: linear-gradient(180deg,
-      rgba(3,5,14,0.95) 0%,
-      rgba(3,5,14,0.82) 50%,
-      rgba(3,5,14,0.75) 100%
+      rgba(3,5,14,0.78) 0%,
+      rgba(3,5,14,0.50) 45%,
+      rgba(3,5,14,0.42) 65%,
+      rgba(3,5,14,0.62) 100%
     );
+  }
+  .hero-badge, .hero-sub, .profile-card, .hero-pillar {
+    text-shadow: 0 1px 12px rgba(0,0,0,0.7);
+  }
+  .hero h1 {
+    text-shadow: 0 2px 20px rgba(0,0,0,0.6);
   }
   .hero-inner { max-width: 100%; }
   .hero-fg    { padding: 6rem 0 4rem; }
