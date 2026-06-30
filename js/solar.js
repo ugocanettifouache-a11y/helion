@@ -78,27 +78,68 @@
       ectx.beginPath(); ectx.ellipse(x, y, rad, rad * rand(0.6, 0.9), ang, 0, Math.PI * 2); ectx.fill();
     }
 
-    /* Nuages — uniquement face jour, blobs organiques (plusieurs touches par amas) */
-    for (let i = 0; i < 130; i++) {
+    /* Nuages — uniquement face jour, traînées texturées (façon couverture nuageuse satellite).
+       Dessinées sur une couche séparée très dense, puis légèrement adoucies (flou ciblé léger)
+       pour fusionner les touches en voiles continus — sans retomber sur de grosses taches floues. */
+    const cloudCanvas = document.createElement('canvas');
+    cloudCanvas.width = cloudCanvas.height = ES;
+    const cctx = cloudCanvas.getContext('2d');
+
+    /* Voile de base : fine couverture nuageuse continue sur toute la face jour,
+       pour qu'il n'y ait jamais de grand vide d'océan totalement dégagé. */
+    const hazeN = isMobile ? 2200 : 4000;
+    for (let i = 0; i < hazeN; i++) {
+      const ang = rand(0, Math.PI * 2), rr = Math.pow(Math.random(), 0.5) * ER * 0.98;
+      const x = ecx + Math.cos(ang) * rr, y = ecy + Math.sin(ang) * rr;
+      if (dayFactor(x, y) < ER * 0.03) continue;
+      cctx.fillStyle = `rgba(255,255,255,${rand(0.05, 0.16)})`;
+      cctx.beginPath();
+      cctx.arc(x, y, rand(ER * 0.004, ER * 0.011), 0, Math.PI * 2);
+      cctx.fill();
+    }
+
+    const cloudBands = 60;
+    for (let i = 0; i < cloudBands; i++) {
       const ang = rand(0, Math.PI * 2), rr = rand(0, ER * 0.97);
-      const bx2 = ecx + Math.cos(ang) * rr, by2 = ecy + Math.sin(ang) * rr;
+      let bx2 = ecx + Math.cos(ang) * rr, by2 = ecy + Math.sin(ang) * rr;
       if (dayFactor(bx2, by2) < ER * 0.04) continue;
-      const puffs = Math.floor(rand(2, 5));
-      for (let p = 0; p < puffs; p++) {
-        const x = bx2 + gauss() * ER * 0.04;
-        const y = by2 + gauss() * ER * 0.04;
-        const rad = rand(ER * 0.035, ER * 0.10);
-        const alpha = rand(0.22, 0.48);
-        const g = ectx.createRadialGradient(x, y, 0, x, y, rad);
-        g.addColorStop(0,   `rgba(255,255,255,${alpha})`);
-        g.addColorStop(0.6, `rgba(255,255,255,${alpha * 0.4})`);
-        g.addColorStop(1,   'rgba(255,255,255,0)');
-        ectx.fillStyle = g;
-        ectx.beginPath();
-        ectx.ellipse(x, y, rad, rad * rand(0.4, 0.7), rand(0, Math.PI), 0, Math.PI * 2);
-        ectx.fill();
+
+      const dir = rand(0, Math.PI * 2);
+      const segs = Math.floor(rand(22, 46));
+      const stepLen = rand(ER * 0.005, ER * 0.011);
+      let px2 = bx2, py2 = by2;
+      const curve = rand(-0.04, 0.04);
+      const bandAlpha = rand(0.35, 0.7);
+
+      for (let s = 0; s < segs; s++) {
+        const ndx = Math.cos(dir + curve * s), ndy = Math.sin(dir + curve * s);
+        px2 += ndx * stepLen; py2 += ndy * stepLen;
+        if (dayFactor(px2, py2) < ER * 0.0) continue;
+
+        // touches nombreuses et très chevauchantes pour une texture dense continue
+        const dabs = Math.floor(rand(4, 8));
+        for (let d = 0; d < dabs; d++) {
+          const ox = px2 + gauss() * stepLen * 2.2;
+          const oy = py2 + gauss() * stepLen * 2.2;
+          const r = rand(ER * 0.006, ER * 0.016);
+          const alpha = bandAlpha * rand(0.5, 1) * (0.55 + 0.45 * Math.sin(s * 1.3 + i));
+          cctx.fillStyle = `rgba(255,255,255,${Math.max(0.04, alpha).toFixed(3)})`;
+          cctx.beginPath();
+          cctx.arc(ox, oy, r, 0, Math.PI * 2);
+          cctx.fill();
+        }
       }
     }
+
+    ectx.save();
+    ectx.filter = `blur(${(ES * 0.0016).toFixed(1)}px)`;
+    ectx.drawImage(cloudCanvas, 0, 0);
+    ectx.restore();
+    // seconde passe nette par-dessus pour garder un peu de relief texturé
+    ectx.save();
+    ectx.globalAlpha = 0.45;
+    ectx.drawImage(cloudCanvas, 0, 0);
+    ectx.restore();
 
     /* Lumières de villes — uniquement face nuit, en amas (façon côtes/métropoles) */
     const clusters = isMobile ? 34 : 56;
