@@ -274,6 +274,9 @@ nav a:hover::after, nav a.active::after { width: 100%; }
   color: var(--gold);
   margin-bottom: 1.75rem;
   backdrop-filter: blur(6px);
+  white-space: nowrap;
+  max-width: none;
+  width: max-content;
 }
 
 .hero-badge-dot {
@@ -859,6 +862,14 @@ footer {
   }
   .hero-inner { max-width: 100%; }
   .hero-fg    { padding: 6rem 0 4rem; }
+
+  .hero-badge {
+    white-space: normal;
+    width: auto;
+    max-width: 100%;
+    font-size: .64rem;
+    letter-spacing: .1em;
+  }
 
   .hero-pillars { gap: 1.2rem; }
   .hero-ctas    { margin-bottom: 1.5rem; }
