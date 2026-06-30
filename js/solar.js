@@ -28,8 +28,10 @@
 
   let W = 0, H = 0;
   function resize() {
-    W = hero.offsetWidth  || window.innerWidth;
-    H = hero.offsetHeight || window.innerHeight;
+    W = hero.offsetWidth  || window.innerWidth  || 1280;
+    H = hero.offsetHeight || window.innerHeight || 800;
+    if (W < 1) W = 1280;
+    if (H < 1) H = 800;
     camera.aspect = W / H;
     camera.updateProjectionMatrix();
     renderer.setSize(W, H);
@@ -41,7 +43,6 @@
   camera.position.set(0, 0, 11);
   camera.lookAt(1.8, 0, 0);
 
-  resize();
   window.addEventListener('resize', resize);
 
   /* ── Lights ──────────────────────────────────────────────────────── */
@@ -306,7 +307,7 @@
     c.beginPath();
     c.moveTo(W*.54, H*.46); c.bezierCurveTo(W*.58,H*.48, W*.60,H*.68, W*.56,H*.76);
     c.bezierCurveTo(W*.50,H*.80, W*.48,H*.66, W*.50,H*.50);
-    c.bezierCurveTo(W*.52,H*.46, W*.54,H*.46);
+    c.lineTo(W*.54, H*.46);
     c.fill();
 
     // Madagascar
@@ -587,5 +588,9 @@
     }
   });
 
-  animId = requestAnimationFrame(tick);
+  // Defer start to after first paint so layout is computed
+  requestAnimationFrame(function init() {
+    resize();
+    animId = requestAnimationFrame(tick);
+  });
 })();
