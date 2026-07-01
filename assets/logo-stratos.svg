@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 160" fill="none">
+  <!-- Dragon/phoenix shape simplified - wing left -->
+  <path d="M60 95 C50 70, 55 50, 80 45 C90 42, 100 48, 108 55 L95 68 C88 62, 80 60, 74 68 C68 76, 70 88, 78 93 Z" fill="#1a7aff"/>
+  <!-- Wing sweep -->
+  <path d="M58 100 C40 90, 35 75, 45 60 C52 50, 65 46, 80 45 L75 58 C65 58, 55 63, 52 73 C49 83, 54 95, 64 100 Z" fill="#1a7aff" opacity="0.7"/>
+  <!-- Circle/spiral body -->
+  <circle cx="148" cy="72" r="38" stroke="#1a7aff" stroke-width="14" fill="none"/>
+  <!-- Inner circle -->
+  <circle cx="148" cy="72" r="22" stroke="#0a1a3a" stroke-width="8" fill="none"/>
+  <!-- Snake head -->
+  <ellipse cx="148" cy="38" rx="7" ry="5" fill="#1a7aff"/>
+  <!-- Tail sweep down -->
+  <path d="M148 108 C148 118, 155 128, 165 132 C175 136, 180 130, 178 122" stroke="#1a7aff" stroke-width="10" fill="none" stroke-linecap="round"/>
+  <path d="M148 108 C140 120, 138 132, 145 136" stroke="#1a7aff" stroke-width="6" fill="none" stroke-linecap="round" opacity="0.6"/>
+  <!-- STRATOSMOTORS text -->
+  <text x="150" y="152" font-family="Arial, sans-serif" font-size="11" font-weight="700" fill="#4499ff" text-anchor="middle" letter-spacing="4">STRATOSMOTORS</text>
+</svg>

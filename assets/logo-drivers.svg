@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 80" fill="none">
+  <!-- Orange rounded square icon -->
+  <rect x="8" y="10" width="60" height="60" rx="12" fill="#f05a28"/>
+  <!-- Lightning bolt -->
+  <polygon points="38,20 28,44 36,44 30,62 50,36 40,36 48,20" fill="white"/>
+  <!-- drivers-led text -->
+  <text x="82" y="46" font-family="Arial, sans-serif" font-size="28" font-weight="700" fill="white">drivers-led</text>
+  <!-- .com -->
+  <text x="82" y="66" font-family="Arial, sans-serif" font-size="14" font-weight="400" fill="#aaaaaa" letter-spacing="1">.com</text>
+</svg>

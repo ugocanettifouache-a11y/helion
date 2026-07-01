@@ -840,6 +840,27 @@ section { padding: 7rem 0; }
   transform: translateY(-5px);
 }
 
+.project-logo-wrap {
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid rgba(196,145,58,.10);
+}
+.project-logo {
+  max-height: 64px;
+  max-width: 200px;
+  width: auto;
+  object-fit: contain;
+  filter: brightness(1.05);
+  transition: filter .3s;
+}
+.project-card:hover .project-logo { filter: brightness(1.2); }
+
+.project-card-body { display: flex; flex-direction: column; gap: .75rem; }
+
 .project-card-head {
   display: flex;
   align-items: baseline;
