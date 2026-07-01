@@ -67,6 +67,19 @@
 .stagger.visible > *:nth-child(3) { opacity:1; transform:none; transition-delay:.24s; }
 .stagger.visible > *:nth-child(4) { opacity:1; transform:none; transition-delay:.36s; }
 
+/* ── Méthode — animations ambiantes ── */
+@keyframes methode-orb-travel {
+  0%   { left: 4%;  opacity: 0; }
+  8%   { opacity: 1; }
+  92%  { opacity: 1; }
+  100% { left: 88%; opacity: 0; }
+}
+
+@keyframes methode-step-float {
+  0%, 100% { transform: translateY(0); }
+  50%       { transform: translateY(-5px); }
+}
+
 /* ── prefers-reduced-motion ── */
 @media (prefers-reduced-motion: reduce) {
   *,
