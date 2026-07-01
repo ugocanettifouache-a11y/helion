@@ -9,14 +9,34 @@
   to   { opacity: 1; }
 }
 
-/* ── Icônes service (hover) ── */
+/* ── Services — animations ambiantes ── */
+@keyframes glow-bar-run {
+  0%   { background-position: -100% 0; }
+  100% { background-position: 200% 0; }
+}
+
+@keyframes orbit-ring {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes disc-pulse {
+  0%, 100% { transform: scale(1);    opacity: 1; }
+  50%       { transform: scale(1.14); opacity: .65; }
+}
+
+@keyframes service-icon-float {
+  0%, 100% { transform: translateY(0);   }
+  50%       { transform: translateY(-4px); }
+}
+
+/* Hover glow on icon — combiné avec le float */
 .service-card:hover .service-icon {
-  animation: icon-glow 1.5s ease-in-out infinite;
+  animation: service-icon-float 3.5s ease-in-out infinite, icon-glow 1.5s ease-in-out infinite;
 }
 
 @keyframes icon-glow {
-  0%, 100% { filter: drop-shadow(0 0 0 rgba(200,147,58,0)); }
-  50%       { filter: drop-shadow(0 0 10px rgba(200,147,58,.55)); }
+  0%, 100% { filter: drop-shadow(0 0 2px rgba(200,147,58,.2)); }
+  50%       { filter: drop-shadow(0 0 12px rgba(200,147,58,.65)); }
 }
 
 /* ── Logo hover ── */

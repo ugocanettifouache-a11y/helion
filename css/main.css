@@ -446,7 +446,7 @@ section { padding: 7rem 0; }
 .service-card {
   background: var(--night-2);
   border: 1px solid rgba(196,145,58,.12);
-  border-top: 2px solid var(--gold);
+  border-top: none;
   padding: 3rem 2.5rem 2.5rem;
   position: relative;
   overflow: hidden;
@@ -490,6 +490,18 @@ section { padding: 7rem 0; }
 .service-card:hover::before { color: rgba(196,145,58,.13); }
 .service-card:hover::after  { opacity: 1; }
 
+/* Animated top bar replacing border-top */
+.service-glow-bar {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 2px;
+  background: linear-gradient(90deg, transparent 0%, var(--gold) 40%, #ffe8a0 50%, var(--gold) 60%, transparent 100%);
+  background-size: 300% 100%;
+  animation: glow-bar-run 3s linear infinite;
+}
+.service-card:nth-child(2) .service-glow-bar { animation-delay: -1s; }
+.service-card:nth-child(3) .service-glow-bar { animation-delay: -2s; }
+
 /* Icon wrapper with glowing disc */
 .service-icon-wrap {
   position: relative;
@@ -506,13 +518,37 @@ section { padding: 7rem 0; }
   border-radius: 50%;
   background: radial-gradient(circle, rgba(196,145,58,.18) 0%, transparent 72%);
   border: 1px solid rgba(196,145,58,.20);
+  animation: disc-pulse 4s ease-in-out infinite;
   transition: background .35s;
 }
 .service-card:hover .service-icon-wrap::before {
-  background: radial-gradient(circle, rgba(196,145,58,.28) 0%, transparent 72%);
+  background: radial-gradient(circle, rgba(196,145,58,.30) 0%, transparent 72%);
 }
 
-.service-icon { width: 36px; height: 36px; color: var(--gold); position: relative; }
+/* Spinning orbital ring */
+.service-icon-wrap::after {
+  content: '';
+  position: absolute;
+  inset: -7px;
+  border-radius: 50%;
+  border: 1px solid transparent;
+  border-top-color: rgba(196,145,58,.55);
+  border-right-color: rgba(196,145,58,.18);
+  animation: orbit-ring 5s linear infinite;
+}
+.service-card:nth-child(2) .service-icon-wrap::after { animation-delay: -1.6s; }
+.service-card:nth-child(3) .service-icon-wrap::after { animation-delay: -3.2s; }
+.service-card:nth-child(2) .service-icon-wrap::before { animation-delay: -1.3s; }
+.service-card:nth-child(3) .service-icon-wrap::before { animation-delay: -2.6s; }
+
+.service-icon {
+  width: 36px; height: 36px;
+  color: var(--gold);
+  position: relative;
+  animation: service-icon-float 3.5s ease-in-out infinite;
+}
+.service-card:nth-child(2) .service-icon { animation-delay: -1.2s; }
+.service-card:nth-child(3) .service-icon { animation-delay: -2.4s; }
 
 /* Category label */
 .service-tag-label {
