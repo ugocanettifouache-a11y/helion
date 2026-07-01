@@ -44,7 +44,7 @@ p { max-width: 65ch; }
 a { color: inherit; text-decoration: none; }
 
 /* ── Utilitaires ── */
-.container { width: min(1200px, 90%); margin: 0 auto; }
+.container { width: min(1440px, 92%); margin: 0 auto; }
 
 .gold { color: var(--gold); }
 
@@ -254,7 +254,7 @@ nav a:hover::after, nav a.active::after { width: 100%; }
 }
 
 .hero-inner {
-  max-width: 560px;
+  max-width: 680px;
   animation: hero-fade-up .9s .12s both;
 }
 
