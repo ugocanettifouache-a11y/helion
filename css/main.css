@@ -19,7 +19,7 @@
 html { scroll-behavior: smooth; font-size: 16px; }
 
 body {
-  background: var(--night);
+  background: #03050e;
   color: var(--text);
   font-family: 'Inter', sans-serif;
   font-weight: 300;
@@ -432,8 +432,10 @@ section { padding: 7rem 0; }
 
 /* ── Services cards ── */
 .services-section {
-  background: var(--night);
+  background: rgba(3,5,14,0.78);
   padding-bottom: 7rem;
+  position: relative;
+  z-index: 1;
 }
 
 .services-grid {
@@ -643,7 +645,7 @@ section { padding: 7rem 0; }
 .author-title { font-size: .76rem; color: var(--text-muted); margin-top: .15rem; }
 
 /* ── Proposition de valeur ── */
-.value-section { background: var(--night); }
+.value-section { background: rgba(3,5,14,0.82); position: relative; z-index: 1; }
 
 .value-grid {
   display: grid;
@@ -690,7 +692,7 @@ section { padding: 7rem 0; }
 .value-card p  { color: var(--text-muted); font-size: .92rem; line-height: 1.72; }
 
 /* ── Méthode ── */
-.methode-section { background: var(--night-2); position: relative; }
+.methode-section { background: rgba(8,12,28,0.82); position: relative; z-index: 1; }
 
 .methode-track { display: none; }
 
@@ -790,7 +792,7 @@ section { padding: 7rem 0; }
 .methode-step p  { color: var(--text-muted); font-size: .86rem; line-height: 1.65; }
 
 /* ── Réalisations ── */
-.projects-section { background: var(--night); }
+.projects-section { background: rgba(3,5,14,0.78); position: relative; z-index: 1; }
 
 .projects-grid {
   display: grid;
@@ -909,7 +911,7 @@ section { padding: 7rem 0; }
 .project-link:hover::after { transform: translateX(4px); }
 
 /* ── Ils nous font confiance ── */
-.trust-section { background: var(--night-2); padding: 4.5rem 0; }
+.trust-section { background: rgba(8,12,28,0.84); padding: 4.5rem 0; position: relative; z-index: 1; }
 .trust-section h2 { margin-bottom: 2.5rem; }
 
 .trust-logos {
@@ -929,7 +931,7 @@ section { padding: 7rem 0; }
 .trust-logos span:hover { opacity: 1; color: var(--gold); }
 
 /* ── FAQ ── */
-.faq-section { background: var(--night); }
+.faq-section { background: rgba(3,5,14,0.80); position: relative; z-index: 1; }
 .container-narrow { max-width: 760px; }
 
 .faq-list { display: flex; flex-direction: column; gap: .9rem; }
@@ -973,7 +975,7 @@ section { padding: 7rem 0; }
 
 /* ── CTA Banner ── */
 .cta-banner {
-  background: var(--night-2);
+  background: rgba(8,12,28,0.86);
   border-top: 1px solid rgba(196,145,58,.12);
   border-bottom: 1px solid rgba(196,145,58,.12);
   padding: 6rem 0;
@@ -998,9 +1000,11 @@ section { padding: 7rem 0; }
 
 /* ── Footer ── */
 footer {
-  background: var(--night);
+  background: rgba(3,5,14,0.94);
   border-top: 1px solid rgba(196,145,58,.08);
   padding: 5rem 0 2.5rem;
+  position: relative;
+  z-index: 1;
 }
 
 .footer-grid {
