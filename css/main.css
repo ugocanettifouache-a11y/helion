@@ -430,7 +430,7 @@ section { padding: 7rem 0; }
 .section-title { color: var(--white); margin-bottom: 1.25rem; }
 .section-intro { color: var(--text-muted); margin-bottom: 4rem; font-size: 1.02rem; }
 
-/* ── Services cards ── */
+/* ── Services section ── */
 .services-section {
   background: rgba(3,5,14,0.78);
   padding-bottom: 7rem;
@@ -438,61 +438,41 @@ section { padding: 7rem 0; }
   z-index: 1;
 }
 
-.services-grid {
+/* ── Bento grid ── */
+.svc-bento {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: auto auto;
   gap: 1.5rem;
   margin-top: 3.5rem;
 }
 
-.service-card {
+/* Grande carte (ligne 1 + 2 à gauche) */
+.svc-card--lg {
+  grid-row: 1 / 3;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Carte commune */
+.svc-card {
   background: var(--night-2);
   border: 1px solid rgba(196,145,58,.12);
   border-top: none;
-  padding: 3rem 2.5rem 2.5rem;
   position: relative;
   overflow: hidden;
+  display: flex;
+  flex-direction: column;
   transition: transform .35s cubic-bezier(.4,0,.2,1), box-shadow .35s, background .35s;
 }
 
-/* Large watermark number */
-.service-card::before {
-  content: attr(data-num);
-  position: absolute;
-  top: -1.5rem;
-  right: 1.5rem;
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 8rem;
-  font-weight: 700;
-  line-height: 1;
-  color: rgba(196,145,58,.07);
-  pointer-events: none;
-  user-select: none;
-  transition: color .35s;
-}
-
-/* Radial glow at top-right on hover */
-.service-card::after {
-  content: '';
-  position: absolute;
-  top: -60px; right: -60px;
-  width: 200px; height: 200px;
-  border-radius: 50%;
-  background: radial-gradient(circle, rgba(196,145,58,.10), transparent 70%);
-  opacity: 0;
-  transition: opacity .45s;
-  pointer-events: none;
-}
-
-.service-card:hover {
-  transform: translateY(-6px);
+.svc-card:hover {
+  transform: translateY(-4px);
   background: var(--night-3);
-  box-shadow: 0 24px 60px rgba(0,0,0,.45), 0 0 0 1px rgba(196,145,58,.18);
+  box-shadow: 0 24px 60px rgba(0,0,0,.5), 0 0 0 1px rgba(196,145,58,.20);
 }
-.service-card:hover::before { color: rgba(196,145,58,.13); }
-.service-card:hover::after  { opacity: 1; }
 
-/* Animated top bar replacing border-top */
+/* Animated top bar */
 .service-glow-bar {
   position: absolute;
   top: 0; left: 0;
@@ -501,86 +481,177 @@ section { padding: 7rem 0; }
   background-size: 300% 100%;
   animation: glow-bar-run 3s linear infinite;
 }
-.service-card:nth-child(2) .service-glow-bar { animation-delay: -1s; }
-.service-card:nth-child(3) .service-glow-bar { animation-delay: -2s; }
+.svc-card:nth-child(2) .service-glow-bar { animation-delay: -1s; }
+.svc-card:nth-child(3) .service-glow-bar { animation-delay: -2s; }
 
-/* Icon wrapper with glowing disc */
-.service-icon-wrap {
-  position: relative;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 68px; height: 68px;
-  margin-bottom: 2rem;
+/* ── Visual panel (SVG container) ── */
+.svc-visual {
+  width: 100%;
+  flex-shrink: 0;
+  border-bottom: 1px solid rgba(196,145,58,.08);
+  overflow: hidden;
+  background: rgba(4,7,22,.5);
+  padding: 0;
 }
-.service-icon-wrap::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  border-radius: 50%;
-  background: radial-gradient(circle, rgba(196,145,58,.18) 0%, transparent 72%);
-  border: 1px solid rgba(196,145,58,.20);
-  animation: disc-pulse 4s ease-in-out infinite;
-  transition: background .35s;
-}
-.service-card:hover .service-icon-wrap::before {
-  background: radial-gradient(circle, rgba(196,145,58,.30) 0%, transparent 72%);
+.svc-visual--sm { /* petites cartes : panneau moins haut */ }
+
+.svc-svg {
+  width: 100%;
+  height: auto;
+  display: block;
 }
 
-/* Spinning orbital ring */
-.service-icon-wrap::after {
-  content: '';
-  position: absolute;
-  inset: -7px;
-  border-radius: 50%;
-  border: 1px solid transparent;
-  border-top-color: rgba(196,145,58,.55);
-  border-right-color: rgba(196,145,58,.18);
-  animation: orbit-ring 5s linear infinite;
+/* ── Card body ── */
+.svc-body {
+  padding: 2.5rem 2.5rem 2.5rem;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
 }
-.service-card:nth-child(2) .service-icon-wrap::after { animation-delay: -1.6s; }
-.service-card:nth-child(3) .service-icon-wrap::after { animation-delay: -3.2s; }
-.service-card:nth-child(2) .service-icon-wrap::before { animation-delay: -1.3s; }
-.service-card:nth-child(3) .service-icon-wrap::before { animation-delay: -2.6s; }
 
-.service-icon {
-  width: 36px; height: 36px;
-  color: var(--gold);
-  position: relative;
-  animation: service-icon-float 3.5s ease-in-out infinite;
+.svc-body-top {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: 1rem;
 }
-.service-card:nth-child(2) .service-icon { animation-delay: -1.2s; }
-.service-card:nth-child(3) .service-icon { animation-delay: -2.4s; }
 
-/* Category label */
-.service-tag-label {
+.svc-tag {
   display: inline-block;
-  font-size: .68rem;
-  letter-spacing: .14em;
+  font-size: .65rem;
+  letter-spacing: .16em;
   text-transform: uppercase;
   color: var(--gold);
   opacity: .75;
-  margin-bottom: .6rem;
 }
 
-.service-card h3 { color: var(--white); margin-bottom: 1rem; font-size: 1.52rem; }
-.service-card p  { color: var(--text-muted); font-size: .91rem; line-height: 1.76; flex: 1; }
+.svc-num-bg {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 5.5rem;
+  font-weight: 700;
+  line-height: .8;
+  color: rgba(196,145,58,.06);
+  user-select: none;
+  pointer-events: none;
+  transition: color .35s;
+}
+.svc-card:hover .svc-num-bg { color: rgba(196,145,58,.11); }
 
-.service-arrow {
-  margin-top: 2.5rem;
+.svc-body h3 {
+  color: var(--white);
+  font-size: 1.55rem;
+  margin-bottom: 1rem;
+}
+.svc-card:nth-child(2) .svc-body h3,
+.svc-card:nth-child(3) .svc-body h3 { font-size: 1.28rem; }
+
+.svc-body p {
+  color: var(--text-muted);
+  font-size: .91rem;
+  line-height: 1.76;
+  margin-bottom: 1.5rem;
+}
+.svc-card:nth-child(2) .svc-body p,
+.svc-card:nth-child(3) .svc-body p { font-size: .87rem; }
+
+/* Feature list */
+.svc-list {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: .55rem;
+  flex: 1;
+}
+.svc-list li {
+  font-size: .83rem;
+  color: rgba(232,218,195,.65);
+  padding-left: 1.2rem;
+  position: relative;
+}
+.svc-list li::before {
+  content: '';
+  position: absolute;
+  left: 0; top: .55em;
+  width: 5px; height: 1px;
+  background: var(--gold);
+  opacity: .7;
+}
+
+/* Link */
+.svc-link {
   display: inline-flex;
   align-items: center;
-  gap: .55rem;
-  font-size: .72rem;
-  letter-spacing: .12em;
+  gap: .5rem;
+  font-size: .70rem;
+  letter-spacing: .13em;
   text-transform: uppercase;
   color: var(--gold);
   opacity: .55;
   transition: opacity .3s, gap .3s;
+  margin-top: auto;
 }
-.service-arrow svg { width: 16px; height: 16px; transition: transform .3s; }
-.service-card:hover .service-arrow { opacity: 1; }
-.service-card:hover .service-arrow svg { transform: translateX(4px); }
+.svc-link svg { width: 16px; height: 16px; transition: transform .3s; }
+.svc-card:hover .svc-link { opacity: 1; }
+.svc-card:hover .svc-link svg { transform: translateX(5px); }
+
+/* ── SVG animations (radar, chart, compass) ── */
+.svc-radar-spin {
+  animation: radar-spin 6s linear infinite;
+  transform-origin: 0 0;
+}
+
+.svc-blip {
+  animation: blip-appear 3s ease-in-out infinite;
+}
+.svc-blip-1 { animation-delay: 0s; }
+.svc-blip-2 { animation-delay: -.8s; }
+.svc-blip-3 { animation-delay: -1.6s; }
+.svc-blip-4 { animation-delay: -2.4s; }
+
+.svc-center-ping {
+  animation: center-ping 2.5s ease-out infinite;
+}
+
+.svc-connect {
+  animation: connect-fade 3s ease-in-out infinite;
+}
+.svc-connect-1 { animation-delay: -.5s; }
+.svc-connect-2 { animation-delay: -1.5s; }
+
+/* Courbe croissance */
+.svc-draw-line {
+  stroke-dasharray: 600;
+  stroke-dashoffset: 600;
+  animation: chart-draw 3s cubic-bezier(.4,0,.2,1) forwards,
+             chart-glow 2s ease-in-out 3s infinite;
+}
+
+.svc-data-pt {
+  animation: blip-appear 2.5s ease-in-out infinite;
+}
+
+/* Orbites conseil */
+.svc-orbit-1 {
+  animation: radar-spin 8s linear infinite;
+  transform-origin: 0 0;
+}
+.svc-orbit-2 {
+  animation: radar-spin 14s linear infinite reverse;
+  transform-origin: 0 0;
+}
+
+/* ── Responsive ── */
+@media (max-width: 900px) {
+  .svc-bento {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto;
+  }
+  .svc-card--lg { grid-row: auto; }
+}
+
+/* Ancien .service-glow-bar conservé pour compatibilité sections autres */
 
 /* ── Testimonials ── */
 .testimonials-grid {
