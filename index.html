@@ -175,40 +175,97 @@
       <div class="svc-bento stagger">
 
         <!-- ── Carte 01 — Prospection B2B (grande) ── -->
+        <!-- ── Carte 01 — Prospection B2B (grande) ── -->
         <article class="svc-card svc-card--lg">
           <span class="service-glow-bar" aria-hidden="true"></span>
 
-          <!-- Visuel : radar de prospection -->
+          <!-- Visuel : radar de prospection — animations SVG natives -->
           <div class="svc-visual" aria-hidden="true">
-            <svg class="svc-svg" viewBox="0 0 480 260" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <svg class="svc-svg" viewBox="0 0 480 300" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <radialGradient id="radar-glow" cx="50%" cy="50%" r="50%">
+                  <stop offset="0%" stop-color="#C4913A" stop-opacity=".18"/>
+                  <stop offset="100%" stop-color="#C4913A" stop-opacity="0"/>
+                </radialGradient>
+                <radialGradient id="sweep-fade" cx="0%" cy="50%" r="100%">
+                  <stop offset="0%" stop-color="#C4913A" stop-opacity=".55"/>
+                  <stop offset="100%" stop-color="#C4913A" stop-opacity="0"/>
+                </radialGradient>
+              </defs>
+
+              <!-- Fond radial léger -->
+              <circle cx="240" cy="150" r="130" fill="url(#radar-glow)"/>
+
               <!-- Grille de fond -->
-              <line x1="0" y1="130" x2="480" y2="130" stroke="rgba(196,145,58,.06)" stroke-width="1"/>
-              <line x1="240" y1="0" x2="240" y2="260" stroke="rgba(196,145,58,.06)" stroke-width="1"/>
-              <!-- Cercles concentriques radar -->
-              <g transform="translate(240 130)">
-                <circle r="40"  stroke="rgba(196,145,58,.14)" stroke-width="1" fill="none"/>
-                <circle r="80"  stroke="rgba(196,145,58,.10)" stroke-width="1" fill="none"/>
-                <circle r="118" stroke="rgba(196,145,58,.07)" stroke-width="1" fill="none"/>
-                <!-- Bras radar tournant -->
-                <g class="svc-radar-spin">
-                  <line x1="0" y1="0" x2="118" y2="0" stroke="rgba(196,145,58,.75)" stroke-width="1.5"/>
-                  <path d="M0 0 L118 0 A118 118 0 0 0 111 -37 Z" fill="rgba(196,145,58,.06)"/>
+              <line x1="0" y1="150" x2="480" y2="150" stroke="#C4913A" stroke-opacity=".07" stroke-width="1"/>
+              <line x1="240" y1="0" x2="240" y2="300" stroke="#C4913A" stroke-opacity=".07" stroke-width="1"/>
+
+              <!-- Cercles concentriques -->
+              <g transform="translate(240,150)">
+                <circle r="45"  stroke="#C4913A" stroke-opacity=".20" stroke-width="1" fill="none"/>
+                <circle r="88"  stroke="#C4913A" stroke-opacity=".13" stroke-width="1" fill="none"/>
+                <circle r="128" stroke="#C4913A" stroke-opacity=".08" stroke-width="1" fill="none"/>
+
+                <!-- Bras radar tournant avec animateTransform SVG natif -->
+                <g>
+                  <animateTransform attributeName="transform" type="rotate" from="0" to="360" dur="6s" repeatCount="indefinite"/>
+                  <!-- Secteur sweep -->
+                  <path d="M0 0 L128 0 A128 128 0 0 0 118 -52 Z" fill="url(#sweep-fade)" opacity=".7"/>
+                  <!-- Ligne du bras -->
+                  <line x1="0" y1="0" x2="128" y2="0" stroke="#C4913A" stroke-opacity=".85" stroke-width="1.5"/>
                 </g>
+
+                <!-- Anneau de ping central -->
+                <circle r="6" fill="#C4913A"/>
+                <circle fill="none" stroke="#C4913A" stroke-width="1.5" r="6">
+                  <animate attributeName="r" values="6;28;28" dur="2.4s" repeatCount="indefinite"/>
+                  <animate attributeName="opacity" values="0.9;0;0" dur="2.4s" repeatCount="indefinite"/>
+                </circle>
               </g>
+
               <!-- Blips (prospects détectés) -->
-              <circle class="svc-blip svc-blip-1" cx="305" cy="88"  r="4.5" fill="#C4913A"/>
-              <circle class="svc-blip svc-blip-2" cx="168" cy="175" r="3.5" fill="#C4913A" opacity=".8"/>
-              <circle class="svc-blip svc-blip-3" cx="348" cy="185" r="4"   fill="#C4913A"/>
-              <circle class="svc-blip svc-blip-4" cx="130" cy="95"  r="3"   fill="#C4913A" opacity=".7"/>
-              <!-- Connexions entre blips -->
-              <line class="svc-connect svc-connect-1" x1="305" y1="88" x2="240" y2="130" stroke="rgba(196,145,58,.25)" stroke-width="1" stroke-dasharray="3 4"/>
-              <line class="svc-connect svc-connect-2" x1="168" y1="175" x2="240" y2="130" stroke="rgba(196,145,58,.20)" stroke-width="1" stroke-dasharray="3 4"/>
-              <!-- Centre -->
-              <circle cx="240" cy="130" r="5" fill="#C4913A"/>
-              <circle class="svc-center-ping" cx="240" cy="130" r="5" fill="none" stroke="#C4913A" stroke-width="1"/>
-              <!-- Labels discrets -->
-              <text x="316" y="82"  font-size="9" fill="rgba(196,145,58,.6)" font-family="monospace">PROSPECT</text>
-              <text x="356" y="188" font-size="9" fill="rgba(196,145,58,.6)" font-family="monospace">LEAD</text>
+              <g>
+                <!-- Blip 1 -->
+                <circle cx="316" cy="84" r="5" fill="#C4913A">
+                  <animate attributeName="opacity" values=".15;1;.8;.15" dur="3s" begin="0s" repeatCount="indefinite"/>
+                </circle>
+                <circle cx="316" cy="84" r="10" fill="none" stroke="#C4913A" stroke-width="1">
+                  <animate attributeName="r" values="5;18" dur="1.5s" begin="0s" repeatCount="indefinite"/>
+                  <animate attributeName="opacity" values=".7;0" dur="1.5s" begin="0s" repeatCount="indefinite"/>
+                </circle>
+                <line x1="316" y1="84" x2="240" y2="150" stroke="#C4913A" stroke-opacity=".22" stroke-width="1" stroke-dasharray="3 4">
+                  <animate attributeName="stroke-opacity" values=".1;.35;.1" dur="3s" begin="0s" repeatCount="indefinite"/>
+                </line>
+                <text x="326" y="80" font-size="8.5" fill="#C4913A" fill-opacity=".65" font-family="monospace">PROSPECT A</text>
+
+                <!-- Blip 2 -->
+                <circle cx="162" cy="188" r="4" fill="#C4913A">
+                  <animate attributeName="opacity" values=".15;1;.8;.15" dur="3s" begin="-1.1s" repeatCount="indefinite"/>
+                </circle>
+                <circle cx="162" cy="188" r="4" fill="none" stroke="#C4913A" stroke-width="1">
+                  <animate attributeName="r" values="4;16" dur="1.5s" begin="-1.1s" repeatCount="indefinite"/>
+                  <animate attributeName="opacity" values=".7;0" dur="1.5s" begin="-1.1s" repeatCount="indefinite"/>
+                </circle>
+                <line x1="162" y1="188" x2="240" y2="150" stroke="#C4913A" stroke-opacity=".18" stroke-width="1" stroke-dasharray="3 4">
+                  <animate attributeName="stroke-opacity" values=".1;.3;.1" dur="3s" begin="-1.1s" repeatCount="indefinite"/>
+                </line>
+                <text x="90" y="200" font-size="8.5" fill="#C4913A" fill-opacity=".55" font-family="monospace">LEAD B2B</text>
+
+                <!-- Blip 3 -->
+                <circle cx="352" cy="204" r="4.5" fill="#C4913A">
+                  <animate attributeName="opacity" values=".15;1;.8;.15" dur="3s" begin="-2.2s" repeatCount="indefinite"/>
+                </circle>
+                <circle cx="352" cy="204" r="4" fill="none" stroke="#C4913A" stroke-width="1">
+                  <animate attributeName="r" values="4;14" dur="1.5s" begin="-2.2s" repeatCount="indefinite"/>
+                  <animate attributeName="opacity" values=".7;0" dur="1.5s" begin="-2.2s" repeatCount="indefinite"/>
+                </circle>
+                <text x="360" y="212" font-size="8.5" fill="#C4913A" fill-opacity=".55" font-family="monospace">COMPTE C</text>
+
+                <!-- Blip 4 (petit, lointain) -->
+                <circle cx="130" cy="95" r="3" fill="#C4913A" fill-opacity=".7">
+                  <animate attributeName="opacity" values=".1;.7;.1" dur="4s" begin="-0.5s" repeatCount="indefinite"/>
+                </circle>
+              </g>
             </svg>
           </div>
 
@@ -218,7 +275,7 @@
               <span class="svc-num-bg">01</span>
             </div>
             <h3>Prospection B2B</h3>
-            <p>Identification et qualification de vos cibles idéales, construction d'un pipeline solide et alimentation continue en leads qualifiés — pour que votre équipe ne perde plus de temps en cold calls inutiles.</p>
+            <p>Identification et qualification de vos cibles idéales, construction d'un pipeline solide et alimentation continue en leads qualifiés — pour que votre équipe se concentre sur la clôture, pas la chasse.</p>
             <ul class="svc-list">
               <li>Définition et ciblage de votre ICP</li>
               <li>Séquences outbound multicanales</li>
@@ -235,35 +292,64 @@
         <article class="svc-card">
           <span class="service-glow-bar" aria-hidden="true"></span>
 
-          <!-- Visuel : courbe de croissance -->
+          <!-- Visuel : courbe de croissance CA — animations SVG natives -->
           <div class="svc-visual svc-visual--sm" aria-hidden="true">
-            <svg class="svc-svg" viewBox="0 0 480 180" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <!-- Grille légère -->
-              <line x1="60" y1="20" x2="60" y2="150" stroke="rgba(196,145,58,.08)" stroke-width="1"/>
-              <line x1="60" y1="150" x2="440" y2="150" stroke="rgba(196,145,58,.08)" stroke-width="1"/>
-              <line x1="60" y1="110" x2="440" y2="110" stroke="rgba(196,145,58,.05)" stroke-width="1" stroke-dasharray="4 6"/>
-              <line x1="60" y1="70"  x2="440" y2="70"  stroke="rgba(196,145,58,.05)" stroke-width="1" stroke-dasharray="4 6"/>
-              <line x1="60" y1="30"  x2="440" y2="30"  stroke="rgba(196,145,58,.05)" stroke-width="1" stroke-dasharray="4 6"/>
-              <!-- Courbe de croissance (path animé) -->
-              <path class="svc-draw-line" d="M70 145 C120 140, 150 120, 200 105 S280 75, 330 55 S400 35, 440 22"
-                stroke="#C4913A" stroke-width="2" fill="none" stroke-linecap="round"/>
-              <!-- Remplissage sous la courbe -->
-              <path d="M70 145 C120 140, 150 120, 200 105 S280 75, 330 55 S400 35, 440 22 L440 150 L70 150 Z"
-                fill="url(#svc-grad)" opacity=".35"/>
+            <svg class="svc-svg" viewBox="0 0 480 210" xmlns="http://www.w3.org/2000/svg">
               <defs>
-                <linearGradient id="svc-grad" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="0%" stop-color="#C4913A" stop-opacity=".4"/>
+                <linearGradient id="chart-fill" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#C4913A" stop-opacity=".45"/>
                   <stop offset="100%" stop-color="#C4913A" stop-opacity="0"/>
                 </linearGradient>
+                <linearGradient id="chart-bar-grad" x1="0" y1="1" x2="0" y2="0">
+                  <stop offset="0%" stop-color="#C4913A" stop-opacity=".35"/>
+                  <stop offset="100%" stop-color="#C4913A" stop-opacity=".75"/>
+                </linearGradient>
               </defs>
-              <!-- Points de données -->
-              <circle class="svc-data-pt" cx="200" cy="105" r="4" fill="#C4913A"/>
-              <circle class="svc-data-pt" cx="330" cy="55"  r="4" fill="#C4913A" style="animation-delay:-.5s"/>
-              <circle class="svc-data-pt" cx="440" cy="22"  r="5" fill="#C4913A" style="animation-delay:-1s"/>
-              <!-- Flèche terminale -->
-              <path d="M432 14 L440 22 L432 30" stroke="#C4913A" stroke-width="1.5" fill="none" stroke-linecap="round"/>
-              <!-- Label -->
-              <text x="348" y="48" font-size="10" fill="rgba(196,145,58,.7)" font-family="monospace">+CA</text>
+
+              <!-- Axes -->
+              <line x1="55" y1="18" x2="55" y2="175" stroke="#C4913A" stroke-opacity=".12" stroke-width="1"/>
+              <line x1="55" y1="175" x2="450" y2="175" stroke="#C4913A" stroke-opacity=".12" stroke-width="1"/>
+              <!-- Lignes horizontales -->
+              <line x1="55" y1="135" x2="450" y2="135" stroke="#C4913A" stroke-opacity=".06" stroke-width="1" stroke-dasharray="4 5"/>
+              <line x1="55" y1="95"  x2="450" y2="95"  stroke="#C4913A" stroke-opacity=".06" stroke-width="1" stroke-dasharray="4 5"/>
+              <line x1="55" y1="55"  x2="450" y2="55"  stroke="#C4913A" stroke-opacity=".06" stroke-width="1" stroke-dasharray="4 5"/>
+
+              <!-- Barres Q1–Q4 avec animation hauteur -->
+              <rect x="82"  y="135" width="44" height="40"  fill="url(#chart-bar-grad)" rx="2">
+                <animate attributeName="y"       values="175;135" dur="1s" begin="0.2s" fill="freeze"/>
+                <animate attributeName="height"  values="0;40"   dur="1s" begin="0.2s" fill="freeze"/>
+              </rect>
+              <rect x="162" y="108" width="44" height="67"  fill="url(#chart-bar-grad)" rx="2">
+                <animate attributeName="y"       values="175;108" dur="1s" begin="0.5s" fill="freeze"/>
+                <animate attributeName="height"  values="0;67"   dur="1s" begin="0.5s" fill="freeze"/>
+              </rect>
+              <rect x="242" y="78"  width="44" height="97"  fill="url(#chart-bar-grad)" rx="2">
+                <animate attributeName="y"       values="175;78" dur="1s" begin="0.8s" fill="freeze"/>
+                <animate attributeName="height"  values="0;97"  dur="1s" begin="0.8s" fill="freeze"/>
+              </rect>
+              <rect x="322" y="42"  width="44" height="133" fill="url(#chart-bar-grad)" rx="2">
+                <animate attributeName="y"       values="175;42"  dur="1s" begin="1.1s" fill="freeze"/>
+                <animate attributeName="height"  values="0;133"  dur="1s" begin="1.1s" fill="freeze"/>
+              </rect>
+
+              <!-- Courbe de tendance -->
+              <path d="M104 155 C140 148, 175 115, 184 120 S230 85, 264 96 S315 60, 344 58"
+                stroke="#C4913A" stroke-width="2" fill="none" stroke-linecap="round" stroke-opacity=".0">
+                <animate attributeName="stroke-opacity" values="0;0.9" dur=".3s" begin="2s" fill="freeze"/>
+              </path>
+
+              <!-- Flèche de croissance -->
+              <g opacity="0">
+                <animate attributeName="opacity" values="0;1" dur=".4s" begin="2.2s" fill="freeze"/>
+                <path d="M380 36 L396 24 L412 36" stroke="#C4913A" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+                <text x="420" y="30" font-size="11" fill="#C4913A" fill-opacity=".8" font-family="monospace" font-weight="bold">+CA</text>
+              </g>
+
+              <!-- Labels axes -->
+              <text x="94"  y="192" font-size="8" fill="#C4913A" fill-opacity=".4" font-family="monospace">Q1</text>
+              <text x="174" y="192" font-size="8" fill="#C4913A" fill-opacity=".4" font-family="monospace">Q2</text>
+              <text x="254" y="192" font-size="8" fill="#C4913A" fill-opacity=".4" font-family="monospace">Q3</text>
+              <text x="334" y="192" font-size="8" fill="#C4913A" fill-opacity=".4" font-family="monospace">Q4</text>
             </svg>
           </div>
 
@@ -286,40 +372,66 @@
           </div>
         </article>
 
-        <!-- ── Carte 03 — Conseil stratégique ── -->
+        <!-- ── Carte 03 — Conseil go-to-market ── -->
         <article class="svc-card">
           <span class="service-glow-bar" aria-hidden="true"></span>
 
-          <!-- Visuel : orbites / boussole stratégique -->
+          <!-- Visuel : boussole orbitale stratégique — animations SVG natives -->
           <div class="svc-visual svc-visual--sm" aria-hidden="true">
-            <svg class="svc-svg" viewBox="0 0 480 180" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <!-- Orbites elliptiques -->
-              <g transform="translate(240 90)">
-                <ellipse rx="80"  ry="50"  stroke="rgba(196,145,58,.18)" stroke-width="1" fill="none" transform="rotate(-15)"/>
-                <ellipse rx="130" ry="70"  stroke="rgba(196,145,58,.11)" stroke-width="1" fill="none" transform="rotate(-15)"/>
-                <ellipse rx="175" ry="82"  stroke="rgba(196,145,58,.07)" stroke-width="1" fill="none" transform="rotate(-15)"/>
-                <!-- Orbe intérieur qui tourne -->
-                <g class="svc-orbit-1">
-                  <circle cx="80" cy="0" r="5" fill="#C4913A" transform="rotate(-15)"/>
-                  <circle cx="80" cy="0" r="9" fill="rgba(196,145,58,.2)" transform="rotate(-15)"/>
+            <svg class="svc-svg" viewBox="0 0 480 210" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <radialGradient id="compass-glow" cx="50%" cy="50%" r="50%">
+                  <stop offset="0%" stop-color="#C4913A" stop-opacity=".14"/>
+                  <stop offset="100%" stop-color="#C4913A" stop-opacity="0"/>
+                </radialGradient>
+              </defs>
+
+              <!-- Fond radial -->
+              <circle cx="240" cy="105" r="100" fill="url(#compass-glow)"/>
+
+              <!-- Orbites elliptiques statiques -->
+              <g transform="translate(240,105)">
+                <ellipse rx="72"  ry="42"  stroke="#C4913A" stroke-opacity=".22" stroke-width="1" fill="none" transform="rotate(-18)"/>
+                <ellipse rx="112" ry="60"  stroke="#C4913A" stroke-opacity=".13" stroke-width="1" fill="none" transform="rotate(-18)"/>
+                <ellipse rx="148" ry="76"  stroke="#C4913A" stroke-opacity=".07" stroke-width="1" fill="none" transform="rotate(-18)"/>
+
+                <!-- Orbe intérieur — tourne avec animateTransform -->
+                <g transform="rotate(-18)">
+                  <g>
+                    <animateTransform attributeName="transform" type="rotate" from="0" to="360" dur="9s" repeatCount="indefinite" additive="sum"/>
+                    <circle cx="72" cy="0" r="5.5" fill="#C4913A"/>
+                    <circle cx="72" cy="0" r="11" fill="#C4913A" fill-opacity=".2"/>
+                  </g>
                 </g>
-                <!-- Orbe extérieur -->
-                <g class="svc-orbit-2">
-                  <circle cx="130" cy="0" r="3.5" fill="#C4913A" opacity=".8" transform="rotate(-15)"/>
+
+                <!-- Orbe extérieur — tourne en sens inverse -->
+                <g transform="rotate(-18)">
+                  <g>
+                    <animateTransform attributeName="transform" type="rotate" from="360" to="0" dur="16s" repeatCount="indefinite" additive="sum"/>
+                    <circle cx="112" cy="0" r="3.5" fill="#C4913A" fill-opacity=".85"/>
+                  </g>
                 </g>
-                <!-- Cible centrale -->
-                <circle r="12" stroke="rgba(196,145,58,.35)" stroke-width="1.5" fill="rgba(196,145,58,.08)"/>
-                <circle r="5"  fill="#C4913A"/>
-                <!-- Croix -->
-                <line x1="-20" y1="0" x2="-13" y2="0" stroke="rgba(196,145,58,.4)" stroke-width="1"/>
-                <line x1="13"  y1="0" x2="20"  y2="0" stroke="rgba(196,145,58,.4)" stroke-width="1"/>
-                <line x1="0" y1="-20" x2="0" y2="-13" stroke="rgba(196,145,58,.4)" stroke-width="1"/>
-                <line x1="0" y1="13"  x2="0" y2="20"  stroke="rgba(196,145,58,.4)" stroke-width="1"/>
+
+                <!-- Cible centrale pulsante -->
+                <circle r="16" stroke="#C4913A" stroke-opacity=".30" stroke-width="1.5" fill="#C4913A" fill-opacity=".07"/>
+                <circle r="7"  fill="#C4913A"/>
+                <circle r="7" fill="none" stroke="#C4913A" stroke-width="1">
+                  <animate attributeName="r" values="7;22;22" dur="2.8s" repeatCount="indefinite"/>
+                  <animate attributeName="opacity" values=".8;0;0" dur="2.8s" repeatCount="indefinite"/>
+                </circle>
+
+                <!-- Croix de visée -->
+                <line x1="-28" y1="0" x2="-17" y2="0" stroke="#C4913A" stroke-opacity=".45" stroke-width="1"/>
+                <line x1="17"  y1="0" x2="28"  y2="0" stroke="#C4913A" stroke-opacity=".45" stroke-width="1"/>
+                <line x1="0" y1="-28" x2="0" y2="-17" stroke="#C4913A" stroke-opacity=".45" stroke-width="1"/>
+                <line x1="0" y1="17"  x2="0" y2="28"  stroke="#C4913A" stroke-opacity=".45" stroke-width="1"/>
               </g>
+
               <!-- Labels directionnels -->
-              <text x="405" y="94" font-size="9" fill="rgba(196,145,58,.5)" font-family="monospace">MARCHÉ</text>
-              <text x="30"  y="94" font-size="9" fill="rgba(196,145,58,.5)" font-family="monospace">ICP</text>
-              <text x="214" y="18" font-size="9" fill="rgba(196,145,58,.5)" font-family="monospace">OFFRE</text>
+              <text x="400" y="109" font-size="9" fill="#C4913A" fill-opacity=".55" font-family="monospace">MARCHÉ</text>
+              <text x="18"  y="109" font-size="9" fill="#C4913A" fill-opacity=".55" font-family="monospace">ICP</text>
+              <text x="214" y="22"  font-size="9" fill="#C4913A" fill-opacity=".55" font-family="monospace">OFFRE</text>
+              <text x="202" y="198" font-size="9" fill="#C4913A" fill-opacity=".45" font-family="monospace">CANAL</text>
             </svg>
           </div>
 
