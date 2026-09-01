@@ -5,64 +5,73 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>À propos — Hélion</title>
 <meta name="description" content="Hélion accompagne les entreprises ambitieuses dans leur développement commercial : stratégie, prospection, structuration d'offres et présence digitale.">
+<link rel="icon" type="image/webp" href="assets/logo.webp">
 <style>
   @import url("https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Spectral:ital,wght@0,400;0,500;0,600;1,400&family=Jost:wght@400;500;600&display=swap");
 
-  :root{
-    --stone-1:#F5EEDC;
-    --stone-2:#EAE0C4;
-    --stone-3:#DCCEA5;
-    --ink:#251C10;
-    --ink-soft:#5C4C33;
-    --ink-faint:#8C7A56;
-    --bronze:#9C7127;
-    --bronze-bright:#B98B34;
-    --terracotta:#9A3C25;
-    --line: rgba(37,28,16,0.18);
-    --shadow: rgba(40,24,8,0.22);
+    :root{
+    --paper:#FFFFFF;
+    --white:#FFFFFF;
+    --stone-2:#F8F5EE;
+    --stone-3:#EFE8D8;
+    --ink:#22272C;
+    --ink-soft:#55606B;
+    --ink-faint:#8B95A0;
+    --accent-deep:#8A6508;
+    --accent-vivid:#D4AF37;
+    --gold-pale:#F6E7B4;
+    --terracotta:#8C5A1E;
+    --on-accent:#1B1200;
+    --line: rgba(34,39,44,0.10);
+    --shadow: rgba(30,20,10,0.14);
 
-    --bg: var(--stone-1);
-    --surface: #FBF6E8;
+    --bg: var(--paper);
+    --surface: var(--white);
     --surface-2: var(--stone-2);
     --surface-3: var(--stone-3);
     --text: var(--ink);
     --text-soft: var(--ink-soft);
     --text-faint: var(--ink-faint);
-    --accent: var(--bronze);
-    --accent-bright: var(--bronze-bright);
+    --accent: var(--accent-deep);
+    --accent-bright: var(--accent-vivid);
     --accent-2: var(--terracotta);
     --border: var(--line);
     --shadow-c: var(--shadow);
-    --focus: #2C5B4A;
+    --focus: #1F6F5C;
+    --gold-shine: linear-gradient(100deg, var(--accent-deep) 0%, var(--gold-pale) 45%, var(--accent-vivid) 55%, var(--accent-deep) 100%);
   }
   @media (prefers-color-scheme: dark){
     :root:not([data-theme="light"]){
-      --bg:#161022;
-      --surface:#1F1830;
-      --surface-2:#271F3A;
-      --surface-3:#332943;
-      --text:#F2E6C7;
-      --text-soft:#CDB98D;
-      --text-faint:#96835F;
-      --accent:#DBA94E;
-      --accent-bright:#EFC46C;
-      --accent-2:#CD703F;
-      --border: rgba(242,230,199,0.16);
+      --bg:#15130C;
+      --surface:#1D1A10;
+      --surface-2:#241F13;
+      --surface-3:#2C2618;
+      --text:#F3EFE8;
+      --text-soft:#CBBE97;
+      --text-faint:#8F8465;
+      --accent:#E3BC52;
+      --accent-bright:#F3D67D;
+      --gold-pale:#FBEFC7;
+      --accent-2:#C99A4A;
+      --on-accent:#1B1200;
+      --border: rgba(243,239,232,0.14);
       --shadow-c: rgba(0,0,0,0.55);
     }
   }
   :root[data-theme="dark"]{
-    --bg:#161022;
-    --surface:#1F1830;
-    --surface-2:#271F3A;
-    --surface-3:#332943;
-    --text:#F2E6C7;
-    --text-soft:#CDB98D;
-    --text-faint:#96835F;
-    --accent:#DBA94E;
-    --accent-bright:#EFC46C;
-    --accent-2:#CD703F;
-    --border: rgba(242,230,199,0.16);
+    --bg:#15130C;
+    --surface:#1D1A10;
+    --surface-2:#241F13;
+    --surface-3:#2C2618;
+    --text:#F3EFE8;
+    --text-soft:#CBBE97;
+    --text-faint:#8F8465;
+    --accent:#E3BC52;
+    --accent-bright:#F3D67D;
+    --gold-pale:#FBEFC7;
+    --accent-2:#C99A4A;
+    --on-accent:#1B1200;
+    --border: rgba(243,239,232,0.14);
     --shadow-c: rgba(0,0,0,0.55);
   }
 
@@ -109,8 +118,7 @@
   /* ---------- Nav ---------- */
   header.site{
     position:sticky; top:0; z-index:50;
-    background:color-mix(in srgb, var(--bg) 88%, transparent);
-    backdrop-filter:blur(10px);
+    background:var(--bg);
     border-bottom:1px solid var(--border);
   }
   .nav-row{ display:flex; align-items:center; justify-content:space-between; gap:24px; padding:16px 28px; max-width:1120px; margin:0 auto; }
@@ -133,15 +141,17 @@
     text-decoration:none; cursor:pointer; border:1px solid transparent; transition:transform .15s, box-shadow .15s, background .15s, color .15s;
     font-weight:500;
   }
-  .btn-primary{ background:var(--accent); color:#221704; }
-  .btn-primary:hover{ background:var(--accent-bright); box-shadow:0 6px 22px -8px var(--shadow-c); }
+  .btn-primary{ background:var(--accent-bright); color:var(--on-accent); box-shadow:0 4px 16px -6px color-mix(in srgb, var(--accent-bright) 60%, transparent); }
+  .btn-primary:hover{ background:var(--accent-bright); transform:translateY(-2px); box-shadow:0 10px 26px -8px color-mix(in srgb, var(--accent-bright) 70%, transparent); }
   .btn-ghost{ background:transparent; color:var(--text); border-color:var(--border); }
-  .btn-ghost:hover{ border-color:var(--accent); color:var(--accent); }
+  .btn-ghost:hover{ border-color:var(--accent); color:var(--accent); transform:translateY(-2px); }
+  @media (prefers-reduced-motion: reduce){ .btn-primary:hover, .btn-ghost:hover{ transform:none; } }
   .btn-block{ width:100%; }
 
   section{ position:relative; padding:96px 0; }
   .eyebrow{ font-size:12.5px; letter-spacing:.16em; text-transform:uppercase; color:var(--accent); font-weight:600; display:flex; align-items:center; gap:10px; }
-  .eyebrow::before{ content:""; width:26px; height:1px; background:var(--accent); }
+  .eyebrow::before{ content:""; width:26px; height:2px; background:var(--gold-shine); background-size:220% 100%; animation:shine-move 5s linear infinite; }
+  @media (prefers-reduced-motion: reduce){ .eyebrow::before{ animation:none; } }
   .section-head{ display:flex; flex-direction:column; gap:16px; margin-bottom:56px; }
   .section-head h2{ font-size:clamp(28px,3.6vw,42px); line-height:1.15; }
   .section-head .prose{ color:var(--text-soft); font-size:17.5px; }
@@ -184,7 +194,7 @@
   .sun-disc{ width:64px; height:64px; position:relative; z-index:1; }
 
   .hero h1{ position:relative; z-index:1; font-size:clamp(34px,5.6vw,64px); line-height:1.08; max-width:16ch; }
-  .hero h1 em{ font-style:normal; color:var(--accent); }
+  .hero h1 em{ font-style:normal; }
   .hero .lede{ position:relative; z-index:1; max-width:56ch; font-size:19px; color:var(--text-soft); }
   .hero-ctas{ position:relative; z-index:1; display:flex; flex-wrap:wrap; gap:14px; justify-content:center; margin-top:8px; }
 
@@ -209,14 +219,20 @@
   @media (max-width:760px){ .grid-3, .grid-2{ grid-template-columns:1fr; } }
 
   .card{
-    background:var(--surface); border:1px solid var(--border); border-radius:3px;
-    padding:30px; position:relative; box-shadow:0 1px 0 var(--border) inset;
+    background:var(--surface); border:1px solid var(--border); border-radius:6px;
+    padding:30px; position:relative; box-shadow:0 1px 0 var(--border) inset, 0 14px 32px -22px var(--shadow-c);
+    transition:transform .35s cubic-bezier(.2,.7,.3,1), box-shadow .35s;
+  }
+  .card:hover{
+    transform:translateY(-5px);
+    box-shadow:0 1px 0 var(--border) inset, 0 22px 40px -18px var(--shadow-c);
   }
   .card::before{
     content:""; position:absolute; top:0; left:24px; right:24px; height:3px;
-    background:repeating-linear-gradient(90deg, var(--accent) 0 6px, transparent 6px 12px);
+    background:repeating-linear-gradient(90deg, var(--accent-bright) 0 6px, transparent 6px 12px);
     opacity:.6;
   }
+  @media (prefers-reduced-motion: reduce){ .card{ transition:none; } .card:hover{ transform:none; } }
 
   .service-mini{ display:flex; flex-direction:column; gap:12px; }
   .service-mini .num{ font-size:12px; color:var(--accent); letter-spacing:.1em; }
@@ -351,9 +367,124 @@
   footer a{ text-decoration:none; color:var(--text-soft); font-size:14.5px; }
   footer a:hover{ color:var(--accent); }
   .footer-bottom{ margin-top:56px; padding-top:24px; border-top:1px solid var(--border); display:flex; flex-wrap:wrap; justify-content:space-between; gap:12px; font-size:13px; color:var(--text-faint); font-family:"Jost",sans-serif; }
+
+  /* ---------- Logo image ---------- */
+  .wordmark{ display:flex; align-items:center; }
+  .wordmark img{ height:32px; width:auto; display:block; }
+  .footer-logo img{ height:26px; width:auto; display:block; }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]) .wordmark img{ background:#fff; padding:7px 12px; border-radius:8px; }
+  }
+  :root[data-theme="dark"] .wordmark img{ background:#fff; padding:7px 12px; border-radius:8px; }
+
+  /* ---------- Nav link underline ---------- */
+  .nav-links a{ position:relative; }
+  .nav-links a::after{
+    content:""; position:absolute; left:0; right:100%; bottom:-4px; height:1px;
+    background:var(--accent-bright); transition:right .25s cubic-bezier(.2,.7,.3,1);
+  }
+  .nav-links a:hover::after{ right:0; }
+  .nav-links a.active{ color:var(--accent); }
+  .nav-links a.active::after{ right:0; }
+
+  /* ---------- Pages (client-side router) ---------- */
+  .page{ animation:page-in .5s cubic-bezier(.2,.7,.2,1); }
+  @keyframes page-in{ from{ opacity:0; transform:translateY(18px); } to{ opacity:1; transform:none; } }
+  @media (prefers-reduced-motion: reduce){ .page{ animation:none; } }
+
+  /* ---------- Gold shine ---------- */
+  .gold-shine-text{
+    background-image:var(--gold-shine); background-size:220% 100%;
+    -webkit-background-clip:text; background-clip:text; color:transparent;
+    animation:shine-move 5s linear infinite;
+  }
+  @keyframes shine-move{ 0%{ background-position:0% 0; } 100%{ background-position:-220% 0; } }
+  @media (prefers-reduced-motion: reduce){ .gold-shine-text{ animation:none; background-position:0 0; } }
+
+  .btn{ position:relative; overflow:hidden; }
+  .btn::after{
+    content:""; position:absolute; top:0; left:-60%; width:40%; height:100%;
+    background:linear-gradient(115deg, transparent, rgba(255,255,255,.55), transparent);
+    transform:skewX(-20deg); transition:left .6s ease;
+  }
+  .btn:hover::after{ left:130%; }
+  @media (prefers-reduced-motion: reduce){ .btn::after{ transition:none; left:130%; opacity:0; } }
+
+  /* ---------- Scroll reveal ---------- */
+  .reveal{
+    opacity:0; transform:translateY(42px) scale(.97);
+    transition:opacity .8s cubic-bezier(.2,.7,.2,1), transform .8s cubic-bezier(.2,.7,.2,1);
+  }
+  .reveal.in-view{ opacity:1; transform:translateY(0) scale(1); transition-delay:calc(var(--i,0) * 90ms); }
+  .reveal-line{ opacity:0; transform:translateX(-16px); transition:opacity .5s ease, transform .5s ease; }
+  .reveal-line.in-view{ opacity:1; transform:none; transition-delay:calc(var(--i,0) * 60ms); }
+  @media (prefers-reduced-motion: reduce){
+    .reveal, .reveal-stagger > *, .reveal-line{ opacity:1 !important; transform:none !important; transition:none !important; }
+  }
+
+  /* ---------- Count-up numbers ---------- */
+  .count-target{ font-variant-numeric:tabular-nums; }
+
+  /* ---------- Key divider draw-in + shimmer ---------- */
+  .key-divider{ transform:scaleX(.85); transform-origin:left center; opacity:0; transition:opacity .8s ease, transform 1s cubic-bezier(.2,.7,.2,1); }
+  .key-divider.in-view{ opacity:.55; transform:scaleX(1); }
+  @media (prefers-reduced-motion: reduce){ .key-divider{ opacity:.55; transform:none; transition:none; } }
+
+  /* ---------- Pillars / icon float ---------- */
+  .pillar svg{ transition:transform .4s cubic-bezier(.2,.7,.3,1); }
+  .pillar:hover svg{ transform:translateY(-6px); }
+  @media (prefers-reduced-motion: reduce){ .pillar:hover svg{ transform:none; } }
+
+  /* ---------- Stat rows: value emphasis draw-in ---------- */
+  .stat-final{ display:inline-block; }
+  .stat-box.reveal .stat-row{ opacity:0; transform:translateX(-10px); transition:opacity .5s ease, transform .5s ease; }
+  .stat-box.reveal.in-view .stat-row{ opacity:1; transform:none; }
+  .stat-box.reveal.in-view .stat-row:nth-child(1){ transition-delay:.05s; }
+  .stat-box.reveal.in-view .stat-row:nth-child(2){ transition-delay:.15s; }
+  .stat-box.reveal.in-view .stat-row:nth-child(3){ transition-delay:.25s; }
+  .stat-box.reveal.in-view .stat-row:nth-child(4){ transition-delay:.35s; }
+  .stat-box.reveal.in-view .stat-row:nth-child(5){ transition-delay:.45s; }
+  @keyframes stat-pop{ 0%{ transform:scale(1); text-shadow:none; } 45%{ transform:scale(1.22); text-shadow:0 0 14px var(--gold-pale); } 100%{ transform:scale(1); text-shadow:none; } }
+  .stat-box.reveal.in-view .stat-row:nth-child(1) .stat-final{ animation:stat-pop .6s ease .35s both; }
+  .stat-box.reveal.in-view .stat-row:nth-child(2) .stat-final{ animation:stat-pop .6s ease .45s both; }
+  .stat-box.reveal.in-view .stat-row:nth-child(3) .stat-final{ animation:stat-pop .6s ease .55s both; }
+  .stat-box.reveal.in-view .stat-row:nth-child(4) .stat-final{ animation:stat-pop .6s ease .65s both; }
+  .stat-box.reveal.in-view .stat-row:nth-child(5) .stat-final{ animation:stat-pop .6s ease .75s both; }
+  @media (prefers-reduced-motion: reduce){ .stat-box .stat-row{ opacity:1 !important; transform:none !important; transition:none !important; } .stat-final{ animation:none !important; } }
+
+  /* ---------- Solar arc travel ---------- */
+  .arc-svg .arc-path{ stroke-dasharray:1000; stroke-dashoffset:1000; transition:stroke-dashoffset 1.6s cubic-bezier(.2,.7,.2,1); }
+  .arc-wrap.in-view .arc-svg .arc-path{ stroke-dashoffset:0; }
+  .arc-dot{ opacity:0; transform:scale(.4); transform-origin:center; transition:opacity .4s ease, transform .4s cubic-bezier(.3,1.4,.4,1); transition-delay:calc(var(--d,0) * 1ms); }
+  .arc-wrap.in-view .arc-dot{ opacity:1; transform:scale(1); }
+  .arc-sun-mark{
+    opacity:0; transition:opacity .3s ease .3s;
+    filter:drop-shadow(0 0 7px var(--accent-bright));
+  }
+  .arc-wrap.in-view .arc-sun-mark{ opacity:1; }
+  @media (prefers-reduced-motion: reduce){
+    .arc-svg .arc-path{ stroke-dashoffset:0; transition:none; }
+    .arc-dot{ opacity:1; transform:none; transition:none; }
+    .arc-sun-mark{ display:none; }
+  }
+
+  /* ---------- Ambient marble sheen ---------- */
+  body::before{
+    content:""; position:fixed; inset:0; pointer-events:none; z-index:0; opacity:.5;
+    background:
+      radial-gradient(1100px 620px at 82% -8%, color-mix(in srgb, var(--accent-bright) 7%, transparent), transparent 60%),
+      radial-gradient(900px 700px at -10% 40%, color-mix(in srgb, var(--terracotta) 5%, transparent), transparent 55%);
+    animation: sheen-drift 26s ease-in-out infinite alternate;
+  }
+  @keyframes sheen-drift{ from{ transform:translate3d(0,0,0) scale(1); } to{ transform:translate3d(-1.5%,1%,0) scale(1.04); } }
+  @media (prefers-reduced-motion: reduce){ body::before{ animation:none; } }
+
+  /* ---------- FAQ answer slide ---------- */
+  .faq-a{ animation:faq-open .25s ease; }
+  @keyframes faq-open{ from{ opacity:0; transform:translateY(-6px); } to{ opacity:1; transform:none; } }
 </style>
 </head>
-<body>
+<body data-page="apropos">
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
   <symbol id="key-unit" viewBox="0 0 20 20">
     <path d="M0 15 H8 V4 H16 V15" />
@@ -363,20 +494,7 @@
 <header class="site" id="top">
   <div class="nav-row">
     <a href="index.html#accueil" class="wordmark">
-      <svg viewBox="0 0 40 40" aria-hidden="true">
-        <circle cx="20" cy="20" r="7" fill="var(--accent)"/>
-        <g stroke="var(--accent)" stroke-width="2" stroke-linecap="round">
-          <line x1="20" y1="2" x2="20" y2="9"/>
-          <line x1="20" y1="31" x2="20" y2="38"/>
-          <line x1="2" y1="20" x2="9" y2="20"/>
-          <line x1="31" y1="20" x2="38" y2="20"/>
-          <line x1="7.5" y1="7.5" x2="12.5" y2="12.5"/>
-          <line x1="27.5" y1="27.5" x2="32.5" y2="32.5"/>
-          <line x1="7.5" y1="32.5" x2="12.5" y2="27.5"/>
-          <line x1="27.5" y1="12.5" x2="32.5" y2="7.5"/>
-        </g>
-      </svg>
-      HÉLION
+      <img src="assets/logo.webp" alt="Hélion" width="152" height="34">
     </a>
     <ul class="nav-links">
       <li><a href="index.html#accueil">Accueil</a></li>
@@ -432,20 +550,7 @@
     <div class="footer-grid">
       <div>
         <a href="index.html#accueil" class="wordmark" style="margin-bottom:14px; display:inline-flex;">
-          <svg viewBox="0 0 40 40" width="26" height="26" aria-hidden="true">
-        <circle cx="20" cy="20" r="7" fill="var(--accent)"/>
-        <g stroke="var(--accent)" stroke-width="2" stroke-linecap="round">
-          <line x1="20" y1="2" x2="20" y2="9"/>
-          <line x1="20" y1="31" x2="20" y2="38"/>
-          <line x1="2" y1="20" x2="9" y2="20"/>
-          <line x1="31" y1="20" x2="38" y2="20"/>
-          <line x1="7.5" y1="7.5" x2="12.5" y2="12.5"/>
-          <line x1="27.5" y1="27.5" x2="32.5" y2="32.5"/>
-          <line x1="7.5" y1="32.5" x2="12.5" y2="27.5"/>
-          <line x1="27.5" y1="12.5" x2="32.5" y2="7.5"/>
-        </g>
-      </svg>
-          HÉLION
+          <img src="assets/logo.webp" alt="Hélion" width="126" height="28">
         </a>
         <p style="color:var(--text-soft); font-size:14.5px; max-width:32ch;">Hélion accompagne les entreprises ambitieuses dans leur développement commercial et leur croissance.</p>
       </div>
@@ -530,11 +635,158 @@
     });
     links.querySelectorAll('a').forEach(function(a){
       a.addEventListener('click', function(){
-        links.style.display = 'none';
-        toggle.setAttribute('aria-expanded','false');
+        if(window.getComputedStyle(toggle).display !== 'none'){
+          links.style.display = 'none';
+          toggle.setAttribute('aria-expanded','false');
+        }
       });
     });
   }
+
+  // Scroll-reveal animations
+  var groupedSelectors = ['.pillar', '.card', '.step', '.stele', '.stat-box', '.value-card'];
+  var parentCounters = new Map();
+  groupedSelectors.forEach(function(sel){
+    document.querySelectorAll(sel).forEach(function(el){
+      el.classList.add('reveal');
+      var p = el.parentElement;
+      var c = parentCounters.get(p) || 0;
+      el.style.setProperty('--i', c);
+      parentCounters.set(p, c + 1);
+    });
+  });
+  document.querySelectorAll('.section-head').forEach(function(el){ el.classList.add('reveal'); });
+
+  // Fine-grained line reveals: feature-list items and footer columns
+  document.querySelectorAll('.feature-list').forEach(function(list){
+    list.querySelectorAll('li').forEach(function(li, i){
+      li.classList.add('reveal-line');
+      li.style.setProperty('--i', i);
+    });
+  });
+  document.querySelectorAll('.footer-grid > div').forEach(function(col, i){
+    col.classList.add('reveal-line');
+    col.style.setProperty('--i', i);
+  });
+
+  var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var toObserve = document.querySelectorAll('.reveal, .reveal-line, .key-divider, .arc-wrap');
+  function onReveal(el){
+    el.classList.add('in-view');
+    if(el.classList.contains('arc-wrap') && !reduceMotion){
+      var motion = el.querySelector('#arcSunMotion');
+      if(motion && motion.beginElement){
+        try{ motion.beginElement(); }catch(e){}
+      }
+    }
+  }
+  if('IntersectionObserver' in window){
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if(entry.isIntersecting){
+          onReveal(entry.target);
+          io.unobserve(entry.target);
+        }
+      });
+    }, {threshold:0.12, rootMargin:'0px 0px -6% 0px'});
+    toObserve.forEach(function(el){ io.observe(el); });
+  } else {
+    toObserve.forEach(onReveal);
+  }
+
+  // ---------- Hero parallax on scroll ----------
+  var heroInner = document.querySelector('.hero-inner');
+  var heroSection = document.querySelector('.hero');
+  if(heroInner && heroSection && !reduceMotion){
+    var parallaxTicking = false;
+    var updateParallax = function(){
+      var rect = heroSection.getBoundingClientRect();
+      var h = rect.height || 1;
+      var progress = Math.min(Math.max(-rect.top / h, 0), 1);
+      heroInner.style.transform = 'translateY(' + (progress * -46) + 'px)';
+      heroInner.style.opacity = String(1 - progress * 0.55);
+      parallaxTicking = false;
+    };
+    window.addEventListener('scroll', function(){
+      if(!parallaxTicking){ requestAnimationFrame(updateParallax); parallaxTicking = true; }
+    }, {passive:true});
+    updateParallax();
+  }
+
+  // ---------- Multi-page client-side router ----------
+  // The site is authored as four segments (accueil / services / apropos / contact).
+  // Anchors that live inside a segment (e.g. #methode, #service-03) resolve to
+  // that segment's page, then scroll to the precise element within it.
+  var PAGE_OF = {
+    accueil:'accueil', methode:'accueil', realisations:'accueil',
+    services:'services', 'service-01':'services', 'service-02':'services',
+    'service-03':'services', 'service-04':'services', 'service-05':'services', 'service-06':'services',
+    apropos:'apropos', contact:'contact'
+  };
+  var pageEls = document.querySelectorAll('.page');
+
+  function headerOffset(){
+    var h = document.querySelector('header.site');
+    return (h ? h.offsetHeight : 0) + 14;
+  }
+
+  function showPage(pageName){
+    pageEls.forEach(function(p){ p.hidden = (p.dataset.page !== pageName); });
+  }
+
+  function updateActiveNav(pageName){
+    document.querySelectorAll('.nav-links a[href^="#"]').forEach(function(a){
+      var target = a.getAttribute('href').slice(1);
+      // On standalone production pages, a nav item for the page you're already on
+      // links to "#top" (rather than re-navigating to its own file) — that always
+      // refers to the current page, whatever it is.
+      var isMatch = (target === 'top') || (PAGE_OF[target] || target) === pageName;
+      a.classList.toggle('active', isMatch);
+    });
+  }
+
+  function goTo(id, opts){
+    opts = opts || {};
+    id = id || 'accueil';
+    var pageName = PAGE_OF[id] || (document.getElementById('page-' + id) ? id : 'accueil');
+    showPage(pageName);
+    updateActiveNav(pageName);
+    renderKeys();
+    requestAnimationFrame(function(){
+      requestAnimationFrame(function(){
+        var target = (id !== pageName) ? document.getElementById(id) : null;
+        if(target){
+          var top = target.getBoundingClientRect().top + window.pageYOffset - headerOffset();
+          window.scrollTo({ top: Math.max(top, 0), behavior: (opts.instant || reduceMotion) ? 'auto' : 'smooth' });
+        } else {
+          window.scrollTo({ top: 0, behavior: 'auto' });
+        }
+      });
+    });
+  }
+
+  document.addEventListener('click', function(e){
+    var a = e.target.closest('a[href^="#"]');
+    if(!a) return;
+    var href = a.getAttribute('href');
+    if(!href || href.length < 2) return;
+    var id = href.slice(1);
+    e.preventDefault();
+    if(window.history && history.pushState){ history.pushState(null, '', '#' + id); }
+    else{ location.hash = id; }
+    goTo(id);
+  });
+
+  // On a real standalone production page (built by build_pages.py) <body data-page="…">
+  // names which page this file IS, so the nav highlights correctly with no hash present.
+  // Inside the single-file Artifact preview this attribute is absent and 'accueil' is used.
+  var defaultPageId = (document.body && document.body.dataset && document.body.dataset.page) || 'accueil';
+
+  window.addEventListener('popstate', function(){
+    goTo(location.hash ? location.hash.slice(1) : defaultPageId, {instant:true});
+  });
+
+  goTo(location.hash ? location.hash.slice(1) : defaultPageId, {instant:true});
 })();
 </script>
 </body>
