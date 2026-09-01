@@ -151,39 +151,41 @@
 
   /* ---------- Hero ---------- */
   .hero{ padding-top:88px; padding-bottom:64px; overflow:hidden; }
-  .hero-inner{ display:flex; flex-direction:column; align-items:center; text-align:center; gap:28px; position:relative; }
-  .sunburst{
-    position:absolute; top:-260px; left:50%; transform:translateX(-50%);
-    width:900px; height:900px; pointer-events:none; z-index:0;
-    background:conic-gradient(from 0deg,
-      color-mix(in srgb, var(--accent) 22%, transparent) 0deg 3deg, transparent 3deg 18deg,
-      color-mix(in srgb, var(--accent) 22%, transparent) 18deg 21deg, transparent 21deg 36deg,
-      color-mix(in srgb, var(--accent) 22%, transparent) 36deg 39deg, transparent 39deg 54deg,
-      color-mix(in srgb, var(--accent) 22%, transparent) 54deg 57deg, transparent 57deg 72deg,
-      color-mix(in srgb, var(--accent) 22%, transparent) 72deg 75deg, transparent 75deg 90deg,
-      color-mix(in srgb, var(--accent) 22%, transparent) 90deg 93deg, transparent 93deg 108deg,
-      color-mix(in srgb, var(--accent) 22%, transparent) 108deg 111deg, transparent 111deg 126deg,
-      color-mix(in srgb, var(--accent) 22%, transparent) 126deg 129deg, transparent 129deg 144deg,
-      color-mix(in srgb, var(--accent) 22%, transparent) 144deg 147deg, transparent 147deg 162deg,
-      color-mix(in srgb, var(--accent) 22%, transparent) 162deg 165deg, transparent 165deg 180deg,
-      color-mix(in srgb, var(--accent) 22%, transparent) 180deg 183deg, transparent 183deg 198deg,
-      color-mix(in srgb, var(--accent) 22%, transparent) 198deg 201deg, transparent 201deg 216deg,
-      color-mix(in srgb, var(--accent) 22%, transparent) 216deg 219deg, transparent 219deg 234deg,
-      color-mix(in srgb, var(--accent) 22%, transparent) 234deg 237deg, transparent 237deg 252deg,
-      color-mix(in srgb, var(--accent) 22%, transparent) 252deg 255deg, transparent 255deg 270deg,
-      color-mix(in srgb, var(--accent) 22%, transparent) 270deg 273deg, transparent 273deg 288deg,
-      color-mix(in srgb, var(--accent) 22%, transparent) 288deg 291deg, transparent 291deg 306deg,
-      color-mix(in srgb, var(--accent) 22%, transparent) 306deg 309deg, transparent 309deg 324deg,
-      color-mix(in srgb, var(--accent) 22%, transparent) 324deg 327deg, transparent 327deg 342deg,
-      color-mix(in srgb, var(--accent) 22%, transparent) 342deg 345deg, transparent 345deg 360deg
-    );
-    -webkit-mask-image:radial-gradient(circle, black 0%, black 32%, transparent 62%);
-            mask-image:radial-gradient(circle, black 0%, black 32%, transparent 62%);
-    animation: rotate 60s linear infinite, sun-breathe 5s ease-in-out infinite;
+  .hero-inner{ display:flex; flex-direction:column; align-items:center; text-align:center; gap:28px; position:relative; z-index:2; }
+
+  /* ---------- Hero scene: a Greco-Roman colonnade at dawn ---------- */
+  .hero-scene{ position:absolute; inset:0; z-index:0; overflow:hidden; pointer-events:none; }
+  .hero-scene-svg{ width:100%; height:100%; display:block; }
+  .hero-scene-sky{ fill:url(#heroSky); }
+  .hero-scene-marble{ opacity:.4; mix-blend-mode:multiply; }
+  .hero-scene-sun{ animation:sun-breathe 6s ease-in-out infinite; transform-origin:center; }
+  .hero-entablature{ filter:drop-shadow(0 2px 2px rgba(60,40,10,.12)); }
+  .hero-entablature-grain{ opacity:.5; mix-blend-mode:multiply; }
+  .hero-architrave-line{ fill:var(--accent-deep); opacity:.55; }
+  .hero-frieze-units{ fill:none; stroke:var(--accent-deep); stroke-width:1.8; opacity:.6; }
+  .col-base, .col-torus, .col-shaft, .col-capital, .col-abacus{
+    fill:url(#heroStone); stroke:var(--accent-deep); stroke-width:.6; stroke-opacity:.25;
   }
-  @media (prefers-reduced-motion: reduce){ .sunburst{ animation:none; } }
-  @keyframes rotate{ to{ transform:translateX(-50%) rotate(360deg); } }
-  @keyframes sun-breathe{ 0%,100%{ opacity:.75; } 50%{ opacity:1; } }
+  .col-shade{ fill:url(#colShade); mix-blend-mode:soft-light; stroke:none; }
+  .col-flutes line{ stroke:var(--accent-deep); stroke-opacity:.28; stroke-width:1.3; }
+  .hero-colonnade use{ filter:drop-shadow(3px 0 4px rgba(60,40,10,.14)); }
+  .hero-col-shadow{ fill:url(#colShadow); }
+  .hero-colonnade-back{ opacity:.42; filter:saturate(.65) blur(.6px); }
+  .hero-pediment-face{ filter:drop-shadow(0 3px 3px rgba(60,40,10,.14)); }
+  .hero-pediment-trim{ stroke:var(--accent-deep); stroke-width:2; opacity:.5; }
+  .hero-pediment-sun{ fill:var(--accent-bright); opacity:.85; }
+  .hero-pediment-rays{ stroke:var(--accent-deep); stroke-width:2; opacity:.4; }
+  .hero-stylobate rect{ filter:drop-shadow(0 2px 2px rgba(60,40,10,.10)); }
+  .hero-scene-floor{ fill:url(#heroFloor); }
+  @keyframes sun-breathe{ 0%,100%{ opacity:.7; } 50%{ opacity:1; } }
+  @media (prefers-reduced-motion: reduce){ .hero-scene-sun{ animation:none; } }
+
+  /* Soft veil behind the text so it stays crisp over the illustration */
+  .hero-veil{
+    position:absolute; left:50%; top:46%; transform:translate(-50%,-50%);
+    width:min(1000px, 130%); height:120%; z-index:1; pointer-events:none;
+    background:radial-gradient(ellipse at center, var(--paper) 0%, color-mix(in srgb, var(--paper) 88%, transparent) 45%, transparent 72%);
+  }
 
   /* ---------- Hero: staggered entrance on load ---------- */
   @keyframes hero-in{ from{ opacity:0; transform:translateY(26px); } to{ opacity:1; transform:none; } }
@@ -533,7 +535,216 @@
 <main>
 
 <section class="hero" id="accueil">
-  <div class="sunburst" aria-hidden="true"></div>
+  <div class="hero-scene" aria-hidden="true">
+<svg class="hero-scene-svg" viewBox="0 0 1600 640" preserveAspectRatio="xMidYMax slice" aria-hidden="true">
+  <defs>
+    <radialGradient id="heroSunGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="var(--gold-pale)" stop-opacity="1" />
+      <stop offset="40%" stop-color="var(--accent-bright)" stop-opacity="0.7" />
+      <stop offset="100%" stop-color="var(--accent-bright)" stop-opacity="0" />
+    </radialGradient>
+    <linearGradient id="heroSky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="var(--white)" />
+      <stop offset="100%" stop-color="var(--stone-2)" />
+    </linearGradient>
+    <linearGradient id="heroStone" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#F7EFDC" />
+      <stop offset="55%" stop-color="#DFCB9C" />
+      <stop offset="100%" stop-color="#B89A62" />
+    </linearGradient>
+    <linearGradient id="colShade" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#2E2008" stop-opacity="0.4" />
+      <stop offset="26%" stop-color="#FFFAE8" stop-opacity="0.6" />
+      <stop offset="52%" stop-color="#FFFAE8" stop-opacity="0.12" />
+      <stop offset="78%" stop-color="#2E2008" stop-opacity="0.22" />
+      <stop offset="100%" stop-color="#2E2008" stop-opacity="0.48" />
+    </linearGradient>
+    <radialGradient id="colShadow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#3A2A10" stop-opacity="0.38" />
+      <stop offset="100%" stop-color="#3A2A10" stop-opacity="0" />
+    </radialGradient>
+    <linearGradient id="heroStep1" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#C9AD73" />
+      <stop offset="100%" stop-color="#A3854E" />
+    </linearGradient>
+    <linearGradient id="heroStep2" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#DCC793" />
+      <stop offset="100%" stop-color="#B79C64" />
+    </linearGradient>
+    <linearGradient id="heroStep3" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#F1E4C1" />
+      <stop offset="100%" stop-color="#CBB27E" />
+    </linearGradient>
+    <linearGradient id="heroFloor" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#F3EAD1" stop-opacity="0.94" />
+      <stop offset="100%" stop-color="#F3EAD1" stop-opacity="0" />
+    </linearGradient>
+    <linearGradient id="heroPediment" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#EFE1B8" />
+      <stop offset="100%" stop-color="#CBAD72" />
+    </linearGradient>
+    <filter id="heroSunBlur" x="-60%" y="-60%" width="220%" height="220%">
+      <feGaussianBlur stdDeviation="22" />
+    </filter>
+    <filter id="heroMarble" x="-20%" y="-20%" width="140%" height="140%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.011 0.018" numOctaves="4" seed="7" result="noise" />
+      <feColorMatrix in="noise" type="matrix" values="0 0 0 0 0.63  0 0 0 0 0.55  0 0 0 0 0.38  0 0 0 0.55 0" />
+    </filter>
+    <filter id="heroStoneNoise" x="-10%" y="-10%" width="120%" height="120%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.9 0.06" numOctaves="2" seed="4" result="grain" />
+      <feColorMatrix in="grain" type="matrix" values="0 0 0 0 0.2  0 0 0 0 0.14  0 0 0 0 0.04  0 0 0 0.18 0" />
+    </filter>
+  <symbol id="doricColumn" viewBox="0 0 80 460">
+    <path class="col-base" d="M2,458 H78 V440 H2 Z" />
+    <ellipse class="col-torus" cx="40" cy="440" rx="30" ry="7" />
+    <path class="col-shaft" d="M15,430 L65,430 L60,45 L20,45 Z" />
+    <g class="col-flutes">
+      <line x1="20.5" y1="428" x2="24.7" y2="47" />
+      <line x1="27.5" y1="428" x2="30.5" y2="47" />
+      <line x1="34.5" y1="428" x2="36.3" y2="47" />
+      <line x1="40" y1="428" x2="40.0" y2="47" />
+      <line x1="45.5" y1="428" x2="43.7" y2="47" />
+      <line x1="52.5" y1="428" x2="49.5" y2="47" />
+      <line x1="59.5" y1="428" x2="55.3" y2="47" />
+    </g>
+    <path class="col-shade" d="M15,430 L65,430 L60,45 L20,45 Z" />
+    <path class="col-capital" d="M20,45 L60,45 L72,20 L8,20 Z" />
+    <rect class="col-abacus" x="3" y="8" width="74" height="13" />
+  </symbol>
+  </defs>
+
+  <rect class="hero-scene-sky" x="0" y="0" width="1600" height="640" fill="url(#heroSky)" />
+  <rect class="hero-scene-marble" x="0" y="0" width="1600" height="640" filter="url(#heroMarble)" />
+
+  <circle class="hero-scene-sun" cx="1290" cy="220" r="175" fill="url(#heroSunGlow)" filter="url(#heroSunBlur)" />
+
+  <!-- pediment: shallow triangular roofline capping the facade -->
+  <g class="hero-pediment">
+    <path class="hero-pediment-face" d="M0,100 L800,18 L1600,100 Z" fill="url(#heroPediment)" />
+    <path class="hero-pediment-trim" d="M0,100 L800,18 L1600,100" fill="none" />
+    <circle class="hero-pediment-sun" cx="800" cy="70" r="17" />
+    <g class="hero-pediment-rays">
+      <line x1="800" y1="70" x2="800" y2="42" /><line x1="800" y1="70" x2="822" y2="52" />
+      <line x1="800" y1="70" x2="778" y2="52" /><line x1="800" y1="70" x2="833" y2="70" />
+      <line x1="800" y1="70" x2="767" y2="70" />
+    </g>
+  </g>
+
+  <g class="hero-colonnade-back">
+      <use href="#doricColumn" x="104.0" y="172" width="68" height="372" />
+      <use href="#doricColumn" x="264.0" y="172" width="68" height="372" />
+      <use href="#doricColumn" x="424.0" y="172" width="68" height="372" />
+      <use href="#doricColumn" x="584.0" y="172" width="68" height="372" />
+      <use href="#doricColumn" x="744.0" y="172" width="68" height="372" />
+      <use href="#doricColumn" x="904.0" y="172" width="68" height="372" />
+      <use href="#doricColumn" x="1064.0" y="172" width="68" height="372" />
+      <use href="#doricColumn" x="1224.0" y="172" width="68" height="372" />
+      <use href="#doricColumn" x="1384.0" y="172" width="68" height="372" />
+  </g>
+
+  <g class="hero-colonnade">
+    <rect class="hero-entablature" x="0" y="100" width="1600" height="46" fill="url(#heroStone)" />
+    <rect class="hero-entablature-grain" x="0" y="100" width="1600" height="46" filter="url(#heroStoneNoise)" />
+    <g class="hero-frieze-units" transform="translate(0,112)">
+      <use href="#key-unit" x="0" y="0" width="26" height="26" />
+      <use href="#key-unit" x="26" y="0" width="26" height="26" />
+      <use href="#key-unit" x="52" y="0" width="26" height="26" />
+      <use href="#key-unit" x="78" y="0" width="26" height="26" />
+      <use href="#key-unit" x="104" y="0" width="26" height="26" />
+      <use href="#key-unit" x="130" y="0" width="26" height="26" />
+      <use href="#key-unit" x="156" y="0" width="26" height="26" />
+      <use href="#key-unit" x="182" y="0" width="26" height="26" />
+      <use href="#key-unit" x="208" y="0" width="26" height="26" />
+      <use href="#key-unit" x="234" y="0" width="26" height="26" />
+      <use href="#key-unit" x="260" y="0" width="26" height="26" />
+      <use href="#key-unit" x="286" y="0" width="26" height="26" />
+      <use href="#key-unit" x="312" y="0" width="26" height="26" />
+      <use href="#key-unit" x="338" y="0" width="26" height="26" />
+      <use href="#key-unit" x="364" y="0" width="26" height="26" />
+      <use href="#key-unit" x="390" y="0" width="26" height="26" />
+      <use href="#key-unit" x="416" y="0" width="26" height="26" />
+      <use href="#key-unit" x="442" y="0" width="26" height="26" />
+      <use href="#key-unit" x="468" y="0" width="26" height="26" />
+      <use href="#key-unit" x="494" y="0" width="26" height="26" />
+      <use href="#key-unit" x="520" y="0" width="26" height="26" />
+      <use href="#key-unit" x="546" y="0" width="26" height="26" />
+      <use href="#key-unit" x="572" y="0" width="26" height="26" />
+      <use href="#key-unit" x="598" y="0" width="26" height="26" />
+      <use href="#key-unit" x="624" y="0" width="26" height="26" />
+      <use href="#key-unit" x="650" y="0" width="26" height="26" />
+      <use href="#key-unit" x="676" y="0" width="26" height="26" />
+      <use href="#key-unit" x="702" y="0" width="26" height="26" />
+      <use href="#key-unit" x="728" y="0" width="26" height="26" />
+      <use href="#key-unit" x="754" y="0" width="26" height="26" />
+      <use href="#key-unit" x="780" y="0" width="26" height="26" />
+      <use href="#key-unit" x="806" y="0" width="26" height="26" />
+      <use href="#key-unit" x="832" y="0" width="26" height="26" />
+      <use href="#key-unit" x="858" y="0" width="26" height="26" />
+      <use href="#key-unit" x="884" y="0" width="26" height="26" />
+      <use href="#key-unit" x="910" y="0" width="26" height="26" />
+      <use href="#key-unit" x="936" y="0" width="26" height="26" />
+      <use href="#key-unit" x="962" y="0" width="26" height="26" />
+      <use href="#key-unit" x="988" y="0" width="26" height="26" />
+      <use href="#key-unit" x="1014" y="0" width="26" height="26" />
+      <use href="#key-unit" x="1040" y="0" width="26" height="26" />
+      <use href="#key-unit" x="1066" y="0" width="26" height="26" />
+      <use href="#key-unit" x="1092" y="0" width="26" height="26" />
+      <use href="#key-unit" x="1118" y="0" width="26" height="26" />
+      <use href="#key-unit" x="1144" y="0" width="26" height="26" />
+      <use href="#key-unit" x="1170" y="0" width="26" height="26" />
+      <use href="#key-unit" x="1196" y="0" width="26" height="26" />
+      <use href="#key-unit" x="1222" y="0" width="26" height="26" />
+      <use href="#key-unit" x="1248" y="0" width="26" height="26" />
+      <use href="#key-unit" x="1274" y="0" width="26" height="26" />
+      <use href="#key-unit" x="1300" y="0" width="26" height="26" />
+      <use href="#key-unit" x="1326" y="0" width="26" height="26" />
+      <use href="#key-unit" x="1352" y="0" width="26" height="26" />
+      <use href="#key-unit" x="1378" y="0" width="26" height="26" />
+      <use href="#key-unit" x="1404" y="0" width="26" height="26" />
+      <use href="#key-unit" x="1430" y="0" width="26" height="26" />
+      <use href="#key-unit" x="1456" y="0" width="26" height="26" />
+      <use href="#key-unit" x="1482" y="0" width="26" height="26" />
+      <use href="#key-unit" x="1508" y="0" width="26" height="26" />
+      <use href="#key-unit" x="1534" y="0" width="26" height="26" />
+      <use href="#key-unit" x="1560" y="0" width="26" height="26" />
+      <use href="#key-unit" x="1586" y="0" width="26" height="26" />
+      <use href="#key-unit" x="1612" y="0" width="26" height="26" />
+      <use href="#key-unit" x="1638" y="0" width="26" height="26" />
+    </g>
+    <rect class="hero-architrave-line" x="0" y="146" width="1600" height="4" />
+
+      <ellipse class="hero-col-shadow" cx="80.0" cy="582" rx="69.44" ry="10" />
+      <ellipse class="hero-col-shadow" cx="240.0" cy="582" rx="69.44" ry="10" />
+      <ellipse class="hero-col-shadow" cx="400.0" cy="582" rx="69.44" ry="10" />
+      <ellipse class="hero-col-shadow" cx="560.0" cy="582" rx="69.44" ry="10" />
+      <ellipse class="hero-col-shadow" cx="720.0" cy="582" rx="69.44" ry="10" />
+      <ellipse class="hero-col-shadow" cx="880.0" cy="582" rx="69.44" ry="10" />
+      <ellipse class="hero-col-shadow" cx="1040.0" cy="582" rx="69.44" ry="10" />
+      <ellipse class="hero-col-shadow" cx="1200.0" cy="582" rx="69.44" ry="10" />
+      <ellipse class="hero-col-shadow" cx="1360.0" cy="582" rx="69.44" ry="10" />
+      <ellipse class="hero-col-shadow" cx="1520.0" cy="582" rx="69.44" ry="10" />
+      <use href="#doricColumn" x="24.0" y="128" width="112" height="460" />
+      <use href="#doricColumn" x="184.0" y="128" width="112" height="460" />
+      <use href="#doricColumn" x="344.0" y="128" width="112" height="460" />
+      <use href="#doricColumn" x="504.0" y="128" width="112" height="460" />
+      <use href="#doricColumn" x="664.0" y="128" width="112" height="460" />
+      <use href="#doricColumn" x="824.0" y="128" width="112" height="460" />
+      <use href="#doricColumn" x="984.0" y="128" width="112" height="460" />
+      <use href="#doricColumn" x="1144.0" y="128" width="112" height="460" />
+      <use href="#doricColumn" x="1304.0" y="128" width="112" height="460" />
+      <use href="#doricColumn" x="1464.0" y="128" width="112" height="460" />
+  </g>
+
+  <g class="hero-stylobate">
+    <rect x="0" y="590" width="1600" height="24" fill="url(#heroStep1)" />
+    <rect x="14" y="574" width="1572" height="20" fill="url(#heroStep2)" />
+    <rect x="30" y="558" width="1540" height="20" fill="url(#heroStep3)" />
+  </g>
+
+  <rect class="hero-scene-floor" x="0" y="560" width="1600" height="80" fill="url(#heroFloor)" />
+</svg>
+  </div>
+  <div class="hero-veil" aria-hidden="true"></div>
   <div class="wrap hero-inner">
     <div class="eyebrow" style="justify-content:center;">Développement commercial B2B</div>
     <h1>Donnez une nouvelle <em class="gold-shine-text">orbite</em> à votre croissance commerciale</h1>

@@ -151,39 +151,41 @@
 
   /* ---------- Hero ---------- */
   .hero{ padding-top:88px; padding-bottom:64px; overflow:hidden; }
-  .hero-inner{ display:flex; flex-direction:column; align-items:center; text-align:center; gap:28px; position:relative; }
-  .sunburst{
-    position:absolute; top:-260px; left:50%; transform:translateX(-50%);
-    width:900px; height:900px; pointer-events:none; z-index:0;
-    background:conic-gradient(from 0deg,
-      color-mix(in srgb, var(--accent) 22%, transparent) 0deg 3deg, transparent 3deg 18deg,
-      color-mix(in srgb, var(--accent) 22%, transparent) 18deg 21deg, transparent 21deg 36deg,
-      color-mix(in srgb, var(--accent) 22%, transparent) 36deg 39deg, transparent 39deg 54deg,
-      color-mix(in srgb, var(--accent) 22%, transparent) 54deg 57deg, transparent 57deg 72deg,
-      color-mix(in srgb, var(--accent) 22%, transparent) 72deg 75deg, transparent 75deg 90deg,
-      color-mix(in srgb, var(--accent) 22%, transparent) 90deg 93deg, transparent 93deg 108deg,
-      color-mix(in srgb, var(--accent) 22%, transparent) 108deg 111deg, transparent 111deg 126deg,
-      color-mix(in srgb, var(--accent) 22%, transparent) 126deg 129deg, transparent 129deg 144deg,
-      color-mix(in srgb, var(--accent) 22%, transparent) 144deg 147deg, transparent 147deg 162deg,
-      color-mix(in srgb, var(--accent) 22%, transparent) 162deg 165deg, transparent 165deg 180deg,
-      color-mix(in srgb, var(--accent) 22%, transparent) 180deg 183deg, transparent 183deg 198deg,
-      color-mix(in srgb, var(--accent) 22%, transparent) 198deg 201deg, transparent 201deg 216deg,
-      color-mix(in srgb, var(--accent) 22%, transparent) 216deg 219deg, transparent 219deg 234deg,
-      color-mix(in srgb, var(--accent) 22%, transparent) 234deg 237deg, transparent 237deg 252deg,
-      color-mix(in srgb, var(--accent) 22%, transparent) 252deg 255deg, transparent 255deg 270deg,
-      color-mix(in srgb, var(--accent) 22%, transparent) 270deg 273deg, transparent 273deg 288deg,
-      color-mix(in srgb, var(--accent) 22%, transparent) 288deg 291deg, transparent 291deg 306deg,
-      color-mix(in srgb, var(--accent) 22%, transparent) 306deg 309deg, transparent 309deg 324deg,
-      color-mix(in srgb, var(--accent) 22%, transparent) 324deg 327deg, transparent 327deg 342deg,
-      color-mix(in srgb, var(--accent) 22%, transparent) 342deg 345deg, transparent 345deg 360deg
-    );
-    -webkit-mask-image:radial-gradient(circle, black 0%, black 32%, transparent 62%);
-            mask-image:radial-gradient(circle, black 0%, black 32%, transparent 62%);
-    animation: rotate 60s linear infinite, sun-breathe 5s ease-in-out infinite;
+  .hero-inner{ display:flex; flex-direction:column; align-items:center; text-align:center; gap:28px; position:relative; z-index:2; }
+
+  /* ---------- Hero scene: a Greco-Roman colonnade at dawn ---------- */
+  .hero-scene{ position:absolute; inset:0; z-index:0; overflow:hidden; pointer-events:none; }
+  .hero-scene-svg{ width:100%; height:100%; display:block; }
+  .hero-scene-sky{ fill:url(#heroSky); }
+  .hero-scene-marble{ opacity:.4; mix-blend-mode:multiply; }
+  .hero-scene-sun{ animation:sun-breathe 6s ease-in-out infinite; transform-origin:center; }
+  .hero-entablature{ filter:drop-shadow(0 2px 2px rgba(60,40,10,.12)); }
+  .hero-entablature-grain{ opacity:.5; mix-blend-mode:multiply; }
+  .hero-architrave-line{ fill:var(--accent-deep); opacity:.55; }
+  .hero-frieze-units{ fill:none; stroke:var(--accent-deep); stroke-width:1.8; opacity:.6; }
+  .col-base, .col-torus, .col-shaft, .col-capital, .col-abacus{
+    fill:url(#heroStone); stroke:var(--accent-deep); stroke-width:.6; stroke-opacity:.25;
   }
-  @media (prefers-reduced-motion: reduce){ .sunburst{ animation:none; } }
-  @keyframes rotate{ to{ transform:translateX(-50%) rotate(360deg); } }
-  @keyframes sun-breathe{ 0%,100%{ opacity:.75; } 50%{ opacity:1; } }
+  .col-shade{ fill:url(#colShade); mix-blend-mode:soft-light; stroke:none; }
+  .col-flutes line{ stroke:var(--accent-deep); stroke-opacity:.28; stroke-width:1.3; }
+  .hero-colonnade use{ filter:drop-shadow(3px 0 4px rgba(60,40,10,.14)); }
+  .hero-col-shadow{ fill:url(#colShadow); }
+  .hero-colonnade-back{ opacity:.42; filter:saturate(.65) blur(.6px); }
+  .hero-pediment-face{ filter:drop-shadow(0 3px 3px rgba(60,40,10,.14)); }
+  .hero-pediment-trim{ stroke:var(--accent-deep); stroke-width:2; opacity:.5; }
+  .hero-pediment-sun{ fill:var(--accent-bright); opacity:.85; }
+  .hero-pediment-rays{ stroke:var(--accent-deep); stroke-width:2; opacity:.4; }
+  .hero-stylobate rect{ filter:drop-shadow(0 2px 2px rgba(60,40,10,.10)); }
+  .hero-scene-floor{ fill:url(#heroFloor); }
+  @keyframes sun-breathe{ 0%,100%{ opacity:.7; } 50%{ opacity:1; } }
+  @media (prefers-reduced-motion: reduce){ .hero-scene-sun{ animation:none; } }
+
+  /* Soft veil behind the text so it stays crisp over the illustration */
+  .hero-veil{
+    position:absolute; left:50%; top:46%; transform:translate(-50%,-50%);
+    width:min(1000px, 130%); height:120%; z-index:1; pointer-events:none;
+    background:radial-gradient(ellipse at center, var(--paper) 0%, color-mix(in srgb, var(--paper) 88%, transparent) 45%, transparent 72%);
+  }
 
   /* ---------- Hero: staggered entrance on load ---------- */
   @keyframes hero-in{ from{ opacity:0; transform:translateY(26px); } to{ opacity:1; transform:none; } }
