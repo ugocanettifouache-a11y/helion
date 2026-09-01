@@ -89,7 +89,8 @@
   a{ color:inherit; }
   img{ max-width:100%; }
 
-  .wrap{ max-width:1120px; margin:0 auto; padding:0 28px; }
+  .wrap{ max-width:1640px; margin:0 auto; padding:0 48px; }
+  @media (max-width:640px){ .wrap{ padding:0 20px; } }
   .prose{ max-width:64ch; }
 
   ::selection{ background:var(--accent); color:var(--surface); }
@@ -114,7 +115,7 @@
     transition:width .1s linear;
   }
   @media (prefers-reduced-motion: reduce){ .scroll-progress{ animation:none; transition:none; } }
-  .nav-row{ display:flex; align-items:center; justify-content:space-between; gap:24px; padding:16px 28px; max-width:1120px; margin:0 auto; }
+  .nav-row{ display:flex; align-items:center; justify-content:space-between; gap:24px; padding:16px 48px; max-width:1640px; margin:0 auto; }
   .wordmark{ display:flex; align-items:center; gap:10px; font-size:20px; font-weight:700; letter-spacing:.06em; text-decoration:none; color:var(--text); }
   .wordmark svg{ width:30px; height:30px; flex:none; }
   .nav-links{ display:flex; align-items:center; gap:28px; list-style:none; margin:0; padding:0; }
