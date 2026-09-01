@@ -40,24 +40,10 @@
     --focus: #1F6F5C;
     --gold-shine: linear-gradient(100deg, var(--accent-deep) 0%, var(--gold-pale) 45%, var(--accent-vivid) 55%, var(--accent-deep) 100%);
   }
-  @media (prefers-color-scheme: dark){
-    :root:not([data-theme="light"]){
-      --bg:#15130C;
-      --surface:#1D1A10;
-      --surface-2:#241F13;
-      --surface-3:#2C2618;
-      --text:#F3EFE8;
-      --text-soft:#CBBE97;
-      --text-faint:#8F8465;
-      --accent:#E3BC52;
-      --accent-bright:#F3D67D;
-      --gold-pale:#FBEFC7;
-      --accent-2:#C99A4A;
-      --on-accent:#1B1200;
-      --border: rgba(243,239,232,0.14);
-      --shadow-c: rgba(0,0,0,0.55);
-    }
-  }
+  /* The site is always white/gold by design, regardless of the visitor's OS
+     theme preference — it no longer switches automatically with
+     prefers-color-scheme. The dark palette is kept only for a possible future
+     manual toggle (an explicit [data-theme="dark"] on the root). */
   :root[data-theme="dark"]{
     --bg:#15130C;
     --surface:#1D1A10;
@@ -121,6 +107,13 @@
     background:var(--bg);
     border-bottom:1px solid var(--border);
   }
+  .scroll-progress{
+    position:absolute; left:0; top:100%; height:3px; width:0%;
+    background:var(--gold-shine); background-size:220% 100%;
+    animation:shine-move 5s linear infinite;
+    transition:width .1s linear;
+  }
+  @media (prefers-reduced-motion: reduce){ .scroll-progress{ animation:none; transition:none; } }
   .nav-row{ display:flex; align-items:center; justify-content:space-between; gap:24px; padding:16px 28px; max-width:1120px; margin:0 auto; }
   .wordmark{ display:flex; align-items:center; gap:10px; font-size:20px; font-weight:700; letter-spacing:.06em; text-decoration:none; color:var(--text); }
   .wordmark svg{ width:30px; height:30px; flex:none; }
@@ -186,10 +179,28 @@
     );
     -webkit-mask-image:radial-gradient(circle, black 0%, black 32%, transparent 62%);
             mask-image:radial-gradient(circle, black 0%, black 32%, transparent 62%);
-    animation: rotate 140s linear infinite;
+    animation: rotate 60s linear infinite, sun-breathe 5s ease-in-out infinite;
   }
   @media (prefers-reduced-motion: reduce){ .sunburst{ animation:none; } }
   @keyframes rotate{ to{ transform:translateX(-50%) rotate(360deg); } }
+  @keyframes sun-breathe{ 0%,100%{ opacity:.75; } 50%{ opacity:1; } }
+
+  /* ---------- Hero: staggered entrance on load ---------- */
+  @keyframes hero-in{ from{ opacity:0; transform:translateY(26px); } to{ opacity:1; transform:none; } }
+  .hero-inner > *{ animation:hero-in .85s cubic-bezier(.2,.7,.2,1) both; }
+  .hero-inner > *:nth-child(1){ animation-delay:.05s; }
+  .hero-inner > *:nth-child(2){ animation-delay:.18s; }
+  .hero-inner > *:nth-child(3){ animation-delay:.34s; }
+  .hero-inner > *:nth-child(4){ animation-delay:.5s; }
+  .hero-inner > *:nth-child(5){ animation-delay:.66s; }
+  @media (prefers-reduced-motion: reduce){ .hero-inner > *{ animation:none; } }
+
+  /* ---------- Pillars: idle float ---------- */
+  @keyframes pillar-float{ 0%,100%{ transform:translateY(0); } 50%{ transform:translateY(-9px); } }
+  .pillar svg{ animation:pillar-float 4.5s ease-in-out infinite; }
+  .pillar:nth-child(2) svg{ animation-delay:.5s; }
+  .pillar:nth-child(3) svg{ animation-delay:1s; }
+  @media (prefers-reduced-motion: reduce){ .pillar svg{ animation:none; } }
 
   .sun-disc{ width:64px; height:64px; position:relative; z-index:1; }
 
@@ -410,6 +421,15 @@
   .btn:hover::after{ left:130%; }
   @media (prefers-reduced-motion: reduce){ .btn::after{ transition:none; left:130%; opacity:0; } }
 
+  /* Ambient gold reflection sweeping across primary buttons, even without hover */
+  .btn-primary::before{
+    content:""; position:absolute; top:0; left:-60%; width:32%; height:100%;
+    background:linear-gradient(115deg, transparent, rgba(255,255,255,.65), transparent);
+    transform:skewX(-20deg); animation:btn-reflect 3.6s ease-in-out infinite;
+  }
+  @keyframes btn-reflect{ 0%,20%{ left:-60%; } 55%,100%{ left:130%; } }
+  @media (prefers-reduced-motion: reduce){ .btn-primary::before{ animation:none; opacity:0; } }
+
   /* ---------- Scroll reveal ---------- */
   .reveal{
     opacity:0; transform:translateY(42px) scale(.97);
@@ -431,9 +451,9 @@
   @media (prefers-reduced-motion: reduce){ .key-divider{ opacity:.55; transform:none; transition:none; } }
 
   /* ---------- Pillars / icon float ---------- */
-  .pillar svg{ transition:transform .4s cubic-bezier(.2,.7,.3,1); }
-  .pillar:hover svg{ transform:translateY(-6px); }
-  @media (prefers-reduced-motion: reduce){ .pillar:hover svg{ transform:none; } }
+  .pillar{ transition:transform .4s cubic-bezier(.2,.7,.3,1); }
+  .pillar:hover{ transform:translateY(-6px); }
+  @media (prefers-reduced-motion: reduce){ .pillar:hover{ transform:none; } }
 
   /* ---------- Stat rows: value emphasis draw-in ---------- */
   .stat-final{ display:inline-block; }
@@ -492,6 +512,7 @@
 </svg>
 
 <header class="site" id="top">
+  <div class="scroll-progress" id="scrollProgress" aria-hidden="true"></div>
   <div class="nav-row">
     <a href="index.html#accueil" class="wordmark">
       <img src="assets/logo.webp" alt="Hélion" width="152" height="34">
@@ -768,6 +789,24 @@
     updateParallax();
   }
 
+  // ---------- Scroll progress bar ----------
+  var progressBar = document.getElementById('scrollProgress');
+  if(progressBar){
+    var progressTicking = false;
+    var updateProgress = function(){
+      var doc = document.documentElement;
+      var max = doc.scrollHeight - doc.clientHeight;
+      var pct = max > 0 ? Math.min(Math.max(window.scrollY / max, 0), 1) * 100 : 0;
+      progressBar.style.width = pct + '%';
+      progressTicking = false;
+    };
+    window.addEventListener('scroll', function(){
+      if(!progressTicking){ requestAnimationFrame(updateProgress); progressTicking = true; }
+    }, {passive:true});
+    window.addEventListener('resize', updateProgress);
+    updateProgress();
+  }
+
   // ---------- Multi-page client-side router ----------
   // The site is authored as four segments (accueil / services / apropos / contact).
   // Anchors that live inside a segment (e.g. #methode, #service-03) resolve to
@@ -816,6 +855,7 @@
         } else {
           window.scrollTo({ top: 0, behavior: 'auto' });
         }
+        if(typeof updateProgress === 'function'){ updateProgress(); }
       });
     });
   }
