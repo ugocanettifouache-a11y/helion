@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Contact — Hélion</title>
-<meta name="description" content="Hélion accompagne les entreprises ambitieuses dans leur développement commercial : stratégie, prospection, structuration d'offres et présence digitale.">
+<meta name="description" content="Ugo Canetti, agent commercial indépendant : prospection, représentation commerciale, négociation et développement de partenariats, rémunéré à la commission.">
 <link rel="icon" type="image/webp" href="assets/logo.webp">
 <style>
   @import url("https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Spectral:ital,wght@0,400;0,500;0,600;1,400&family=Jost:wght@400;500;600&display=swap");
@@ -641,9 +641,9 @@
           <select id="service" required>
             <option value="">Sélectionnez…</option>
             <option>Prospection B2B</option>
-            <option>Externalisation commerciale</option>
-            <option>Formation commerciale</option>
-            <option>Conseil go-to-market</option>
+            <option>Représentation commerciale (portage de vente)</option>
+            <option>Négociation &amp; closing</option>
+            <option>Développement de partenariats</option>
             <option>Diagnostic offert</option>
             <option>Autre</option>
           </select>
@@ -720,7 +720,7 @@
         <a href="index.html#accueil" class="wordmark" style="margin-bottom:14px; display:inline-flex;">
           <img src="assets/logo.webp" alt="Hélion" width="126" height="28">
         </a>
-        <p style="color:var(--on-navy-soft); font-size:14.5px; max-width:32ch;">Hélion accompagne les entreprises ambitieuses dans leur développement commercial et leur croissance.</p>
+        <p style="color:var(--on-navy-soft); font-size:14.5px; max-width:32ch;">Ugo Canetti, agent commercial indépendant&nbsp;: je représente des entreprises ambitieuses pour développer leurs ventes.</p>
       </div>
       <div>
         <div class="footer-head">Navigation</div>
@@ -737,11 +737,9 @@
         <div class="footer-head">Services</div>
         <ul>
           <li><a href="services.html">Prospection B2B</a></li>
-          <li><a href="services.html">Externalisation commerciale</a></li>
-          <li><a href="services.html">Formation commerciale</a></li>
-          <li><a href="services.html">Conseil go-to-market</a></li>
-          <li><a href="services.html">Structuration d'offres</a></li>
-          <li><a href="services.html">Création de sites</a></li>
+          <li><a href="services.html">Représentation commerciale</a></li>
+          <li><a href="services.html">Négociation &amp; closing</a></li>
+          <li><a href="services.html">Développement de partenariats</a></li>
         </ul>
       </div>
       <div>
@@ -905,7 +903,7 @@
   var PAGE_OF = {
     accueil:'accueil', methode:'accueil', realisations:'accueil',
     services:'services', 'service-01':'services', 'service-02':'services',
-    'service-03':'services', 'service-04':'services', 'service-05':'services', 'service-06':'services',
+    'service-03':'services', 'service-04':'services',
     apropos:'apropos', contact:'contact'
   };
   var pageEls = document.querySelectorAll('.page');
@@ -982,42 +980,42 @@
 
     var CHAT_STEPS = {
       start: {
-        bot: ["Bonjour, je suis Iris, conseillère commerciale chez Hélion. En une question : qu'est-ce qui freine le plus votre croissance en ce moment ?"],
+        bot: ["Bonjour, je suis Iris, l'assistante virtuelle d'Ugo Canetti, agent commercial indépendant. En une question : qu'est-ce qui vous amène aujourd'hui ?"],
         options: [
-          { label: "Pas assez de rendez-vous", next: "rdv" },
-          { label: "Mon offre manque de clarté", next: "offre" },
-          { label: "Mon site ne convertit pas", next: "site" },
+          { label: "Développer mes ventes sans recruter", next: "repr" },
+          { label: "Besoin d'aide pour négocier ou closer", next: "closing" },
+          { label: "Trouver des partenaires ou distributeurs", next: "partenariats" },
           { label: "Je ne sais pas par où commencer", next: "diag" }
         ]
       },
-      rdv: {
+      repr: {
         bot: [
-          "C'est le symptôme n°1 qu'on traite : un pipeline qui dépend d'une seule personne, ou de leads entrants trop rares.",
-          "Nos clients décrochent en moyenne 3x plus de rendez-vous qualifiés en 90 jours grâce à notre méthode de prospection structurée."
+          "C'est exactement le rôle d'un agent commercial indépendant : Ugo représente votre entreprise auprès de prospects, sans que vous ayez à recruter, former ou licencier.",
+          "Vous ne payez que sur les ventes réalisées — aucun frais fixe de son côté."
         ],
-        cta: "Réserver mon diagnostic gratuit →",
+        cta: "Échanger sur une représentation commerciale →",
         back: true
       },
-      offre: {
+      closing: {
         bot: [
-          "Une offre que les prospects ne comprennent pas en 10 secondes, c'est du chiffre d'affaires perdu avant même le premier rendez-vous.",
-          "On structure votre positionnement et vos tarifs pour que votre valeur soit évidente — c'est l'un de nos six leviers principaux."
+          "Beaucoup d'entreprises génèrent des prospects mais peinent à transformer les échanges en contrats signés.",
+          "Ugo peut reprendre vos opportunités en cours pour les négocier et les closer, ou structurer votre discours de vente."
         ],
-        cta: "Clarifier mon offre →",
+        cta: "Parler de mes opportunités en cours →",
         back: true
       },
-      site: {
+      partenariats: {
         bot: [
-          "Un site qui reçoit des visites sans générer de rendez-vous, c'est un budget marketing qui fuit.",
-          "On reconstruit vos pages clés pour convertir — nos refontes doublent en moyenne le taux de conversion."
+          "Trouver les bons partenaires ou distributeurs prend du temps et un réseau déjà construit.",
+          "Ugo s'appuie sur son réseau et ses mandats existants pour identifier et activer les bons partenaires pour vous."
         ],
-        cta: "Convertir mon site →",
+        cta: "Explorer un partenariat →",
         back: true
       },
       diag: {
         bot: [
-          "C'est normal — la plupart de nos clients arrivent avec plusieurs symptômes à la fois, pas un diagnostic clair.",
-          "Le plus simple : 45 minutes, offertes, sans engagement, pour identifier vos leviers prioritaires avec nous."
+          "C'est normal — la plupart des entreprises qui contactent Ugo n'ont pas encore de diagnostic clair.",
+          "Le plus simple : 45 minutes, offertes, sans engagement, pour voir si une collaboration a du sens."
         ],
         cta: "Réserver mon diagnostic gratuit →",
         back: true
@@ -1026,12 +1024,12 @@
 
     var widgetHTML =
       '<div class="chat-widget" id="chatWidget">' +
-        '<div class="chat-panel" id="chatPanel" role="dialog" aria-label="Conseillère commerciale Hélion" aria-hidden="true">' +
+        '<div class="chat-panel" id="chatPanel" role="dialog" aria-label="Assistante d\'Ugo Canetti" aria-hidden="true">' +
           '<div class="chat-panel-head">' +
             '<div class="chat-avatar" aria-hidden="true">I</div>' +
             '<div class="chat-panel-id">' +
               '<div class="chat-panel-name">Iris · Hélion</div>' +
-              '<div class="chat-panel-status"><span class="chat-dot-live" aria-hidden="true"></span>Conseillère commerciale</div>' +
+              '<div class="chat-panel-status"><span class="chat-dot-live" aria-hidden="true"></span>Assistante d\'Ugo Canetti</div>' +
             '</div>' +
             '<button type="button" class="chat-panel-close" id="chatClose" aria-label="Fermer la conversation">' +
               '<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 5 L15 15 M15 5 L5 15"/></svg>' +
@@ -1040,7 +1038,7 @@
           '<div class="chat-messages" id="chatMessages"></div>' +
           '<div class="chat-options" id="chatOptions"></div>' +
         '</div>' +
-        '<button type="button" class="chat-toggle" id="chatToggle" aria-label="Ouvrir la conversation avec notre conseillère commerciale" aria-expanded="false">' +
+        '<button type="button" class="chat-toggle" id="chatToggle" aria-label="Ouvrir la conversation avec l\'assistante d\'Ugo Canetti" aria-expanded="false">' +
           '<svg class="ic-open" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>' +
           '<svg class="ic-close" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 5 L15 15 M15 5 L5 15"/></svg>' +
           '<span class="chat-dot" aria-hidden="true">1</span>' +
