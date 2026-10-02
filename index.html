@@ -294,6 +294,8 @@
   .arc-svg .arc-path{ fill:none; stroke:var(--border); stroke-width:2; }
   .arc-svg .arc-dot{ fill:var(--surface); stroke:var(--accent); stroke-width:3; }
   .arc-svg .arc-dot.filled{ fill:var(--accent); }
+  .arc-svg .arc-dot{ transition:filter .4s ease; }
+  .arc-svg .arc-dot.sun-active{ filter:drop-shadow(0 0 6px var(--accent-bright)); }
   @media (max-width:760px){ .arc-svg{ display:none; } }
 
   .steps-row{ display:grid; grid-template-columns:repeat(5,1fr); gap:20px; margin-top:8px; }
@@ -301,7 +303,19 @@
     .steps-row{ grid-template-columns:1fr; gap:0; margin-top:24px; position:relative; padding-left:34px; }
     .steps-row::before{ content:""; position:absolute; left:9px; top:6px; bottom:6px; width:2px; background:var(--border); }
   }
-  .step{ text-align:center; display:flex; flex-direction:column; gap:8px; }
+  .step{
+    text-align:center; display:flex; flex-direction:column; gap:8px;
+    padding:14px 12px; border-radius:8px; margin:-14px -12px;
+    background:transparent; box-shadow:0 0 0 1px transparent inset;
+    transition:background .5s ease, box-shadow .5s ease;
+  }
+  .step.sun-active{
+    background:color-mix(in srgb, var(--accent-bright) 13%, transparent);
+    box-shadow:0 0 0 1px color-mix(in srgb, var(--accent-bright) 28%, transparent) inset;
+  }
+  .step.sun-active .step-num{ color:var(--accent-bright); }
+  .step.sun-active h3{ color:var(--accent-deep); }
+  @media (prefers-reduced-motion: reduce){ .step{ transition:none; } }
   @media (max-width:760px){
     .step{ text-align:left; padding-bottom:32px; position:relative; }
     .step::before{ content:""; position:absolute; left:-34px; top:4px; width:16px; height:16px; border-radius:50%; background:var(--surface); border:3px solid var(--accent); }
@@ -1001,8 +1015,7 @@
         <circle class="arc-dot filled" cx="580" cy="92.5" r="7"/>
         <circle class="arc-dot filled" cx="760" cy="160" r="7"/>
         <g class="arc-sun-mark">
-          <circle r="9" fill="var(--accent-bright)"/>
-          <animateMotion id="arcSunMotion" dur="2.4s" begin="indefinite" fill="freeze" path="M40 160 Q400 -20 760 160"/>
+          <circle id="arcSunDot" r="9" fill="var(--accent-bright)" cx="40" cy="160"/>
         </g>
       </svg>
 
@@ -1197,17 +1210,56 @@
 
   var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var toObserve = document.querySelectorAll('.reveal, .reveal-line, .key-divider, .arc-wrap');
+  // The arc path "M40 160 Q400 -20 760 160" is built so the sun's x
+  // position is exactly linear in t (the control point's x sits at the
+  // midpoint), so t=0,.25,.5,.75,1 line up precisely with the five dots —
+  // letting the travel and the step highlight stay perfectly in sync.
+  function arcPoint(t){
+    var mt = 1 - t;
+    return {
+      x: 40 + 720 * t,
+      y: mt * mt * 160 + 2 * t * mt * -20 + t * t * 160
+    };
+  }
+  function easeInOutSine(t){ return -(Math.cos(Math.PI * t) - 1) / 2; }
+  function runArcJourney(el){
+    var sunDot = el.querySelector('#arcSunDot');
+    var dots = el.querySelectorAll('.arc-svg .arc-dot.filled');
+    var steps = el.querySelectorAll('.step');
+    if(!sunDot || !steps.length) return;
+    if(el._arcFrame) cancelAnimationFrame(el._arcFrame);
+    var stepT = [0, .25, .5, .75, 1];
+    var duration = 5200; // slow, deliberate travel across the five steps
+    var start = null;
+    function frame(ts){
+      if(start === null) start = ts;
+      var raw = Math.min((ts - start) / duration, 1);
+      var t = easeInOutSine(raw);
+      var p = arcPoint(t);
+      sunDot.setAttribute('cx', p.x);
+      sunDot.setAttribute('cy', p.y);
+      for(var i = 0; i < stepT.length; i++){
+        var near = Math.abs(t - stepT[i]) < 0.09;
+        if(steps[i]) steps[i].classList.toggle('sun-active', near);
+        if(dots[i]) dots[i].classList.toggle('sun-active', near);
+      }
+      if(raw < 1){
+        el._arcFrame = requestAnimationFrame(frame);
+      } else {
+        el._arcFrame = null;
+      }
+    }
+    el._arcFrame = requestAnimationFrame(frame);
+  }
   function onReveal(el){
     el.classList.add('in-view');
     if(el.classList.contains('arc-wrap') && !reduceMotion){
-      var motion = el.querySelector('#arcSunMotion');
-      if(motion && motion.beginElement){
-        try{ motion.beginElement(); }catch(e){}
-      }
+      runArcJourney(el);
     }
   }
   function onHide(el){
     el.classList.remove('in-view');
+    if(el._arcFrame){ cancelAnimationFrame(el._arcFrame); el._arcFrame = null; }
   }
   if('IntersectionObserver' in window && !reduceMotion){
     // Re-trigger on every pass so the page keeps feeling alive as you
