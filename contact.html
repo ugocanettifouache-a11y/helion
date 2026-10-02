@@ -10,7 +10,7 @@
   @import url("https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Spectral:ital,wght@0,400;0,500;0,600;1,400&family=Jost:wght@400;500;600&display=swap");
 
     :root{
-    --paper:#FFFFFF;
+    --paper:#FBF9F4;
     --white:#FFFFFF;
     --stone-2:#F4F4F2;
     --stone-3:#E8E7E2;
@@ -74,6 +74,8 @@
     margin:0;
     background:
       radial-gradient(ellipse 900px 500px at 15% -10%, color-mix(in srgb, var(--accent) 10%, transparent), transparent 60%),
+      radial-gradient(ellipse 800px 600px at 100% 30%, color-mix(in srgb, var(--terracotta) 6%, transparent), transparent 62%),
+      url("data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A//www.w3.org/2000/svg%27%20width%3D%27180%27%20height%3D%27180%27%3E%3Cfilter%20id%3D%27n%27%3E%3CfeTurbulence%20type%3D%27fractalNoise%27%20baseFrequency%3D%270.85%27%20numOctaves%3D%272%27%20stitchTiles%3D%27stitch%27/%3E%3CfeColorMatrix%20type%3D%27matrix%27%20values%3D%270%200%200%200%200.45%20%200%200%200%200%200.32%20%200%200%200%200%200.18%20%200%200%200%200.05%200%27/%3E%3C/filter%3E%3Crect%20width%3D%27100%25%27%20height%3D%27100%25%27%20filter%3D%27url%28%23n%29%27/%3E%3C/svg%3E") repeat,
       var(--bg);
     color:var(--text);
     font-family:"Spectral", Georgia, "Times New Roman", serif;
