@@ -303,19 +303,17 @@
     .steps-row{ grid-template-columns:1fr; gap:0; margin-top:24px; position:relative; padding-left:34px; }
     .steps-row::before{ content:""; position:absolute; left:9px; top:6px; bottom:6px; width:2px; background:var(--border); }
   }
-  .step{
-    text-align:center; display:flex; flex-direction:column; gap:8px;
-    padding:14px 12px; border-radius:8px; margin:-14px -12px;
-    background:transparent; box-shadow:0 0 0 1px transparent inset;
-    transition:background .5s ease, box-shadow .5s ease;
+  .step{ text-align:center; display:flex; flex-direction:column; gap:8px; }
+  .step .step-num, .step h3{ transition:color .5s ease, text-shadow .5s ease; }
+  .step.sun-active .step-num{
+    color:var(--accent-bright);
+    text-shadow:0 0 12px color-mix(in srgb, var(--accent-bright) 55%, transparent);
   }
-  .step.sun-active{
-    background:color-mix(in srgb, var(--accent-bright) 13%, transparent);
-    box-shadow:0 0 0 1px color-mix(in srgb, var(--accent-bright) 28%, transparent) inset;
+  .step.sun-active h3{
+    color:var(--accent-deep);
+    text-shadow:0 0 16px color-mix(in srgb, var(--accent-bright) 35%, transparent);
   }
-  .step.sun-active .step-num{ color:var(--accent-bright); }
-  .step.sun-active h3{ color:var(--accent-deep); }
-  @media (prefers-reduced-motion: reduce){ .step{ transition:none; } }
+  @media (prefers-reduced-motion: reduce){ .step .step-num, .step h3{ transition:none; } }
   @media (max-width:760px){
     .step{ text-align:left; padding-bottom:32px; position:relative; }
     .step::before{ content:""; position:absolute; left:-34px; top:4px; width:16px; height:16px; border-radius:50%; background:var(--surface); border:3px solid var(--accent); }
@@ -932,7 +930,7 @@
     if(!sunDot || !steps.length) return;
     if(el._arcFrame) cancelAnimationFrame(el._arcFrame);
     var stepT = [0, .25, .5, .75, 1];
-    var duration = 5200; // slow, deliberate travel across the five steps
+    var duration = 9000; // slow, deliberate travel across the five steps
     var start = null;
     function frame(ts){
       if(start === null) start = ts;
