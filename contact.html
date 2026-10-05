@@ -161,7 +161,8 @@
 
   /* ---------- Hero ---------- */
   .hero{ padding-top:64px; padding-bottom:48px; overflow:hidden; }
-  .hero-inner{ display:flex; flex-direction:column; align-items:center; text-align:center; gap:28px; position:relative; z-index:2; }
+  .hero-inner{ display:grid; grid-template-columns:minmax(0,1.3fr) minmax(0,.8fr); gap:40px 64px; align-items:center; text-align:left; position:relative; z-index:2; }
+  @media (max-width:980px){ .hero-inner{ grid-template-columns:1fr; gap:36px; } }
 
   /* ---------- Hero scene: a Greco-Roman colonnade at dawn ----------
      Kept only as a faint, desaturated watermark behind the copy — a nod to
@@ -206,8 +207,8 @@
   @keyframes hero-in{ from{ opacity:0; transform:translateY(26px); } to{ opacity:1; transform:none; } }
   .hero-inner > *{ animation:hero-in .85s cubic-bezier(.2,.7,.2,1) both; }
   .hero-inner > *:nth-child(1){ animation-delay:.05s; }
-  .hero-inner > *:nth-child(2){ animation-delay:.18s; }
-  .hero-inner > *:nth-child(3){ animation-delay:.34s; }
+  .hero-inner > *:nth-child(2){ animation-delay:.28s; }
+  .hero-inner > *:nth-child(3){ animation-delay:.5s; }
   .hero-inner > *:nth-child(4){ animation-delay:.5s; }
   .hero-inner > *:nth-child(5){ animation-delay:.66s; }
   @media (prefers-reduced-motion: reduce){ .hero-inner > *{ animation:none; } }
@@ -215,17 +216,53 @@
 
   .sun-disc{ width:64px; height:64px; position:relative; z-index:1; }
 
-  .hero h1{ position:relative; z-index:1; font-size:clamp(34px,5.6vw,64px); line-height:1.08; max-width:min(22ch, 92vw); }
-  .hero h1 em{ font-style:normal; }
-  .hero .lede{ position:relative; z-index:1; max-width:56ch; font-size:19px; color:var(--text-soft); }
-  .hero-ctas{ position:relative; z-index:1; display:flex; flex-wrap:wrap; gap:14px; justify-content:center; margin-top:8px; }
-  .hero-urgency{ position:relative; z-index:1; font-size:13.5px; color:var(--text-faint); font-family:"Jost",sans-serif; letter-spacing:.03em; margin-top:-4px; }
+  .hero-copy{ display:flex; flex-direction:column; align-items:flex-start; gap:26px; }
+  .hero h1{ position:relative; z-index:1; font-size:clamp(32px,4.5vw,60px); line-height:1.08; max-width:none; text-wrap:balance; }
+  .hero h1 em{ font-style:normal; display:block; }
+  .hero .lede{ position:relative; z-index:1; max-width:58ch; font-size:19.5px; color:var(--text-soft); }
+  .hero .lede strong{ color:var(--text); }
+  .hero-ctas{ position:relative; z-index:1; display:flex; flex-wrap:wrap; gap:14px; margin-top:4px; }
+  .btn-lg{ padding:17px 32px; font-size:13.5px; }
+  .btn-block{ display:flex; width:100%; justify-content:center; }
+  .hero-assure{ list-style:none; display:flex; flex-wrap:wrap; gap:10px 28px; padding:0; margin:0; font-family:"Jost",sans-serif; font-size:14.5px; font-weight:500; color:var(--text); }
+  .hero-assure li{ display:flex; align-items:center; gap:9px; }
+  .hero-assure li::before, .hero-card-list li::before{
+    content:"✓"; flex:none; width:20px; height:20px; border-radius:50%; display:inline-flex; align-items:center; justify-content:center;
+    background:var(--accent-bright); color:var(--on-accent); font-size:12px; font-weight:700; line-height:1;
+  }
 
-  .logo-strip{ margin-top:48px; display:flex; flex-wrap:wrap; gap:14px; justify-content:center; }
+  .hero-card{
+    position:relative; z-index:1; background:var(--navy); color:var(--on-navy); border-radius:3px;
+    padding:34px 34px 28px; display:flex; flex-direction:column; gap:18px;
+    border-top:4px solid var(--accent-bright);
+    box-shadow:0 30px 60px -28px rgba(18,23,36,.55), 0 8px 18px -10px rgba(18,23,36,.35);
+  }
+  .hero-card-tag{ align-self:flex-start; font-family:"Jost",sans-serif; font-size:11.5px; font-weight:600; letter-spacing:.14em; text-transform:uppercase; color:var(--on-accent); background:var(--accent-bright); padding:5px 11px; border-radius:2px; }
+  .hero-card h2{ font-size:clamp(22px,2.1vw,28px); line-height:1.2; color:#fff; }
+  .hero-card-sub{ font-size:15.5px; line-height:1.55; color:color-mix(in srgb, var(--on-navy) 80%, transparent); }
+  .hero-card-list{ list-style:none; padding:0; margin:0; display:flex; flex-direction:column; gap:12px; font-size:15.5px; line-height:1.45; }
+  .hero-card-list li{ display:flex; gap:11px; align-items:flex-start; }
+  .hero-card-list li::before{ margin-top:1px; }
+  .hero-card-fee{ font-size:15px; padding-top:16px; border-top:1px solid rgba(255,255,255,.14); color:color-mix(in srgb, var(--on-navy) 88%, transparent); }
+  .hero-card-fee strong{ color:var(--accent-bright); }
+  .hero-card-foot{ font-family:"Jost",sans-serif; font-size:13.5px; text-align:center; color:color-mix(in srgb, var(--on-navy) 65%, transparent); }
+  .hero-card-foot a{ color:#fff; font-weight:600; text-decoration:none; border-bottom:1px solid rgba(255,255,255,.35); }
+  .hero-card-foot a:hover{ border-color:var(--accent-bright); }
+  .hero-card .btn-primary{ animation:none; }
+
+  .logo-strip{ grid-column:1 / -1; margin-top:16px; padding-top:28px; border-top:1px solid var(--border); display:flex; flex-wrap:wrap; gap:14px; justify-content:center; align-items:center; }
+  .logo-strip-label{ font-family:"Jost",sans-serif; font-size:12px; letter-spacing:.16em; text-transform:uppercase; color:var(--text-faint); margin-right:10px; }
   .logo-plaque{
     border:1px solid var(--border); padding:12px 22px; border-radius:2px;
-    font-family:"Cinzel", serif; font-size:13px; letter-spacing:.08em; color:var(--text-faint);
+    font-family:"Cinzel", serif; font-size:13px; letter-spacing:.08em; color:var(--text-soft);
     background:var(--surface);
+  }
+  @media (max-width:640px){
+    .hero{ padding-top:36px; }
+    .hero-card{ padding:26px 22px 22px; }
+    .hero-ctas .btn{ width:100%; justify-content:center; }
+    .btn-lg{ padding:16px 20px; }
+    .logo-strip-label{ width:100%; text-align:center; margin:0; }
   }
   .hero-inner > *:nth-child(6){ animation-delay:.8s; }
 
@@ -631,7 +668,7 @@
       <li><a href="a-propos.html">À propos</a></li>
       <li><a href="#top">Contact</a></li>
     </ul>
-    <a href="#top" class="btn btn-primary nav-cta">Démarrer un projet</a>
+    <a href="#top" class="btn btn-primary nav-cta">Diagnostic gratuit</a>
     <button class="nav-mobile-toggle" id="mobileToggle" aria-label="Ouvrir le menu" aria-expanded="false">☰</button>
   </div>
 </header>
