@@ -407,6 +407,103 @@
   .tier li{ font-size:14.5px; color:var(--text-soft); display:flex; gap:8px; }
   .tier li::before{ content:"—"; color:var(--accent); }
 
+  /* ---------- Services page (v2) ---------- */
+  .btn-ghost-light{ background:transparent; color:#fff; border-color:rgba(255,255,255,.35); }
+  .btn-ghost-light:hover{ border-color:var(--accent-bright); color:var(--accent-bright); transform:translateY(-2px); }
+  .sv-hero{ position:relative; overflow:hidden; background:var(--navy); color:var(--on-navy); padding:80px 0 64px; margin-top:-1px; }
+  .sv-hero::before{ content:""; position:absolute; inset:0; pointer-events:none;
+    background:radial-gradient(ellipse 700px 420px at 88% -10%, color-mix(in srgb, var(--accent-bright) 34%, transparent), transparent 65%),
+               radial-gradient(ellipse 600px 380px at 0% 110%, color-mix(in srgb, var(--accent-bright) 14%, transparent), transparent 70%); animation:ambient-drift 18s ease-in-out infinite alternate; }
+  .sv-hero-inner{ position:relative; z-index:1; display:grid; grid-template-columns:minmax(0,1.35fr) minmax(0,.65fr); gap:36px 64px; align-items:center; }
+  @media (max-width:980px){ .sv-hero-inner{ grid-template-columns:1fr; } }
+  .sv-hero-copy{ display:flex; flex-direction:column; align-items:flex-start; gap:26px; }
+  .sv-hero .eyebrow{ color:var(--accent-bright); }
+  .sv-hero .eyebrow::before{ background:var(--accent-bright); }
+  .sv-hero h1{ color:#fff; font-size:clamp(32px,4.4vw,58px); line-height:1.08; max-width:none; text-wrap:balance; }
+  .sv-hero h1 em{ font-style:normal; display:block; color:var(--accent-bright); background:none; -webkit-text-fill-color:var(--accent-bright); animation:none; }
+  .sv-hero .lede{ max-width:60ch; font-size:19.5px; color:var(--on-navy-soft); }
+  .sv-hero .lede strong{ color:#fff; }
+  .sv-hero-inner > *{ animation:hero-in .85s cubic-bezier(.2,.7,.2,1) both; }
+  .sv-hero-inner > *:nth-child(2){ animation-delay:.2s; } .sv-hero-inner > *:nth-child(3){ animation-delay:.4s; }
+  @media (prefers-reduced-motion: reduce){ .sv-hero-inner > *, .sv-hero::before{ animation:none; } }
+  .sv-facts{ list-style:none; margin:0; padding:10px 30px; background:rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.12); border-top:4px solid var(--accent-bright); border-radius:3px; display:flex; flex-direction:column; }
+  .sv-facts li{ display:flex; align-items:baseline; justify-content:space-between; gap:16px; padding:18px 0; }
+  .sv-facts li + li{ border-top:1px dashed rgba(255,255,255,.18); }
+  .sv-facts strong{ font-family:"Cinzel",serif; font-size:clamp(26px,2.8vw,38px); color:var(--accent-bright); white-space:nowrap; }
+  .sv-facts span{ font-family:"Jost",sans-serif; font-size:14.5px; letter-spacing:.04em; color:var(--on-navy-soft); text-align:right; }
+  .sv-jumps{ grid-column:1 / -1; display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:16px; width:100%; margin-top:14px; }
+  @media (max-width:980px){ .sv-jumps{ grid-template-columns:repeat(2,minmax(0,1fr)); } }
+  @media (max-width:560px){ .sv-jumps{ grid-template-columns:1fr; } }
+  .sv-jump{ position:relative; display:flex; flex-direction:column; gap:6px; padding:22px 22px 20px; text-decoration:none; color:#fff;
+    background:rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.12); border-radius:3px; transition:transform .25s ease, border-color .25s ease, background .25s ease; }
+  .sv-jump:hover{ transform:translateY(-5px); border-color:var(--accent-bright); background:rgba(255,255,255,.09); }
+  .sv-jump-n{ position:absolute; top:16px; right:18px; font-family:"Cinzel",serif; font-size:13px; letter-spacing:.1em; color:var(--accent-bright); }
+  .sv-jump-ic{ color:var(--accent-bright); display:flex; margin-bottom:6px; }
+  .sv-jump-t{ font-family:"Cinzel",serif; font-size:17px; line-height:1.25; }
+  .sv-jump-d{ font-size:14px; line-height:1.45; color:var(--on-navy-soft); }
+
+  .sv-sec{ padding:84px 0; scroll-margin-top:80px; }
+  .sv-alt{ background:color-mix(in srgb, var(--surface) 78%, transparent); border-top:1px solid var(--border); border-bottom:1px solid var(--border); }
+  .sv-block{ display:grid; grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr); gap:64px; align-items:center; padding:0; border:0; }
+  .sv-flip .sv-main{ order:2; } .sv-flip .sv-box{ order:1; }
+  @media (max-width:900px){ .sv-block{ grid-template-columns:1fr; gap:32px; } .sv-flip .sv-main, .sv-flip .sv-box{ order:0; } .sv-sec{ padding:56px 0; } }
+  .sv-main{ position:relative; display:flex; flex-direction:column; align-items:flex-start; gap:6px; }
+  .sv-ghost{ position:absolute; top:-30px; right:0; z-index:0; font-family:"Cinzel",serif; font-weight:700; font-size:clamp(110px,13vw,190px); line-height:1; color:transparent;
+    -webkit-text-stroke:1.5px color-mix(in srgb, var(--accent-bright) 38%, transparent); opacity:.55; pointer-events:none; user-select:none; }
+  .sv-main > *:not(.sv-ghost){ position:relative; z-index:1; }
+  .sv-head{ display:flex; align-items:center; gap:14px; margin-bottom:6px; }
+  .sv-icon{ width:52px; height:52px; border-radius:3px; display:inline-flex; align-items:center; justify-content:center; background:var(--accent-bright); color:var(--on-accent); box-shadow:0 10px 22px -10px color-mix(in srgb, var(--accent-bright) 80%, transparent); }
+  .sv-block h3{ font-size:clamp(26px,3vw,36px); line-height:1.15; margin-top:4px; }
+  .sv-block h3 small{ font-size:.52em; font-weight:400; color:var(--text-faint); letter-spacing:.02em; }
+  .sv-block .tagline{ margin:14px 0 6px; padding-left:18px; border-left:3px solid var(--accent-bright); font-size:18px; line-height:1.5; max-width:52ch; }
+  .sv-checks{ list-style:none; margin:14px 0 26px; padding:0; display:flex; flex-direction:column; gap:12px; }
+  .sv-checks li{ display:flex; gap:12px; align-items:flex-start; font-size:16px; line-height:1.45; color:var(--text); }
+  .sv-checks li::before{ content:"✓"; flex:none; margin-top:1px; width:21px; height:21px; border-radius:50%; display:inline-flex; align-items:center; justify-content:center; background:color-mix(in srgb, var(--accent-bright) 18%, transparent); color:var(--accent-deep); font-size:12px; font-weight:700; }
+  .sv-box{ background:var(--navy); color:var(--on-navy); border:0; border-top:4px solid var(--accent-bright); border-radius:3px; padding:32px 30px; box-shadow:0 30px 60px -30px rgba(18,23,36,.55); }
+  .sv-box-title{ font-family:"Jost",sans-serif; font-size:12px; font-weight:600; letter-spacing:.16em; text-transform:uppercase; color:var(--accent-bright); margin-bottom:18px; }
+  .sv-box .stat-row + .stat-row{ border-top:1px dashed rgba(255,255,255,.18); }
+  .sv-box .stat-label{ color:var(--on-navy-soft); font-size:13.5px; }
+  .sv-box .stat-value{ color:#fff; font-size:15.5px; text-align:right; }
+  .sv-box .stat-final{ color:var(--accent-bright); }
+
+  .sv-center{ align-items:center; text-align:center; }
+  .sv-center .prose{ max-width:62ch; }
+  .sv-start{ padding:84px 0 56px; }
+  .sv-steps{ list-style:none; margin:0; padding:0; display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:28px; counter-reset:none; position:relative; }
+  @media (max-width:900px){ .sv-steps{ grid-template-columns:1fr; } }
+  .sv-steps li{ position:relative; background:var(--surface); border:1px solid var(--border); border-radius:3px; padding:34px 28px 28px; display:flex; flex-direction:column; gap:10px; }
+  .sv-steps li:not(:last-child)::after{ content:"→"; position:absolute; right:-24px; top:50%; transform:translateY(-50%); color:var(--accent-bright); font-size:22px; z-index:2; }
+  @media (max-width:900px){ .sv-steps li:not(:last-child)::after{ content:"↓"; right:auto; left:50%; top:auto; bottom:-26px; transform:translateX(-50%); } }
+  .sv-step-n{ width:44px; height:44px; border-radius:50%; background:var(--accent-bright); color:var(--on-accent); font-family:"Cinzel",serif; font-weight:700; font-size:20px; display:inline-flex; align-items:center; justify-content:center; box-shadow:0 8px 18px -8px color-mix(in srgb, var(--accent-bright) 80%, transparent); }
+  .sv-steps h3{ font-size:20px; margin-top:6px; }
+  .sv-steps p{ font-size:15.5px; color:var(--text-soft); line-height:1.55; }
+
+  .sv-pay{ padding:56px 0 96px; }
+  .sv-pay .tiers{ margin-top:8px; }
+  .sv-pay .tier{ position:relative; align-items:flex-start; padding:36px 30px; transition:transform .25s ease, box-shadow .25s ease; }
+  .sv-pay .tier:hover{ transform:translateY(-6px); box-shadow:0 20px 40px -22px var(--shadow-c); }
+  .sv-pay .tier.featured{ background:var(--navy); color:var(--on-navy); border-color:var(--navy); border-top:4px solid var(--accent-bright); transform:translateY(-10px); box-shadow:0 30px 60px -26px rgba(18,23,36,.6); }
+  .sv-pay .tier.featured:hover{ transform:translateY(-16px); }
+  .sv-pay .tier.featured .tier-name{ color:#fff !important; }
+  .sv-pay .tier.featured li{ color:var(--on-navy-soft); }
+  .sv-pay .tier.featured li::before{ color:var(--accent-bright); }
+  .sv-tier-ic{ font-family:"Cinzel",serif; font-size:34px; font-weight:700; color:var(--accent-bright); line-height:1; }
+  .sv-tier-flag{ position:absolute; top:-1px; right:20px; transform:translateY(-50%); background:var(--accent-bright); color:var(--on-accent); font-family:"Jost",sans-serif; font-size:11px; font-weight:600; letter-spacing:.14em; text-transform:uppercase; padding:6px 12px; border-radius:2px; }
+  .sv-pay .tier-name{ font-family:"Cinzel",serif; font-size:19px; letter-spacing:.03em; }
+  .sv-pay .tier li::before{ content:"✓"; font-weight:700; }
+  .sv-final{ margin-top:72px; position:relative; overflow:hidden; padding:56px; }
+  .sv-final::before{ content:""; position:absolute; inset:0; pointer-events:none; background:radial-gradient(ellipse 520px 300px at 100% 0%, color-mix(in srgb, var(--accent-bright) 30%, transparent), transparent 70%); }
+  .sv-final > *{ position:relative; }
+  .sv-final > div:first-child{ flex:1 1 380px; }
+  .sv-final h3{ font-size:clamp(22px,2.6vw,30px); line-height:1.25; max-width:30ch; text-wrap:balance; }
+  .sv-final-ctas{ display:flex; flex-direction:column; align-items:flex-start; gap:14px; }
+  .sv-final-tel{ font-family:"Jost",sans-serif; font-size:14px; color:var(--on-navy-soft); text-decoration:none; border-bottom:1px solid rgba(255,255,255,.3); }
+  .sv-final-tel:hover{ color:#fff; border-color:var(--accent-bright); }
+  @media (max-width:640px){
+    .sv-hero{ padding:48px 0 44px; } .sv-final{ padding:32px 22px; } .sv-hero-ctas .btn{ width:100%; justify-content:center; }
+    .sv-box{ padding:26px 22px; } .sv-box .stat-value{ text-align:left; } .sv-pay .tier.featured{ transform:none; } .sv-final-ctas, .sv-final-ctas .btn{ width:100%; } .sv-final-ctas .btn{ justify-content:center; }
+    }
+
   /* ---------- CTA banner ---------- */
   .cta-banner{
     background:var(--navy); border-radius:3px;
@@ -674,33 +771,55 @@
 </header>
 <div class="page" id="page-services" data-page="services">
 
-<div class="wrap"><div class="key-divider" data-key></div></div>
-
-<!-- FULL SERVICES DETAIL -->
-<section id="services-detail">
-  <div class="wrap">
-    <div class="section-head">
-      <div class="eyebrow">Détail des offres</div>
-      <h2>Chaque levier, en détail — et ce qu'il change concrètement</h2>
-      <p class="prose">Pas de package générique. Chaque mission est pilotée pour un seul objectif&nbsp;: des rendez-vous et des contrats, mesurables dès les premières semaines.</p>
+<!-- SERVICES HERO -->
+<section class="sv-hero">
+  <div class="wrap sv-hero-inner">
+    <div class="sv-hero-copy">
+    <div class="eyebrow sv-eyebrow">Mes offres · Payé uniquement à la commission</div>
+    <h1>Quatre leviers pour vendre plus. <em class="gold-shine-text">Un seul tarif&nbsp;: la commission.</em></h1>
+    <p class="lede">Prospection, représentation, closing, partenariats&nbsp;: choisissez le levier dont vous avez besoin, ou combinez-les. <strong>Pas de frais fixe, pas d'abonnement</strong> — je ne gagne que sur les ventes signées.</p>
+    <div class="hero-ctas sv-hero-ctas">
+      <a href="contact.html" class="btn btn-primary btn-lg">Obtenir mon diagnostic gratuit →</a>
+      <a href="tel:+33647112035" class="btn btn-ghost-light btn-lg">06&nbsp;47&nbsp;11&nbsp;20&nbsp;35</a>
     </div>
+    </div>
+    <ul class="sv-facts" aria-label="Mes engagements">
+      <li><strong>0&nbsp;€</strong><span>de frais fixe</span></li>
+      <li><strong>100&nbsp;%</strong><span>à la commission</span></li>
+      <li><strong>45&nbsp;min</strong><span>de diagnostic offert</span></li>
+      <li><strong>7&nbsp;jours</strong><span>pour démarrer</span></li>
+    </ul>
+    <nav class="sv-jumps" aria-label="Aller à une offre">
+        <a class="sv-jump" href="services.html#service-01"><span class="sv-jump-n">01</span><span class="sv-jump-ic" aria-hidden="true"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.2" fill="currentColor"/></svg></span><span class="sv-jump-t">Prospection B2B</span><span class="sv-jump-d">Des rendez-vous qualifiés dans votre agenda</span></a>
+        <a class="sv-jump" href="services.html#service-02"><span class="sv-jump-n">02</span><span class="sv-jump-ic" aria-hidden="true"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M9 7V5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2"/><path d="M3 13h18"/></svg></span><span class="sv-jump-t">Représentation commerciale</span><span class="sv-jump-d">Je vends pour vous, sur le terrain</span></a>
+        <a class="sv-jump" href="services.html#service-03"><span class="sv-jump-n">03</span><span class="sv-jump-ic" aria-hidden="true"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8 12.5l2.8 2.8L16.5 9.5"/></svg></span><span class="sv-jump-t">Négociation &amp; closing</span><span class="sv-jump-d">Vos opportunités en attente, signées</span></a>
+        <a class="sv-jump" href="services.html#service-04"><span class="sv-jump-n">04</span><span class="sv-jump-ic" aria-hidden="true"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="12" r="3"/><circle cx="18" cy="6" r="3"/><circle cx="18" cy="18" r="3"/><path d="M8.7 10.6l6.6-3.2M8.7 13.4l6.6 3.2"/></svg></span><span class="sv-jump-t">Partenariats</span><span class="sv-jump-d">Distributeurs et apporteurs d'affaires</span></a>
+    </nav>
+  </div>
+</section>
 
-    <div class="service-block" id="service-01">
-      <div>
-        <span class="card-eyebrow">01 — Acquisition</span>
+<section class="sv-sec" id="service-01">
+  <div class="wrap">
+    <div class="sv-block">
+      <div class="sv-main">
+        <span class="sv-ghost" aria-hidden="true">01</span>
+        <div class="sv-head">
+          <span class="sv-icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.2" fill="currentColor"/></svg></span>
+          <span class="card-eyebrow">01 — Acquisition</span>
+        </div>
         <h3>Prospection B2B</h3>
         <p class="tagline">« J'identifie, qualifie et engage vos prospects idéaux avec une précision chirurgicale. »</p>
-        <ul class="feature-list">
+        <ul class="sv-checks">
           <li>Construction de listes de prospects ultra-qualifiées</li>
           <li>Séquences email et LinkedIn personnalisées</li>
           <li>Prospection téléphonique structurée et argumentée</li>
           <li>Qualification rigoureuse des opportunités (budget, besoin, délai de décision)</li>
           <li>Reporting hebdomadaire et optimisation continue</li>
         </ul>
-        <a href="contact.html" class="btn btn-ghost" style="margin-top:24px;">Démarrer une campagne</a>
+        <a href="contact.html" class="btn btn-primary btn-lg">Démarrer une campagne →</a>
       </div>
-      <div class="stat-box">
-        <div class="stat-label" style="margin-bottom:14px;">Approche multicanal</div>
+      <div class="stat-box sv-box reveal">
+        <div class="sv-box-title">Approche multicanal</div>
         <div class="stat-row"><span class="stat-label">Ciblage</span><span class="stat-value">Listes qualifiées par profil client (ICP)</span></div>
         <div class="stat-row"><span class="stat-label">Email</span><span class="stat-value">Séquences personnalisées et testées</span></div>
         <div class="stat-row"><span class="stat-label">LinkedIn</span><span class="stat-value">Approche directe et relances</span></div>
@@ -708,117 +827,162 @@
         <div class="stat-row"><span class="stat-label">Pilotage</span><span class="stat-value stat-final">Reporting hebdomadaire transparent</span></div>
       </div>
     </div>
-
-    <div class="service-block" id="service-02">
-      <div>
-        <span class="card-eyebrow">02 — Représentation</span>
-        <h3>Représentation commerciale (portage de vente)</h3>
+  </div>
+</section>
+<section class="sv-sec sv-alt" id="service-02">
+  <div class="wrap">
+    <div class="sv-block sv-flip">
+      <div class="sv-main">
+        <span class="sv-ghost" aria-hidden="true">02</span>
+        <div class="sv-head">
+          <span class="sv-icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M9 7V5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2"/><path d="M3 13h18"/></svg></span>
+          <span class="card-eyebrow">02 — Représentation</span>
+        </div>
+        <h3>Représentation commerciale <small>(portage de vente)</small></h3>
         <p class="tagline">« Je deviens votre représentant commercial sur le terrain — vous ne payez que sur les ventes réalisées. »</p>
-        <ul class="feature-list">
+        <ul class="sv-checks">
           <li>Mandat de représentation clair et encadré</li>
           <li>Présentation et vente de votre offre à vos prospects et clients</li>
           <li>Couverture d'un secteur, d'une zone ou d'un portefeuille dédié</li>
           <li>Rémunération 100&nbsp;% à la commission, aucun frais fixe</li>
           <li>Reporting régulier sur les actions et les résultats</li>
         </ul>
-        <a href="contact.html" class="btn btn-ghost" style="margin-top:24px;">Discuter d'un mandat</a>
+        <a href="contact.html" class="btn btn-primary btn-lg">Discuter d'un mandat →</a>
       </div>
-      <div class="stat-box">
-        <div class="stat-label" style="margin-bottom:14px;">Comment ça marche</div>
+      <div class="stat-box sv-box reveal">
+        <div class="sv-box-title">Comment ça marche</div>
         <div class="stat-row"><span class="stat-label">Mandat</span><span class="stat-value">Secteur, zone et conditions de commission définis ensemble</span></div>
         <div class="stat-row"><span class="stat-label">Déploiement</span><span class="stat-value">Prise en main de votre offre et de vos argumentaires</span></div>
         <div class="stat-row"><span class="stat-label">Terrain</span><span class="stat-value">Prospection et vente active auprès de vos cibles</span></div>
         <div class="stat-row"><span class="stat-label">Rémunération</span><span class="stat-value stat-final">Commission versée sur chaque vente conclue</span></div>
       </div>
     </div>
-
-    <div class="service-block" id="service-03">
-      <div>
-        <span class="card-eyebrow">03 — Closing</span>
+  </div>
+</section>
+<section class="sv-sec" id="service-03">
+  <div class="wrap">
+    <div class="sv-block">
+      <div class="sv-main">
+        <span class="sv-ghost" aria-hidden="true">03</span>
+        <div class="sv-head">
+          <span class="sv-icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8 12.5l2.8 2.8L16.5 9.5"/></svg></span>
+          <span class="card-eyebrow">03 — Closing</span>
+        </div>
         <h3>Négociation &amp; closing</h3>
         <p class="tagline">« Des opportunités en cours qui traînent ? Je les reprends pour les transformer en contrats signés. »</p>
-        <ul class="feature-list">
+        <ul class="sv-checks">
           <li>Reprise et relance d'opportunités commerciales en cours</li>
           <li>Préparation et conduite des négociations</li>
           <li>Traitement des objections et structuration de l'argumentaire</li>
           <li>Rédaction et finalisation des accords commerciaux</li>
           <li>Transmission du savoir-faire à vos équipes si besoin</li>
         </ul>
-        <a href="contact.html" class="btn btn-ghost" style="margin-top:24px;">Parler de mes opportunités en cours</a>
+        <a href="contact.html" class="btn btn-primary btn-lg">Parler de mes opportunités en cours →</a>
       </div>
-      <div class="stat-box">
-        <div class="stat-label" style="margin-bottom:14px;">Ce que ça change</div>
+      <div class="stat-box sv-box reveal">
+        <div class="sv-box-title">Ce que ça change</div>
         <div class="stat-row"><span class="stat-label">Opportunités dormantes</span><span class="stat-value">Relancées et requalifiées</span></div>
         <div class="stat-row"><span class="stat-label">Objections</span><span class="stat-value">Anticipées et mieux traitées</span></div>
         <div class="stat-row"><span class="stat-label">Cycle de décision</span><span class="stat-value stat-final">Raccourci grâce à un suivi structuré</span></div>
       </div>
     </div>
-
-    <div class="service-block" id="service-04">
-      <div>
-        <span class="card-eyebrow">04 — Partenariats</span>
+  </div>
+</section>
+<section class="sv-sec sv-alt" id="service-04">
+  <div class="wrap">
+    <div class="sv-block sv-flip">
+      <div class="sv-main">
+        <span class="sv-ghost" aria-hidden="true">04</span>
+        <div class="sv-head">
+          <span class="sv-icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="12" r="3"/><circle cx="18" cy="6" r="3"/><circle cx="18" cy="18" r="3"/><path d="M8.7 10.6l6.6-3.2M8.7 13.4l6.6 3.2"/></svg></span>
+          <span class="card-eyebrow">04 — Partenariats</span>
+        </div>
         <h3>Développement de partenariats</h3>
         <p class="tagline">« Un réseau déjà construit, activé pour trouver vos prochains partenaires ou distributeurs. »</p>
-        <ul class="feature-list">
+        <ul class="sv-checks">
           <li>Identification de partenaires, apporteurs d'affaires ou distributeurs pertinents</li>
           <li>Prise de contact et mise en relation</li>
           <li>Structuration des accords de partenariat</li>
           <li>Suivi et animation des relations dans la durée</li>
           <li>Veille sectorielle et détection d'opportunités</li>
         </ul>
-        <a href="contact.html" class="btn btn-ghost" style="margin-top:24px;">Explorer un partenariat</a>
+        <a href="contact.html" class="btn btn-primary btn-lg">Explorer un partenariat →</a>
       </div>
-      <div class="stat-box">
-        <div class="stat-label" style="margin-bottom:14px;">Profil type des mandats</div>
+      <div class="stat-box sv-box reveal">
+        <div class="sv-box-title">Profil type des mandats</div>
         <div class="stat-row"><span class="stat-label">Entreprise</span><span class="stat-value">PME 10–200 pers.</span></div>
         <div class="stat-row"><span class="stat-label">Secteur</span><span class="stat-value">Industrie, B2B technique, services</span></div>
         <div class="stat-row"><span class="stat-label">Zone</span><span class="stat-value">France (et au-delà selon mandat)</span></div>
         <div class="stat-row"><span class="stat-label">Engagement</span><span class="stat-value stat-final">Mandat de représentation, exclusif ou non</span></div>
       </div>
     </div>
+  </div>
+</section>
 
-    <!-- Commission model -->
-    <div style="margin-top:64px;">
-      <div class="section-head" style="margin-bottom:0;">
-        <div class="eyebrow">Rémunération</div>
-        <h2 style="font-size:28px;">Une seule règle : je suis payé quand vous vendez</h2>
-        <p class="prose">Pas d'abonnement, pas de forfait mensuel imposé. Je travaille à la commission sur les ventes que je génère ou que je conclus pour vous — mon intérêt est directement aligné sur le vôtre.</p>
-      </div>
-      <div class="tiers">
-        <div class="tier">
-          <span class="tier-name">Aucun frais fixe</span>
-          <ul>
-            <li>Pas d'abonnement ni de forfait mensuel</li>
-            <li>Vous ne payez rien tant qu'il n'y a pas de vente</li>
-            <li>Le diagnostic initial est offert</li>
-          </ul>
-        </div>
-        <div class="tier featured">
-          <span class="tier-name" style="color:var(--accent);">Commission négociée</span>
-          <ul>
-            <li>Taux défini selon votre secteur et votre marge</li>
-            <li>Adapté à la complexité du cycle de vente</li>
-            <li>Fixé ensemble avant le début du mandat</li>
-          </ul>
-        </div>
-        <div class="tier">
-          <span class="tier-name">Mandat sur mesure</span>
-          <ul>
-            <li>Exclusif ou non, selon votre besoin</li>
-            <li>Sur une zone, un secteur ou un portefeuille défini</li>
-            <li>Durée et conditions fixées contractuellement</li>
-          </ul>
-        </div>
-      </div>
-      <p class="pricing-note">Aucun frais caché, aucune facturation surprise. Le diagnostic qui précède chaque mandat est offert — vous savez exactement à quoi vous engager avant de signer.</p>
+<!-- HOW IT STARTS -->
+<section class="sv-start">
+  <div class="wrap">
+    <div class="section-head sv-center">
+      <div class="eyebrow" style="justify-content:center;">Pour démarrer</div>
+      <h2>Trois étapes, zéro risque de votre côté</h2>
     </div>
+    <ol class="sv-steps">
+      <li class="reveal"><span class="sv-step-n">1</span><h3>Diagnostic offert</h3><p>45 minutes avec moi pour passer en revue votre offre, vos cibles et votre pipeline. Gratuit, sans engagement.</p></li>
+      <li class="reveal" style="--i:1"><span class="sv-step-n">2</span><h3>Mandat sur mesure</h3><p>Nous fixons ensemble le périmètre, la durée et le taux de commission avant que quoi que ce soit ne démarre.</p></li>
+      <li class="reveal" style="--i:2"><span class="sv-step-n">3</span><h3>Je vends, vous payez aux résultats</h3><p>Je pars sur le terrain. Vous suivez l'avancement par un reporting régulier et ne payez que sur les ventes conclues.</p></li>
+    </ol>
+  </div>
+</section>
 
-    <div class="cta-banner" style="margin-top:64px;">
+<!-- COMMISSION MODEL -->
+<section class="sv-pay" id="services-detail">
+  <div class="wrap">
+    <div class="section-head sv-center">
+      <div class="eyebrow" style="justify-content:center;">Rémunération</div>
+      <h2>Une seule règle&nbsp;: je suis payé quand vous vendez</h2>
+      <p class="prose">Pas d'abonnement, pas de forfait mensuel imposé. Je travaille à la commission sur les ventes que je génère ou que je conclus pour vous — mon intérêt est directement aligné sur le vôtre.</p>
+    </div>
+    <div class="tiers">
+      <div class="tier reveal">
+        <span class="sv-tier-ic" aria-hidden="true">0&nbsp;€</span>
+        <span class="tier-name">Aucun frais fixe</span>
+        <ul>
+          <li>Pas d'abonnement ni de forfait mensuel</li>
+          <li>Vous ne payez rien tant qu'il n'y a pas de vente</li>
+          <li>Le diagnostic initial est offert</li>
+        </ul>
+      </div>
+      <div class="tier featured reveal" style="--i:1">
+        <span class="sv-tier-flag">Au cœur de l'offre</span>
+        <span class="sv-tier-ic" aria-hidden="true">%</span>
+        <span class="tier-name">Commission négociée</span>
+        <ul>
+          <li>Taux défini selon votre secteur et votre marge</li>
+          <li>Adapté à la complexité du cycle de vente</li>
+          <li>Fixé ensemble avant le début du mandat</li>
+        </ul>
+      </div>
+      <div class="tier reveal" style="--i:2">
+        <span class="sv-tier-ic" aria-hidden="true">✎</span>
+        <span class="tier-name">Mandat sur mesure</span>
+        <ul>
+          <li>Exclusif ou non, selon votre besoin</li>
+          <li>Sur une zone, un secteur ou un portefeuille défini</li>
+          <li>Durée et conditions fixées contractuellement</li>
+        </ul>
+      </div>
+    </div>
+    <p class="pricing-note">Aucun frais caché, aucune facturation surprise. Le diagnostic qui précède chaque mandat est offert — vous savez exactement à quoi vous engager avant de signer.</p>
+
+    <div class="cta-banner sv-final">
       <div>
-        <h3>Pas sûr qu'une représentation commerciale ait du sens pour vous ?</h3>
+        <h3>Pas sûr qu'une représentation commerciale ait du sens pour vous&nbsp;?</h3>
         <p>45 minutes pour identifier vos leviers de croissance prioritaires. Offert, sans engagement — places limitées chaque mois.</p>
       </div>
-      <a href="contact.html" class="btn btn-primary">Réserver mon diagnostic gratuit →</a>
+      <div class="sv-final-ctas">
+        <a href="contact.html" class="btn btn-primary btn-lg">Réserver mon diagnostic gratuit →</a>
+        <a href="tel:+33647112035" class="sv-final-tel">ou appelez-moi&nbsp;: 06&nbsp;47&nbsp;11&nbsp;20&nbsp;35</a>
+      </div>
     </div>
   </div>
 </section>
