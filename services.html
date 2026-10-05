@@ -1144,6 +1144,355 @@
   .sv-pay .tier-name, .value-card .value-name{ font-weight:600; }
   .ab-path .section-head h2{ max-width:30ch; }
 
+  /* =====================================================================
+     v4 — classical layer. Greek key friezes, a portrait medallion, open
+     columns instead of boxed cards, symmetric centred compositions.
+     ===================================================================== */
+  :root{ --frieze:url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%2236%22 height=%2234%22 viewBox=%220 -2 36 34%22%3E%3Cg fill=%22none%22 stroke=%22%23000%22 stroke-width=%222.2%22 stroke-linecap=%22square%22%3E%3Cpath d=%22M0,0 H36 M0,30 H36%22/%3E%3Cpath d=%22M0,30 L0,6 L30,6 L30,24 L12,24 L12,12 L24,12 L24,18%22/%3E%3C/g%3E%3C/svg%3E"); --glyph:url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%2222%22 height=%2212%22 viewBox=%220 0 22 12%22%3E%3Cpath d=%22M1,11 H21 M1,11 V1 H13 V8 H5 V4 H9%22 fill=%22none%22 stroke=%22%23000%22 stroke-width=%221.6%22 stroke-linecap=%22square%22/%3E%3C/svg%3E"); --glyph-r:url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%2222%22 height=%2212%22 viewBox=%220 0 22 12%22%3E%3Cpath d=%22M21,11 H1 M21,11 V1 H9 V8 H17 V4 H13%22 fill=%22none%22 stroke=%22%23000%22 stroke-width=%221.6%22 stroke-linecap=%22square%22/%3E%3C/svg%3E"); }
+
+  /* ---------- Greek key frieze ---------- */
+  .frieze{ height:var(--fh,22px); background:var(--fc,var(--accent-deep)); -webkit-mask:var(--frieze) repeat-x left center / auto 100%; mask:var(--frieze) repeat-x left center / auto 100%; opacity:var(--fo,1); }
+  .frieze-hero{ --fh:26px; --fc:var(--accent-deep); --fo:.85; margin-top:72px; animation:frieze-run 90s linear infinite; }
+  .frieze-band{ --fh:24px; --fc:var(--accent-bright); --fo:.9; animation:frieze-run 120s linear infinite; }
+  .frieze-tablet{ --fh:20px; --fc:var(--accent-bright); }
+  .frieze-thin{ --fh:14px; --fc:var(--accent-deep); --fo:.7; }
+  @keyframes frieze-run{ to{ -webkit-mask-position:-720px center; mask-position:-720px center; } }
+  @media (prefers-reduced-motion: reduce){ .frieze{ animation:none !important; } }
+
+  /* ---------- eyebrow: label between two key hooks ---------- */
+  .eyebrow{ justify-content:center; gap:14px; font-size:12px; letter-spacing:.24em; color:var(--accent-deep); }
+  .eyebrow::before, .eyebrow::after{ content:""; display:block; width:22px; height:12px; flex:none; border:0; border-radius:0; box-shadow:none; background:currentColor; -webkit-mask:var(--glyph) no-repeat center / contain; mask:var(--glyph) no-repeat center / contain; }
+  .eyebrow::after{ -webkit-mask-image:var(--glyph-r); mask-image:var(--glyph-r); }
+
+  /* ---------- centred, symmetric section heads ---------- */
+  .section-head{ align-items:center; text-align:center; margin-left:auto; margin-right:auto; margin-bottom:72px; }
+  .section-head h2{ max-width:24ch; margin:0 auto; }
+  .section-head .prose{ max-width:58ch; margin:0 auto; }
+  .g-center{ text-align:center; margin-top:56px; }
+  .g-narrow{ max-width:920px; }
+  .g-lede{ font-size:20px; line-height:1.6; color:var(--text-soft); max-width:56ch; margin:0 auto; }
+  .g-ctas{ display:flex; flex-wrap:wrap; align-items:center; justify-content:center; gap:20px 36px; }
+  .text-link-light{ color:#fff; }
+  .text-link-light:hover{ color:var(--accent-bright); }
+
+  /* ---------- facts line (no boxes, key-hook separators) ---------- */
+  .g-facts{ list-style:none; margin:0; padding:0; display:flex; flex-wrap:wrap; justify-content:center; align-items:center; gap:12px 0; font-family:"Jost",sans-serif; font-size:13px; letter-spacing:.12em; text-transform:uppercase; color:var(--text-soft); }
+  .g-facts li{ display:flex; align-items:center; gap:10px; }
+  .g-facts li + li::before{ content:""; width:18px; height:10px; margin:0 22px; background:var(--accent-deep); -webkit-mask:var(--glyph) no-repeat center / contain; mask:var(--glyph) no-repeat center / contain; opacity:.8; }
+  .g-facts strong{ font-family:"Cinzel",serif; font-size:20px; letter-spacing:.02em; font-weight:600; color:var(--text); text-transform:none; }
+  .g-facts-light{ color:var(--on-navy-soft); }
+  .g-facts-light strong{ color:#fff; }
+  .g-facts-light li + li::before{ background:var(--accent-bright); }
+  @media (max-width:640px){ .g-facts{ flex-direction:column; } .g-facts li + li::before{ display:none; } }
+
+  /* ---------- HOME HERO ---------- */
+  .g-hero{ position:relative; overflow:hidden; isolation:isolate; padding:56px 0 0; text-align:center; }
+  .g-hero-rays{ position:absolute; z-index:-1; left:50%; top:-260px; width:1600px; height:1600px; margin-left:-800px; pointer-events:none; opacity:.55;
+    background:repeating-conic-gradient(from 0deg, color-mix(in srgb, var(--accent-bright) 9%, transparent) 0deg 1.2deg, transparent 1.2deg 7.5deg);
+    -webkit-mask:radial-gradient(circle, #000 0%, rgba(0,0,0,.6) 28%, transparent 62%); mask:radial-gradient(circle, #000 0%, rgba(0,0,0,.6) 28%, transparent 62%);
+    animation:rays-turn 240s linear infinite; }
+  @keyframes rays-turn{ to{ transform:rotate(360deg); } }
+  .g-hero-inner{ display:flex; flex-direction:column; align-items:center; gap:26px; }
+  .g-hero-inner > *{ animation:hero-in 1.1s var(--ease-out) both; }
+  .g-hero-inner > .medal{ animation:none; }
+  .g-hero-inner > h1{ animation:none; }
+  .g-hero-inner > .g-hero-id{ animation-delay:.5s; }
+  .g-hero-inner > .g-lede{ animation-delay:.9s; }
+  .g-hero-inner > .g-ctas{ animation-delay:1.05s; }
+  .g-hero-inner > .g-facts{ animation-delay:1.2s; }
+  .g-hero h1{ font-size:clamp(34px,4.5vw,70px); line-height:1.04; max-width:26ch; margin:6px auto 0; }
+  .g-hero h1 em, .g-band h1 em{ font-style:normal; display:block; color:var(--accent-deep); }
+  .g-hero-id{ font-family:"Jost",sans-serif; font-size:12.5px; letter-spacing:.2em; text-transform:uppercase; color:var(--text-faint); }
+  .g-hero-id span{ margin:0 8px; color:var(--accent-deep); }
+  .g-hero-id-light{ color:var(--on-navy-soft); }
+  .g-hero-id-light span{ color:var(--accent-bright); }
+  .g-clients{ display:flex; flex-wrap:wrap; justify-content:center; align-items:baseline; gap:10px 0; padding:30px 0 40px; }
+  .g-clients-label{ width:100%; text-align:center; font-family:"Jost",sans-serif; font-size:11.5px; letter-spacing:.24em; text-transform:uppercase; color:var(--text-faint); margin-bottom:8px; }
+  .g-client{ font-family:"Cinzel",serif; font-weight:600; font-size:clamp(17px,1.6vw,23px); letter-spacing:.1em; color:color-mix(in srgb, var(--ink) 62%, transparent); }
+  .g-client + .g-client::before{ content:"·"; margin:0 26px; color:var(--accent-deep); }
+  @media (max-width:640px){ .g-client + .g-client::before{ margin:0 12px; } .g-hero{ padding-top:36px; } }
+
+  /* ---------- MEDALLION ---------- */
+  .medal{ position:relative; width:var(--ms,320px); aspect-ratio:1; }
+  .medal-hero{ --ms:clamp(230px, 26vw, 340px); margin-bottom:-6px; }
+  .medal-about{ --ms:clamp(220px, 24vw, 300px); margin-bottom:6px; }
+  .medal-svg{ width:100%; height:100%; display:block; overflow:visible; }
+  .medal-svg .medal-meander circle, .medal-svg .medal-meander path{ fill:none; stroke:var(--accent-deep); stroke-width:2.2; }
+  .medal-svg .medal-ticks path{ stroke:var(--accent-deep); stroke-width:1.3; opacity:.55; }
+  .medal-svg .medal-beads circle{ fill:var(--accent-deep); opacity:.85; }
+  .medal-svg .medal-rays path{ fill:none; stroke:var(--accent-bright); stroke-width:1.8; stroke-linecap:round; }
+  .medal-svg .medal-rim{ fill:none; stroke:var(--accent-deep); stroke-width:2.4; }
+  .medal-svg .medal-rim2{ fill:none; stroke:var(--accent-deep); stroke-width:1; opacity:.6; }
+  .g-band .medal-svg .medal-meander circle, .g-band .medal-svg .medal-meander path, .g-band .medal-svg .medal-rim, .g-band .medal-svg .medal-rim2{ stroke:var(--accent-bright); }
+  .g-band .medal-svg .medal-ticks path{ stroke:var(--accent-bright); }
+  .g-band .medal-svg .medal-beads circle{ fill:var(--accent-bright); }
+  /* rings turn in opposite directions; the whole coin draws itself on load */
+  .medal-ring, .medal-beads, .medal-ticks, .medal-rays{ transform-box:view-box; transform-origin:0 0; }
+  .medal-ring{ animation:medal-cw 140s linear infinite; }
+  .medal-ticks{ animation:medal-ccw 200s linear infinite; }
+  .medal-beads{ animation:medal-ccw 110s linear infinite; }
+  @keyframes medal-cw{ to{ transform:rotate(360deg); } }
+  @keyframes medal-ccw{ to{ transform:rotate(-360deg); } }
+  .medal .medal-meander path, .medal .medal-meander circle{ stroke-dasharray:1 1; }
+  .medal .medal-meander path{ stroke-dasharray:4200; stroke-dashoffset:4200; animation:medal-draw 2.6s var(--ease-out) .1s forwards; }
+  .medal .medal-meander circle{ stroke-dasharray:1; stroke-dashoffset:1; animation:medal-draw 1.6s var(--ease-out) forwards; }
+  @keyframes medal-draw{ to{ stroke-dashoffset:0; } }
+  .medal .medal-beads, .medal .medal-ticks{ opacity:0; animation-name:medal-ccw, medal-fade; animation-duration:110s, 1.2s; animation-timing-function:linear, ease; animation-delay:0s, .9s; animation-iteration-count:infinite, 1; animation-fill-mode:none, forwards; }
+  .medal .medal-rays{ opacity:0; transform:scale(.6); animation:medal-rays-in 1.6s var(--ease-out) .7s forwards; }
+  @keyframes medal-fade{ to{ opacity:1; } }
+  @keyframes medal-rays-in{ to{ opacity:1; transform:none; } }
+  .medal-face{ opacity:0; animation:medal-fade 1.4s ease .3s forwards; }
+  @media (prefers-reduced-motion: reduce){
+    .medal .medal-ring, .medal .medal-ticks, .medal .medal-beads, .medal .medal-rays, .medal .medal-meander path, .medal .medal-meander circle, .medal-face{ animation:none !important; opacity:1 !important; stroke-dashoffset:0 !important; transform:none !important; }
+    .g-hero-rays{ animation:none; }
+  }
+
+  /* ---------- TABLET (framed offer) ---------- */
+  .g-offer{ padding-top:96px; }
+  .tablet{ position:relative; max-width:1080px; margin:0 auto; background:var(--navy); color:var(--on-navy); padding:22px 26px; box-shadow:0 50px 90px -50px rgba(18,23,36,.75); }
+  .tablet::before{ content:""; position:absolute; inset:10px; border:1px solid color-mix(in srgb, var(--accent-bright) 40%, transparent); pointer-events:none; }
+  .tablet-body{ padding:48px 40px 52px; display:flex; flex-direction:column; align-items:center; text-align:center; gap:22px; }
+  .tablet h2{ color:#fff; font-size:clamp(28px,3.4vw,48px); }
+  .tablet h3{ color:#fff; }
+  .tablet-kicker{ font-family:"Jost",sans-serif; font-size:12px; letter-spacing:.24em; text-transform:uppercase; color:var(--accent-bright); }
+  .tablet-lede{ font-size:19px; line-height:1.6; color:var(--on-navy-soft); max-width:60ch; }
+  .tablet-cols{ display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); width:100%; margin:18px 0 6px; border-top:1px solid rgba(255,255,255,.14); border-bottom:1px solid rgba(255,255,255,.14); }
+  .tablet-cols > div{ padding:28px 26px; }
+  .tablet-cols > div + div{ border-left:1px solid rgba(255,255,255,.14); }
+  .tablet-cols h3{ font-size:18px; letter-spacing:.03em; margin-bottom:10px; }
+  .tablet-cols p{ font-size:15.5px; line-height:1.55; color:var(--on-navy-soft); }
+  .tablet-note{ font-size:16px; color:var(--on-navy); }
+  .tablet-tel{ font-family:"Cinzel",serif; font-size:20px; letter-spacing:.06em; color:#fff; text-decoration:none; border-bottom:1px solid rgba(255,255,255,.3); }
+  .tablet-tel:hover{ border-color:var(--accent-bright); }
+  .tablet .btn-primary::before{ background:#fff; }
+  .tablet .btn-primary:hover{ color:var(--ink); }
+  @media (max-width:820px){ .tablet-cols{ grid-template-columns:1fr; } .tablet-cols > div + div{ border-left:0; border-top:1px solid rgba(255,255,255,.14); } .tablet-body{ padding:36px 8px 40px; } .tablet{ padding:16px; } }
+  .tablet-small{ padding:16px 18px; }
+  .tablet-small .tablet-body{ padding:34px 22px 38px; gap:14px; }
+  .tablet-small h3{ font-size:24px; }
+  .tablet-small p{ color:var(--on-navy-soft); font-size:16px; line-height:1.6; }
+
+  /* ---------- LETTER (founder) ---------- */
+  .g-letter{ padding-top:140px; }
+  .letter-body{ max-width:64ch; margin:0 auto; display:flex; flex-direction:column; gap:22px; font-size:20px; line-height:1.7; color:var(--text-soft); text-align:center; }
+  .letter-body p:first-child{ font-size:24px; line-height:1.5; color:var(--text); }
+  .signature{ margin-top:44px; display:flex; flex-direction:column; align-items:center; gap:18px; }
+  .signature-name{ font-family:"Cinzel",serif; font-size:30px; letter-spacing:.08em; color:var(--text); padding-bottom:16px; position:relative; }
+  .signature-name::after{ content:""; position:absolute; left:50%; bottom:0; width:120px; margin-left:-60px; height:12px; background:var(--accent-deep); -webkit-mask:var(--frieze) repeat-x left center / auto 100%; mask:var(--frieze) repeat-x left center / auto 100%; }
+  .signature-links{ display:flex; gap:32px; }
+
+  /* ---------- VOICES ---------- */
+  .g-voices{ padding-bottom:40px; }
+  .voices{ list-style:none; margin:0 auto; padding:0; max-width:980px; display:flex; flex-direction:column; align-items:center; }
+  .voices li{ text-align:center; font-size:clamp(22px,2.3vw,32px); line-height:1.35; font-style:italic; color:var(--text); padding:26px 0; }
+  .voices li + li::before{ content:""; display:block; width:22px; height:12px; margin:0 auto 52px; background:var(--accent-deep); -webkit-mask:var(--glyph) no-repeat center / contain; mask:var(--glyph) no-repeat center / contain; opacity:.75; }
+  .manifesto{ padding:100px 0 150px; }
+  .manifesto-text{ margin:0 auto; text-align:center; max-width:28ch; }
+
+  /* ---------- COLONNADE (open columns + fluted pilasters) ---------- */
+  .colonnade{ display:grid; grid-template-columns:minmax(0,1fr) 18px minmax(0,1fr) 18px minmax(0,1fr); gap:0 clamp(24px,4vw,64px); align-items:stretch; }
+  .colonnade-4{ grid-template-columns:minmax(0,1fr) 18px minmax(0,1fr) 18px minmax(0,1fr) 18px minmax(0,1fr); }
+  .colonnade .col{ text-align:center; display:flex; flex-direction:column; align-items:center; gap:14px; padding:12px 0 18px; }
+  .colonnade .col h3{ font-size:clamp(20px,1.7vw,25px); letter-spacing:.03em; }
+  .colonnade .col p{ font-size:16.5px; line-height:1.6; color:var(--text-soft); max-width:34ch; }
+  .pilaster{ position:relative; display:block; width:18px; justify-self:center;
+    background:linear-gradient(90deg, transparent 0 3px, var(--hair-strong) 3px 4px, transparent 4px 8.5px, var(--hair-strong) 8.5px 9.5px, transparent 9.5px 14px, var(--hair-strong) 14px 15px, transparent 15px); }
+  .pilaster::before, .pilaster::after{ content:""; position:absolute; left:-5px; right:-5px; height:6px; border:1px solid var(--hair-strong); border-left:0; border-right:0; }
+  .pilaster::before{ top:-6px; border-bottom:0; box-shadow:0 -1px 0 var(--hair-strong); }
+  .pilaster::after{ bottom:-6px; border-top:0; box-shadow:0 1px 0 var(--hair-strong); }
+  @media (max-width:860px){
+    .colonnade, .colonnade-4{ grid-template-columns:1fr; gap:0; }
+    .pilaster{ width:120px; height:18px; margin:28px auto; background:none; }
+    .pilaster::before, .pilaster::after{ display:none; }
+    .pilaster{ background:var(--accent-deep); -webkit-mask:var(--frieze) repeat-x left center / auto 100%; mask:var(--frieze) repeat-x left center / auto 100%; opacity:.5; height:14px; }
+  }
+  @media (min-width:861px) and (max-width:1100px){ .colonnade-4{ grid-template-columns:minmax(0,1fr) 18px minmax(0,1fr); } .colonnade-4 > .pilaster:nth-of-type(2){ display:none; } }
+  .g-colonnade-sec{ padding-top:40px; }
+
+  /* ---------- SERVICES (index) ---------- */
+  .svc-list{ max-width:1100px; margin:0 auto; display:flex; flex-direction:column; align-items:center; }
+  .svc-item{ display:flex; flex-direction:column; align-items:center; text-align:center; gap:10px; padding:34px 20px; text-decoration:none; color:var(--text); width:100%; position:relative; }
+  .svc-item + .svc-item{ border-top:1px solid var(--hair); }
+  .svc-name{ font-family:"Cinzel",serif; font-weight:600; font-size:clamp(28px,3.6vw,54px); line-height:1.08; letter-spacing:.01em; position:relative; transition:color .4s ease, letter-spacing .6s var(--ease-out); }
+  .svc-name::after{ content:""; position:absolute; left:0; right:0; bottom:-8px; height:10px; background:var(--accent-bright); -webkit-mask:var(--frieze) repeat-x left center / auto 100%; mask:var(--frieze) repeat-x left center / auto 100%; transform:scaleX(0); transform-origin:center; transition:transform .6s var(--ease-out); }
+  .svc-line{ font-size:17.5px; line-height:1.55; color:var(--text-soft); max-width:56ch; }
+  .svc-item:hover .svc-name, .svc-item:focus-visible .svc-name{ color:var(--accent-deep); letter-spacing:.03em; }
+  .svc-item:hover .svc-name::after, .svc-item:focus-visible .svc-name::after{ transform:scaleX(1); }
+  @media (prefers-reduced-motion: reduce){ .svc-name, .svc-name::after{ transition:none; } }
+
+  /* ---------- JOURNEY (sundial, scroll-driven) ---------- */
+  .journey{ position:relative; background:var(--navy); color:var(--on-navy); padding:0; }
+  .journey-pin{ position:relative; padding:110px 0 90px; overflow:hidden; }
+  .journey-head{ text-align:center; padding:0 20px; position:relative; z-index:2; }
+  .journey-head .eyebrow{ color:var(--accent-bright); }
+  .journey-head h2{ color:#fff; font-size:clamp(26px,3vw,44px); line-height:1.12; max-width:26ch; margin:16px auto 0; }
+  .journey-stage{ position:relative; width:100%; margin:24px auto 0; }
+  .journey-svg{ display:block; width:100%; height:auto; }
+  .j-arc{ fill:none; stroke:rgba(255,255,255,.16); stroke-width:1.4; stroke-dasharray:2 7; }
+  .j-ticks{ stroke:rgba(255,255,255,.22); stroke-width:1.2; }
+  .j-arc-lit{ fill:none; stroke:var(--accent-bright); stroke-width:2.6; stroke-linecap:round; filter:drop-shadow(0 0 6px rgba(251,115,10,.6)); }
+  .j-mark{ fill:var(--navy); stroke:rgba(255,255,255,.4); stroke-width:1.6; transition:fill .4s ease, stroke .4s ease; }
+  .j-mark.passed{ fill:var(--accent-bright); stroke:var(--accent-bright); }
+  .j-label{ font-family:"Cinzel",serif; font-size:24px; font-weight:600; letter-spacing:.06em; fill:rgba(255,255,255,.42); transition:fill .4s ease; }
+  .j-label.passed{ fill:rgba(255,255,255,.8); }
+  .j-label.active{ fill:var(--accent-bright); }
+  .j-floor{ stroke:rgba(251,115,10,.12); stroke-width:1; }
+  .j-ground{ stroke:rgba(251,115,10,.55); stroke-width:1.4; }
+  .j-shadow{ fill:url(#jShadowG); }
+  .j-temple rect, .j-temple path{ fill:var(--navy-2); stroke:rgba(251,115,10,.85); stroke-width:1.5; }
+  .j-temple .t-frieze-key{ stroke:none; }
+  .j-temple .t-flutes{ fill:none; stroke:rgba(251,115,10,.35); stroke-width:1; }
+  .j-temple .t-pediment-in{ fill:none; stroke:rgba(251,115,10,.45); }
+  .j-temple .t-shaft{ stroke:rgba(251,115,10,.85); }
+  .j-sun-halo{ fill:rgba(251,115,10,.18); }
+  .j-sun-rays line{ stroke:#FFB066; stroke-width:2.4; stroke-linecap:round; }
+  .j-sun-rays{ animation:medal-cw 30s linear infinite; transform-box:fill-box; transform-origin:center; }
+  .j-horizon{ opacity:.6; }
+  .journey-steps{ list-style:none; margin:0; padding:0; }
+  /* static fallback (no JS / reduced motion): readable list */
+  .journey:not(.is-live) .journey-steps{ display:grid; grid-template-columns:repeat(5,minmax(0,1fr)); gap:28px; max-width:1400px; margin:20px auto 0; padding:0 48px; text-align:center; }
+  .journey:not(.is-live) .j-step h3{ color:#fff; font-size:20px; margin-bottom:8px; }
+  .journey:not(.is-live) .j-step p{ color:var(--on-navy-soft); font-size:15px; }
+  .journey:not(.is-live) .journey-hint{ display:none; }
+  @media (max-width:900px){ .journey:not(.is-live) .journey-steps{ grid-template-columns:1fr; padding:0 20px; } }
+  /* live: section is tall, the stage is pinned while the sun travels */
+  .journey.is-live{ height:460vh; }
+  .journey.is-live .journey-pin{ position:sticky; top:0; height:100vh; min-height:620px; padding:clamp(80px,11vh,120px) 0 0; display:flex; flex-direction:column; }
+  .journey.is-live .journey-stage{ flex:1; min-height:0; display:flex; align-items:flex-end; }
+  .journey.is-live .journey-svg{ width:100%; height:100%; }
+  .journey.is-live .journey-steps{ position:absolute; left:50%; top:var(--apex, 46%); transform:translateX(-50%); width:min(600px, 84vw); height:150px; text-align:center; z-index:3; }
+  .journey.is-live .j-step{ position:absolute; inset:0; opacity:0; transform:translateY(16px); transition:opacity .5s ease, transform .6s var(--ease-out); }
+  .journey.is-live .j-step.is-active{ opacity:1; transform:none; }
+  .journey.is-live .j-step h3{ color:#fff; font-size:clamp(26px,2.6vw,40px); letter-spacing:.04em; }
+  .journey.is-live .j-step p{ color:var(--on-navy-soft); font-size:17px; line-height:1.55; margin-top:10px; }
+  .journey-hint{ position:absolute; left:50%; bottom:18px; transform:translateX(-50%); font-family:"Jost",sans-serif; font-size:11px; letter-spacing:.24em; text-transform:uppercase; color:rgba(255,255,255,.4); z-index:3; transition:opacity .4s ease; }
+  .journey.is-done .journey-hint{ opacity:0; }
+
+
+  /* ---------- REFERENCES ---------- */
+  .refs .col h3{ font-size:clamp(24px,2.4vw,36px); }
+  .ref-kind{ font-family:"Jost",sans-serif; font-size:11.5px; letter-spacing:.2em; text-transform:uppercase; color:var(--accent-deep); }
+  .refs .col p{ font-style:italic; }
+
+  /* ---------- FAQ ---------- */
+  .g-faq .faq{ max-width:860px; margin:0 auto; }
+  .g-faq .faq-q{ text-align:left; }
+
+  /* ---------- SUNRISE: the horizon is a lit Greek key ---------- */
+  .frieze-horizon{ position:absolute; z-index:-1; left:0; right:0; bottom:13%; --fh:16px; --fc:#FFB066; --fo:calc(.35 + var(--rise, 0) * .65); transform:translateY(50%); animation:frieze-run 140s linear infinite; }
+  .sunrise-horizon{ display:none; }
+  @media (max-width:640px){ .frieze-horizon{ bottom:12%; } }
+
+  /* ---------- NAVY BANDS (page heroes & final calls) ---------- */
+  .g-band{ position:relative; overflow:hidden; isolation:isolate; background:var(--navy); color:var(--on-navy); text-align:center; padding:0; }
+  .g-band-inner{ display:flex; flex-direction:column; align-items:center; gap:24px; padding:96px 0 84px; }
+  .g-band-hero .g-band-inner{ padding:84px 0 72px; }
+  .g-band::before{ content:""; position:absolute; z-index:-1; left:50%; top:-40%; width:1400px; height:1400px; margin-left:-700px; pointer-events:none;
+    background:repeating-conic-gradient(from 0deg, rgba(251,115,10,.07) 0deg 1.2deg, transparent 1.2deg 7.5deg);
+    -webkit-mask:radial-gradient(circle, #000 0%, transparent 60%); mask:radial-gradient(circle, #000 0%, transparent 60%); animation:rays-turn 260s linear infinite; }
+  @media (prefers-reduced-motion: reduce){ .g-band::before{ animation:none; } }
+  .g-band h1{ color:#fff; font-size:clamp(34px,4.6vw,68px); line-height:1.05; max-width:20ch; }
+  .g-band h1 em{ color:var(--accent-bright); }
+  .g-band h2{ color:#fff; font-size:clamp(28px,3.4vw,48px); max-width:24ch; }
+  .g-band .eyebrow{ color:var(--accent-bright); }
+  .g-band .g-lede{ color:var(--on-navy-soft); }
+  .g-band-inner > *{ animation:hero-in 1s var(--ease-out) both; }
+  .g-band-inner > *:nth-child(2){ animation-delay:.1s; } .g-band-inner > *:nth-child(3){ animation-delay:.2s; } .g-band-inner > *:nth-child(4){ animation-delay:.3s; } .g-band-inner > *:nth-child(5){ animation-delay:.4s; } .g-band-inner > *:nth-child(6){ animation-delay:.5s; }
+  .g-band-cta .g-band-inner > *{ animation:none; }
+  .g-band .btn-primary::before{ background:#fff; }
+  .g-band .btn-primary:hover{ color:var(--ink); }
+  .g-anchors{ display:flex; flex-wrap:wrap; justify-content:center; gap:10px 0; margin-top:10px; }
+  .g-anchors a{ font-family:"Cinzel",serif; font-weight:600; font-size:clamp(16px,1.5vw,21px); letter-spacing:.08em; color:#fff; text-decoration:none; position:relative; padding:4px 0; transition:color .3s ease; }
+  .g-anchors a + a::before{ content:"·"; margin:0 24px; color:var(--accent-bright); }
+  .g-anchors a:hover{ color:var(--accent-bright); }
+
+  /* ---------- SERVICE DETAIL (services page) ---------- */
+  .g-svc{ padding:112px 0; }
+  .g-svc + .g-svc{ padding-top:0; }
+  .g-svc + .g-svc .wrap::before{ content:""; display:block; height:18px; max-width:520px; margin:0 auto 112px; background:var(--accent-deep); opacity:.55; -webkit-mask:var(--frieze) repeat-x center / auto 100%; mask:var(--frieze) repeat-x center / auto 100%; }
+  .g-svc .section-head{ margin-bottom:56px; }
+  .g-svc .section-head h2{ font-size:clamp(32px,4vw,58px); }
+  .svc-tagline{ font-size:clamp(19px,1.7vw,23px); font-style:italic; color:var(--text-soft); max-width:46ch; margin:0 auto; }
+  .svc-cols{ display:grid; grid-template-columns:minmax(0,1fr) 18px minmax(0,1fr); gap:0 clamp(28px,4.5vw,72px); max-width:1180px; margin:0 auto; }
+  .svc-cols h3{ font-family:"Jost",sans-serif; font-size:12px; font-weight:500; letter-spacing:.22em; text-transform:uppercase; color:var(--accent-deep); text-align:center; margin-bottom:18px; }
+  .svc-does{ list-style:none; margin:0; padding:0; text-align:center; }
+  .svc-does li{ padding:15px 0; font-size:17.5px; line-height:1.45; color:var(--text); }
+  .svc-does li + li{ border-top:1px solid var(--hair); }
+  .svc-how{ margin:0; }
+  .svc-how > div{ display:grid; grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr); gap:16px; padding:15px 0; align-items:baseline; }
+  .svc-how > div + div{ border-top:1px solid var(--hair); }
+  .svc-how dt{ font-family:"Jost",sans-serif; font-size:12.5px; letter-spacing:.14em; text-transform:uppercase; color:var(--text-faint); text-align:right; }
+  .svc-how dd{ margin:0; font-size:17px; line-height:1.45; color:var(--text); }
+  .svc-how dd.strong{ color:var(--accent-deep); font-weight:600; }
+  .g-svc .g-ctas{ margin-top:52px; }
+  @media (max-width:860px){ .svc-cols{ grid-template-columns:1fr; } .svc-cols .pilaster{ width:120px; height:14px; margin:36px auto; } .svc-how > div{ grid-template-columns:1fr; gap:4px; text-align:center; } .svc-how dt{ text-align:center; } }
+
+  /* sun position glyphs for the three starting steps (order without numbers) */
+  .sun-phase{ position:relative; width:64px; height:34px; display:block; margin-bottom:6px; }
+  .sun-phase::before{ content:""; position:absolute; inset:0 0 2px; border:1.5px solid var(--hair-strong); border-bottom:0; border-radius:64px 64px 0 0; }
+  .sun-phase::after{ content:""; position:absolute; width:12px; height:12px; border-radius:50%; background:var(--accent-bright); box-shadow:0 0 0 4px var(--bg), 0 0 12px rgba(251,115,10,.7); }
+  .sun-phase-1::after{ left:-5px; bottom:-4px; }
+  .sun-phase-2::after{ left:26px; top:-6px; }
+  .sun-phase-3::after{ right:-5px; bottom:-4px; }
+  .sun-phase{ border-bottom:1.5px solid var(--accent-deep); }
+
+  /* ---------- PAY ---------- */
+  .pay-grid{ display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1.15fr) minmax(0,1fr); gap:clamp(24px,4vw,64px); align-items:center; max-width:1240px; margin:0 auto; }
+  .pay-side{ text-align:center; display:flex; flex-direction:column; gap:12px; align-items:center; }
+  .pay-side h3{ font-size:22px; }
+  .pay-side p{ font-size:16.5px; line-height:1.6; color:var(--text-soft); max-width:32ch; }
+  @media (max-width:900px){ .pay-grid{ grid-template-columns:1fr; } }
+
+  /* ---------- ABOUT ---------- */
+  .g-about-hero .g-band-inner{ gap:20px; }
+  .spine{ list-style:none; margin:0 auto; padding:0; max-width:1100px; position:relative; }
+  .spine::before{ content:""; position:absolute; left:50%; top:0; bottom:0; width:1px; background:linear-gradient(var(--accent-deep), var(--hair-strong)); }
+  .spine-item{ display:grid; grid-template-columns:1fr 1fr; gap:0 80px; position:relative; padding:30px 0; }
+  .spine-item::before{ content:""; position:absolute; left:50%; top:40px; width:13px; height:13px; margin-left:-7px; border-radius:50%; background:var(--bg); border:1.5px solid var(--accent-deep); }
+  .spine-item.is-now::before{ background:var(--accent-bright); border-color:var(--accent-bright); box-shadow:0 0 0 6px color-mix(in srgb, var(--accent-bright) 22%, transparent), 0 0 18px rgba(251,115,10,.6); }
+  .spine-date{ text-align:right; font-family:"Jost",sans-serif; font-size:13px; letter-spacing:.16em; text-transform:uppercase; color:var(--accent-deep); padding-top:6px; }
+  .spine-body h3{ font-size:clamp(22px,2vw,28px); }
+  .spine-org{ font-size:18px; font-weight:600; color:var(--text); margin-top:4px; }
+  .spine-body p:last-child{ font-size:16px; color:var(--text-soft); margin-top:2px; }
+  .spine-item:nth-child(even) .spine-date{ order:2; text-align:left; }
+  .spine-item:nth-child(even) .spine-body{ order:1; text-align:right; }
+  @media (max-width:760px){
+    .spine::before{ left:6px; }
+    .spine-item{ grid-template-columns:1fr; padding:22px 0 22px 34px; }
+    .spine-item::before{ left:6px; top:28px; }
+    .spine-date, .spine-item:nth-child(even) .spine-date{ order:0; text-align:left; padding-top:0; margin-bottom:4px; }
+    .spine-item:nth-child(even) .spine-body{ order:0; text-align:left; }
+  }
+  .edu{ margin:80px auto 0; text-align:center; display:flex; flex-direction:column; align-items:center; gap:10px; }
+  .edu-title{ font-family:"Jost",sans-serif; font-size:12px; font-weight:500; letter-spacing:.24em; text-transform:uppercase; color:var(--accent-deep); margin-bottom:6px; }
+  .edu p{ font-size:18px; color:var(--text); }
+  .edu-date{ display:inline-block; margin-left:10px; font-family:"Jost",sans-serif; font-size:12px; letter-spacing:.14em; text-transform:uppercase; color:var(--text-faint); }
+  .g-quote{ padding:40px 0 100px; }
+  .g-quote .frieze{ max-width:640px; margin:0 auto; }
+  .g-quote blockquote{ margin:44px auto; max-width:24ch; text-align:center; font-family:"Cinzel",serif; font-weight:600; font-size:clamp(26px,3.4vw,50px); line-height:1.2; color:var(--text); }
+
+  /* ---------- CONTACT ---------- */
+  .contact-note{ margin-top:32px; padding-top:22px; border-top:1px solid var(--hair); font-size:16.5px; color:var(--text-soft); }
+  .contact-note strong{ color:var(--accent-deep); font-weight:600; }
+
+  /* ---------- footer gets a frieze ---------- */
+  footer .frieze-foot{ --fh:20px; --fc:var(--accent-bright); --fo:.75; margin-bottom:56px; }
+
+  /* journey on phones: stage fits the width, step text sits under the drawing */
+  @media (max-width:760px){
+    .j-label{ display:none; }
+    .journey.is-live .journey-pin{ justify-content:center; padding-top:70px; }
+    .journey.is-live .journey-stage{ flex:none; display:block; }
+    .journey.is-live .journey-svg{ height:auto; }
+    .journey.is-live .journey-steps{ position:relative; top:auto; left:auto; transform:none; margin:20px auto 0; height:190px; }
+  }
+  .colonnade .col h3{ line-height:1.15; }
+  .g-band h2{ line-height:1.12; }
+  .tablet-small .tablet-kicker{ color:var(--accent-bright); }
+  .tablet-small h3{ line-height:1.2; }
+  #contact .faq{ max-width:860px; margin-left:auto; margin-right:auto; }
+  .contact-grid{ max-width:1180px; margin:0 auto; }
+
 </style>
 
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
@@ -1174,213 +1523,211 @@
 <div class="page" id="page-services" data-page="services">
 
 <!-- SERVICES HERO -->
-<section class="sv-hero">
-  <div class="wrap sv-hero-inner">
-    <div class="sv-hero-copy">
-    <div class="eyebrow sv-eyebrow">Mes offres · Payé uniquement à la commission</div>
-    <h1>Quatre leviers pour vendre plus. <em class="gold-shine-text">Un seul tarif&nbsp;: la commission.</em></h1>
-    <p class="lede">Prospection, représentation, closing, partenariats&nbsp;: choisissez le levier dont vous avez besoin, ou combinez-les. <strong>Pas de frais fixe, pas d'abonnement</strong> — je ne gagne que sur les ventes signées.</p>
-    <div class="hero-ctas sv-hero-ctas">
-      <a href="contact.html" class="btn btn-primary btn-lg">Obtenir mon diagnostic gratuit →</a>
-      <a href="tel:+33647112035" class="btn btn-ghost-light btn-lg">06&nbsp;47&nbsp;11&nbsp;20&nbsp;35</a>
+<section class="g-band g-band-hero">
+  <div class="wrap g-band-inner">
+    <div class="eyebrow">Mes offres</div>
+    <h1 class="split-words">Quatre leviers pour vendre plus. <em>Un seul tarif&nbsp;: la commission.</em></h1>
+    <p class="g-lede">Choisissez le levier dont vous avez besoin ou combinez-les. Je ne facture ni abonnement ni frais fixe&nbsp;: je suis rémunéré sur les ventes signées.</p>
+    <div class="g-ctas">
+      <a href="contact.html" class="btn btn-primary btn-lg"><span>Réserver le diagnostic offert</span><span class="btn-arrow" aria-hidden="true">→</span></a>
+      <a href="tel:+33647112035" class="text-link text-link-light">06&nbsp;47&nbsp;11&nbsp;20&nbsp;35</a>
     </div>
-    </div>
-    <ul class="sv-facts" aria-label="Mes engagements">
-      <li><strong>0&nbsp;€</strong><span>de frais fixe</span></li>
-      <li><strong>100&nbsp;%</strong><span>à la commission</span></li>
-      <li><strong>45&nbsp;min</strong><span>de diagnostic offert</span></li>
-      <li><strong>7&nbsp;jours</strong><span>pour démarrer</span></li>
+    <ul class="g-facts g-facts-light" aria-label="Mes engagements">
+      <li><strong>0&nbsp;€</strong> de frais fixe</li>
+      <li><strong>100&nbsp;%</strong> à la commission</li>
+      <li><strong>45&nbsp;min</strong> de diagnostic offert</li>
+      <li><strong>7&nbsp;jours</strong> pour démarrer</li>
     </ul>
-    <nav class="sv-jumps" aria-label="Aller à une offre">
-        <a class="sv-jump" href="services.html#service-01"><span class="sv-jump-n">01</span><span class="sv-jump-ic" aria-hidden="true"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.2" fill="currentColor"/></svg></span><span class="sv-jump-t">Prospection B2B</span><span class="sv-jump-d">Des rendez-vous qualifiés dans votre agenda</span></a>
-        <a class="sv-jump" href="services.html#service-02"><span class="sv-jump-n">02</span><span class="sv-jump-ic" aria-hidden="true"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M9 7V5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2"/><path d="M3 13h18"/></svg></span><span class="sv-jump-t">Représentation commerciale</span><span class="sv-jump-d">Je vends pour vous, sur le terrain</span></a>
-        <a class="sv-jump" href="services.html#service-03"><span class="sv-jump-n">03</span><span class="sv-jump-ic" aria-hidden="true"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8 12.5l2.8 2.8L16.5 9.5"/></svg></span><span class="sv-jump-t">Négociation &amp; closing</span><span class="sv-jump-d">Vos opportunités en attente, signées</span></a>
-        <a class="sv-jump" href="services.html#service-04"><span class="sv-jump-n">04</span><span class="sv-jump-ic" aria-hidden="true"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="12" r="3"/><circle cx="18" cy="6" r="3"/><circle cx="18" cy="18" r="3"/><path d="M8.7 10.6l6.6-3.2M8.7 13.4l6.6 3.2"/></svg></span><span class="sv-jump-t">Partenariats</span><span class="sv-jump-d">Distributeurs et apporteurs d'affaires</span></a>
+    <nav class="g-anchors" aria-label="Aller à une offre">
+      <a href="services.html#service-01">Prospection</a><a href="services.html#service-02">Représentation</a><a href="services.html#service-03">Négociation</a><a href="services.html#service-04">Partenariats</a>
     </nav>
+  </div>
+  <div class="frieze frieze-band" aria-hidden="true"></div>
+</section>
+
+<section class="g-svc" id="service-01">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="eyebrow">Acquisition</div>
+      <h2>Prospection B2B</h2>
+      <p class="svc-tagline">Je trouve vos prospects, je les appelle et je vous apporte des rendez-vous qualifiés.</p>
+    </div>
+    <div class="svc-cols reveal">
+      <div>
+        <h3>Ce que je fais</h3>
+        <ul class="svc-does">
+          <li>Construction de listes de prospects qualifiés</li>
+          <li>Séquences email et LinkedIn personnalisées</li>
+          <li>Prospection téléphonique structurée et argumentée</li>
+          <li>Qualification des opportunités : budget, besoin, délai de décision</li>
+          <li>Reporting hebdomadaire et ajustements continus</li>
+        </ul>
+      </div>
+      <span class="pilaster" aria-hidden="true"></span>
+      <div>
+        <h3>En pratique</h3>
+        <dl class="svc-how">
+          <div><dt>Ciblage</dt><dd>Listes établies selon votre profil de client idéal</dd></div>
+          <div><dt>Email</dt><dd>Séquences personnalisées et testées</dd></div>
+          <div><dt>LinkedIn</dt><dd>Approche directe et relances</dd></div>
+          <div><dt>Téléphone</dt><dd>Appels structurés, argumentaire sur mesure</dd></div>
+          <div><dt>Pilotage</dt><dd class="strong">Reporting hebdomadaire</dd></div>
+        </dl>
+      </div>
+    </div>
+    <div class="g-ctas"><a href="contact.html" class="btn btn-primary btn-lg"><span>Démarrer une campagne</span><span class="btn-arrow" aria-hidden="true">→</span></a></div>
   </div>
 </section>
 
-<section class="sv-sec" id="service-01">
+<section class="g-svc" id="service-02">
   <div class="wrap">
-    <div class="sv-block">
-      <div class="sv-main">
-        <div class="sv-head">
-          <span class="sv-icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.2" fill="currentColor"/></svg></span>
-          <span class="card-eyebrow">01 — Acquisition</span>
-        </div>
-        <h3>Prospection B2B</h3>
-        <p class="tagline">« Je trouve vos prospects, je les appelle et je vous apporte des rendez-vous qualifiés. »</p>
-        <ul class="sv-checks">
-          <li>Construction de listes de prospects ultra-qualifiées</li>
-          <li>Séquences email et LinkedIn personnalisées</li>
-          <li>Prospection téléphonique structurée et argumentée</li>
-          <li>Qualification rigoureuse des opportunités (budget, besoin, délai de décision)</li>
-          <li>Reporting hebdomadaire et optimisation continue</li>
-        </ul>
-        <a href="contact.html" class="btn btn-primary btn-lg">Démarrer une campagne →</a>
-      </div>
-      <div class="stat-box sv-box reveal">
-        <div class="sv-box-title">Approche multicanal</div>
-        <div class="stat-row"><span class="stat-label">Ciblage</span><span class="stat-value">Listes qualifiées par profil client (ICP)</span></div>
-        <div class="stat-row"><span class="stat-label">Email</span><span class="stat-value">Séquences personnalisées et testées</span></div>
-        <div class="stat-row"><span class="stat-label">LinkedIn</span><span class="stat-value">Approche directe et relances</span></div>
-        <div class="stat-row"><span class="stat-label">Téléphone</span><span class="stat-value">Appels structurés, argumentaire sur-mesure</span></div>
-        <div class="stat-row"><span class="stat-label">Pilotage</span><span class="stat-value stat-final">Reporting hebdomadaire transparent</span></div>
-      </div>
+    <div class="section-head">
+      <div class="eyebrow">Représentation</div>
+      <h2>Représentation commerciale</h2>
+      <p class="svc-tagline">Je représente votre entreprise sur le terrain, et vous ne payez que sur les ventes réalisées.</p>
     </div>
-  </div>
-</section>
-<section class="sv-sec sv-alt" id="service-02">
-  <div class="wrap">
-    <div class="sv-block sv-flip">
-      <div class="sv-main">
-        <div class="sv-head">
-          <span class="sv-icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M9 7V5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2"/><path d="M3 13h18"/></svg></span>
-          <span class="card-eyebrow">02 — Représentation</span>
-        </div>
-        <h3>Représentation commerciale <small>(portage de vente)</small></h3>
-        <p class="tagline">« Je deviens votre représentant commercial sur le terrain — vous ne payez que sur les ventes réalisées. »</p>
-        <ul class="sv-checks">
+    <div class="svc-cols reveal">
+      <div>
+        <h3>Ce que je fais</h3>
+        <ul class="svc-does">
           <li>Mandat de représentation clair et encadré</li>
           <li>Présentation et vente de votre offre à vos prospects et clients</li>
           <li>Couverture d'un secteur, d'une zone ou d'un portefeuille dédié</li>
-          <li>Rémunération 100&nbsp;% à la commission, aucun frais fixe</li>
-          <li>Reporting régulier sur les actions et les résultats</li>
+          <li>Rémunération 100 % à la commission, sans frais fixe</li>
+          <li>Comptes rendus réguliers sur les actions et les résultats</li>
         </ul>
-        <a href="contact.html" class="btn btn-primary btn-lg">Discuter d'un mandat →</a>
       </div>
-      <div class="stat-box sv-box reveal">
-        <div class="sv-box-title">Comment ça marche</div>
-        <div class="stat-row"><span class="stat-label">Mandat</span><span class="stat-value">Secteur, zone et conditions de commission définis ensemble</span></div>
-        <div class="stat-row"><span class="stat-label">Déploiement</span><span class="stat-value">Prise en main de votre offre et de vos argumentaires</span></div>
-        <div class="stat-row"><span class="stat-label">Terrain</span><span class="stat-value">Prospection et vente active auprès de vos cibles</span></div>
-        <div class="stat-row"><span class="stat-label">Rémunération</span><span class="stat-value stat-final">Commission versée sur chaque vente conclue</span></div>
+      <span class="pilaster" aria-hidden="true"></span>
+      <div>
+        <h3>En pratique</h3>
+        <dl class="svc-how">
+          <div><dt>Mandat</dt><dd>Secteur, zone et commission définis ensemble</dd></div>
+          <div><dt>Démarrage</dt><dd>Prise en main de votre offre et de vos argumentaires</dd></div>
+          <div><dt>Terrain</dt><dd>Prospection et vente auprès de vos cibles</dd></div>
+          <div><dt>Rémunération</dt><dd class="strong">Commission versée sur chaque vente conclue</dd></div>
+        </dl>
       </div>
     </div>
-  </div>
-</section>
-<section class="sv-sec" id="service-03">
-  <div class="wrap">
-    <div class="sv-block">
-      <div class="sv-main">
-        <div class="sv-head">
-          <span class="sv-icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8 12.5l2.8 2.8L16.5 9.5"/></svg></span>
-          <span class="card-eyebrow">03 — Closing</span>
-        </div>
-        <h3>Négociation &amp; closing</h3>
-        <p class="tagline">« Des opportunités en cours qui traînent ? Je les reprends pour les transformer en contrats signés. »</p>
-        <ul class="sv-checks">
-          <li>Reprise et relance d'opportunités commerciales en cours</li>
-          <li>Préparation et conduite des négociations</li>
-          <li>Traitement des objections et structuration de l'argumentaire</li>
-          <li>Rédaction et finalisation des accords commerciaux</li>
-          <li>Transmission du savoir-faire à vos équipes si besoin</li>
-        </ul>
-        <a href="contact.html" class="btn btn-primary btn-lg">Parler de mes opportunités en cours →</a>
-      </div>
-      <div class="stat-box sv-box reveal">
-        <div class="sv-box-title">Ce que ça change</div>
-        <div class="stat-row"><span class="stat-label">Opportunités dormantes</span><span class="stat-value">Relancées et requalifiées</span></div>
-        <div class="stat-row"><span class="stat-label">Objections</span><span class="stat-value">Anticipées et mieux traitées</span></div>
-        <div class="stat-row"><span class="stat-label">Cycle de décision</span><span class="stat-value stat-final">Raccourci grâce à un suivi structuré</span></div>
-      </div>
-    </div>
-  </div>
-</section>
-<section class="sv-sec sv-alt" id="service-04">
-  <div class="wrap">
-    <div class="sv-block sv-flip">
-      <div class="sv-main">
-        <div class="sv-head">
-          <span class="sv-icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="12" r="3"/><circle cx="18" cy="6" r="3"/><circle cx="18" cy="18" r="3"/><path d="M8.7 10.6l6.6-3.2M8.7 13.4l6.6 3.2"/></svg></span>
-          <span class="card-eyebrow">04 — Partenariats</span>
-        </div>
-        <h3>Développement de partenariats</h3>
-        <p class="tagline">« Un réseau déjà construit, activé pour trouver vos prochains partenaires ou distributeurs. »</p>
-        <ul class="sv-checks">
-          <li>Identification de partenaires, apporteurs d'affaires ou distributeurs pertinents</li>
-          <li>Prise de contact et mise en relation</li>
-          <li>Structuration des accords de partenariat</li>
-          <li>Suivi et animation des relations dans la durée</li>
-          <li>Veille sectorielle et détection d'opportunités</li>
-        </ul>
-        <a href="contact.html" class="btn btn-primary btn-lg">Explorer un partenariat →</a>
-      </div>
-      <div class="stat-box sv-box reveal">
-        <div class="sv-box-title">Profil type des mandats</div>
-        <div class="stat-row"><span class="stat-label">Entreprise</span><span class="stat-value">PME 10–200 pers.</span></div>
-        <div class="stat-row"><span class="stat-label">Secteur</span><span class="stat-value">Industrie, B2B technique, services</span></div>
-        <div class="stat-row"><span class="stat-label">Zone</span><span class="stat-value">France (et au-delà selon mandat)</span></div>
-        <div class="stat-row"><span class="stat-label">Engagement</span><span class="stat-value stat-final">Mandat de représentation, exclusif ou non</span></div>
-      </div>
-    </div>
+    <div class="g-ctas"><a href="contact.html" class="btn btn-primary btn-lg"><span>Discuter d'un mandat</span><span class="btn-arrow" aria-hidden="true">→</span></a></div>
   </div>
 </section>
 
-<!-- HOW IT STARTS -->
-<section class="sv-start">
+<section class="g-svc" id="service-03">
   <div class="wrap">
-    <div class="section-head sv-center">
-      <div class="eyebrow" style="justify-content:center;">Pour démarrer</div>
-      <h2>Trois étapes, zéro risque de votre côté</h2>
+    <div class="section-head">
+      <div class="eyebrow">Closing</div>
+      <h2>Négociation &amp; closing</h2>
+      <p class="svc-tagline">Je reprends les opportunités qui traînent et je les mène jusqu'à la signature.</p>
     </div>
-    <ol class="sv-steps">
-      <li class="reveal"><span class="sv-step-n">1</span><h3>Diagnostic offert</h3><p>45 minutes avec moi pour passer en revue votre offre, vos cibles et votre pipeline. Gratuit, sans engagement.</p></li>
-      <li class="reveal" style="--i:1"><span class="sv-step-n">2</span><h3>Mandat sur mesure</h3><p>Nous fixons ensemble le périmètre, la durée et le taux de commission avant que quoi que ce soit ne démarre.</p></li>
-      <li class="reveal" style="--i:2"><span class="sv-step-n">3</span><h3>Je vends, vous payez aux résultats</h3><p>Je pars sur le terrain. Vous suivez l'avancement par un reporting régulier et ne payez que sur les ventes conclues.</p></li>
-    </ol>
+    <div class="svc-cols reveal">
+      <div>
+        <h3>Ce que je fais</h3>
+        <ul class="svc-does">
+          <li>Reprise et relance d'opportunités en cours</li>
+          <li>Préparation et conduite des négociations</li>
+          <li>Traitement des objections et travail de l'argumentaire</li>
+          <li>Rédaction et finalisation des accords commerciaux</li>
+          <li>Transmission de la méthode à vos équipes si besoin</li>
+        </ul>
+      </div>
+      <span class="pilaster" aria-hidden="true"></span>
+      <div>
+        <h3>En pratique</h3>
+        <dl class="svc-how">
+          <div><dt>Affaires en sommeil</dt><dd>Relancées et requalifiées</dd></div>
+          <div><dt>Objections</dt><dd>Anticipées et mieux traitées</dd></div>
+          <div><dt>Cycle de décision</dt><dd class="strong">Raccourci par un suivi régulier</dd></div>
+        </dl>
+      </div>
+    </div>
+    <div class="g-ctas"><a href="contact.html" class="btn btn-primary btn-lg"><span>Parler de mes affaires en cours</span><span class="btn-arrow" aria-hidden="true">→</span></a></div>
+  </div>
+</section>
+
+<section class="g-svc" id="service-04">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="eyebrow">Partenariats</div>
+      <h2>Développement de partenariats</h2>
+      <p class="svc-tagline">J'active mon réseau pour trouver vos prochains partenaires et distributeurs.</p>
+    </div>
+    <div class="svc-cols reveal">
+      <div>
+        <h3>Ce que je fais</h3>
+        <ul class="svc-does">
+          <li>Identification de partenaires, apporteurs d'affaires ou distributeurs</li>
+          <li>Prise de contact et mise en relation</li>
+          <li>Structuration des accords de partenariat</li>
+          <li>Suivi des relations dans la durée</li>
+          <li>Veille sur votre secteur et repérage des opportunités</li>
+        </ul>
+      </div>
+      <span class="pilaster" aria-hidden="true"></span>
+      <div>
+        <h3>En pratique</h3>
+        <dl class="svc-how">
+          <div><dt>Entreprises</dt><dd>PME de 10 à 200 personnes</dd></div>
+          <div><dt>Secteurs</dt><dd>Industrie, B2B technique, services</dd></div>
+          <div><dt>Zone</dt><dd>France, et au-delà selon le mandat</dd></div>
+          <div><dt>Engagement</dt><dd class="strong">Mandat exclusif ou non</dd></div>
+        </dl>
+      </div>
+    </div>
+    <div class="g-ctas"><a href="contact.html" class="btn btn-primary btn-lg"><span>Explorer un partenariat</span><span class="btn-arrow" aria-hidden="true">→</span></a></div>
+  </div>
+</section>
+
+
+<!-- HOW IT STARTS -->
+<section class="g-start">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="eyebrow">Pour démarrer</div>
+      <h2>Trois étapes, sans risque de votre côté</h2>
+    </div>
+    <div class="colonnade">
+      <div class="col reveal"><span class="sun-phase sun-phase-1" aria-hidden="true"></span><h3>Le diagnostic</h3><p>45 minutes avec moi pour passer en revue votre offre, vos cibles et votre pipeline. Il est offert et ne vous engage à rien.</p></div>
+      <span class="pilaster" aria-hidden="true"></span>
+      <div class="col reveal" style="--i:1"><span class="sun-phase sun-phase-2" aria-hidden="true"></span><h3>Le mandat</h3><p>Nous fixons ensemble le périmètre, la durée et le taux de commission avant toute action.</p></div>
+      <span class="pilaster" aria-hidden="true"></span>
+      <div class="col reveal" style="--i:2"><span class="sun-phase sun-phase-3" aria-hidden="true"></span><h3>Les ventes</h3><p>Je pars sur le terrain. Vous suivez l'avancement par des comptes rendus réguliers et ne payez que sur les ventes conclues.</p></div>
+    </div>
   </div>
 </section>
 
 <!-- COMMISSION MODEL -->
-<section class="sv-pay" id="services-detail">
+<section class="g-pay" id="services-detail">
   <div class="wrap">
-    <div class="section-head sv-center">
-      <div class="eyebrow" style="justify-content:center;">Rémunération</div>
+    <div class="section-head">
+      <div class="eyebrow">Rémunération</div>
       <h2>Une seule règle&nbsp;: je suis payé quand vous vendez</h2>
-      <p class="prose">Pas d'abonnement, pas de forfait mensuel imposé. Je travaille à la commission sur les ventes que je génère ou que je conclus pour vous — mon intérêt est directement aligné sur le vôtre.</p>
+      <p class="prose">Je travaille à la commission sur les ventes que je génère ou que je conclus pour vous. Mon intérêt est donc le même que le vôtre.</p>
     </div>
-    <div class="tiers">
-      <div class="tier reveal">
-        <span class="sv-tier-ic" aria-hidden="true">0&nbsp;€</span>
-        <span class="tier-name">Aucun frais fixe</span>
-        <ul>
-          <li>Pas d'abonnement ni de forfait mensuel</li>
-          <li>Vous ne payez rien tant qu'il n'y a pas de vente</li>
-          <li>Le diagnostic initial est offert</li>
-        </ul>
+    <div class="pay-grid">
+      <div class="pay-side reveal"><h3>Aucun frais fixe</h3><p>Ni abonnement ni forfait mensuel. Tant qu'aucune vente n'est signée, vous ne payez rien, et le diagnostic initial est offert.</p></div>
+      <div class="tablet tablet-small reveal" style="--i:1">
+        <div class="frieze frieze-tablet" aria-hidden="true"></div>
+        <div class="tablet-body">
+          <p class="tablet-kicker">Le principe</p>
+          <h3>Une commission négociée</h3>
+          <p>Le taux dépend de votre secteur, de votre marge et de la longueur de votre cycle de vente. Il est fixé avec vous avant le début du mandat.</p>
+        </div>
+        <div class="frieze frieze-tablet" aria-hidden="true"></div>
       </div>
-      <div class="tier featured reveal" style="--i:1">
-        <span class="sv-tier-flag">Le principe</span>
-        <span class="sv-tier-ic" aria-hidden="true">%</span>
-        <span class="tier-name">Commission négociée</span>
-        <ul>
-          <li>Taux défini selon votre secteur et votre marge</li>
-          <li>Adapté à la complexité du cycle de vente</li>
-          <li>Fixé ensemble avant le début du mandat</li>
-        </ul>
-      </div>
-      <div class="tier reveal" style="--i:2">
-        <span class="sv-tier-ic" aria-hidden="true">✎</span>
-        <span class="tier-name">Mandat sur mesure</span>
-        <ul>
-          <li>Exclusif ou non, selon votre besoin</li>
-          <li>Sur une zone, un secteur ou un portefeuille défini</li>
-          <li>Durée et conditions fixées contractuellement</li>
-        </ul>
-      </div>
+      <div class="pay-side reveal" style="--i:2"><h3>Un mandat sur mesure</h3><p>Exclusif ou non, sur une zone, un secteur ou un portefeuille défini, avec une durée et des conditions écrites.</p></div>
     </div>
-    <p class="pricing-note">Aucun frais caché, aucune facturation surprise. Le diagnostic qui précède chaque mandat est offert — vous savez exactement à quoi vous engager avant de signer.</p>
+  </div>
+</section>
 
-    <div class="cta-banner sv-final">
-      <div>
-        <h3>Pas sûr qu'une représentation commerciale ait du sens pour vous&nbsp;?</h3>
-        <p>45 minutes pour voir où se trouvent vos prochaines ventes. Offert, sans engagement.</p>
-      </div>
-      <div class="sv-final-ctas">
-        <a href="contact.html" class="btn btn-primary btn-lg">Réserver mon diagnostic gratuit →</a>
-        <a href="tel:+33647112035" class="sv-final-tel">ou appelez-moi&nbsp;: 06&nbsp;47&nbsp;11&nbsp;20&nbsp;35</a>
-      </div>
+<!-- FINAL BAND -->
+<section class="g-band g-band-cta">
+  <div class="frieze frieze-band" aria-hidden="true"></div>
+  <div class="wrap g-band-inner">
+    <h2>Une représentation commerciale a-t-elle du sens pour vous&nbsp;?</h2>
+    <p class="g-lede">45 minutes pour voir où se trouvent vos prochaines ventes. Offert et sans engagement.</p>
+    <div class="g-ctas">
+      <a href="contact.html" class="btn btn-primary btn-lg"><span>Réserver mon diagnostic</span><span class="btn-arrow" aria-hidden="true">→</span></a>
+      <a href="tel:+33647112035" class="text-link text-link-light">06&nbsp;47&nbsp;11&nbsp;20&nbsp;35</a>
     </div>
   </div>
 </section>
@@ -1388,6 +1735,7 @@
 </div>
 <footer>
   <div class="wrap">
+    <div class="frieze frieze-foot" aria-hidden="true"></div>
     
     <div class="footer-grid">
       <div>
@@ -1949,6 +2297,104 @@
         if(note){ note.textContent = "Votre messagerie s'ouvre avec la demande pré-remplie : il ne reste qu'à l'envoyer."; }
       });
     }
+  })();
+
+  // ---------- v4: sundial journey (method), scrubbed by scroll ----------
+  (function(){
+    var sec = document.getElementById('methode');
+    if(!sec || !sec.classList.contains('journey')){ return; }
+    var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var svg = sec.querySelector('.journey-svg');
+    var sun = document.getElementById('jSun'), glow = document.getElementById('jGlow'), lit = document.getElementById('jArcLit');
+    var horizon = sec.querySelector('.j-horizon');
+    var grad = document.getElementById('jColLight'), colA = document.getElementById('jColA');
+    var marks = sec.querySelectorAll('.j-mark'), labels = sec.querySelectorAll('.j-label'), steps = sec.querySelectorAll('.j-step');
+    var shadows = sec.querySelectorAll('.j-shadow');
+    var pin = sec.querySelector('.journey-pin');
+    if(!svg || !sun || !lit){ return; }
+    var CX = 800, GY = 600, RX = 640, RY = 470, L = 1800;
+    var arcBase = sec.querySelector('.j-arc'), ticksEl = sec.querySelector('.j-ticks');
+    function pt(t, dr){ dr = dr || 0; var a = Math.PI * t; return { x: CX - (RX + dr) * Math.cos(a), y: GY - (RY + dr) * Math.sin(a) }; }
+    function geometry(){
+      // fit the arc to what is actually visible (the svg is cropped with "slice")
+      var narrow = window.innerWidth <= 760;
+      svg.setAttribute('viewBox', narrow ? '330 150 940 500' : '-400 0 2400 760');
+      svg.setAttribute('preserveAspectRatio', narrow ? 'xMidYMid meet' : 'xMidYMax slice');
+      var st = svg.getBoundingClientRect();
+      var sc = narrow ? st.width / 940 : (Math.max(st.width / 2400, st.height / 760) || 1);
+      var visW = narrow ? 940 : st.width / sc;
+      RX = Math.max(260, Math.min(640, visW / 2 - 110));
+      RY = Math.min(470, 300 + RX * 0.27);
+      var d = 'M' + (CX - RX) + ',' + GY + ' A' + RX + ',' + RY + ' 0 0 1 ' + (CX + RX) + ',' + GY;
+      arcBase.setAttribute('d', d); lit.setAttribute('d', d);
+      L = lit.getTotalLength ? lit.getTotalLength() : 1800;
+      lit.style.strokeDasharray = L;
+      var td = '';
+      for(var k = 1; k < 48; k++){
+        if(k % 12 === 0){ continue; }
+        var t = k / 48, p1 = pt(t, -6), p2 = pt(t, k % 2 ? 6 : 12);
+        td += 'M' + p1.x.toFixed(1) + ',' + p1.y.toFixed(1) + ' L' + p2.x.toFixed(1) + ',' + p2.y.toFixed(1) + ' ';
+      }
+      ticksEl.setAttribute('d', td);
+      for(var i = 0; i < 5; i++){
+        var m = pt(i / 4); if(marks[i]){ marks[i].setAttribute('cx', m.x.toFixed(1)); marks[i].setAttribute('cy', m.y.toFixed(1)); }
+        var lp = pt(i / 4, 46); if(i === 0 || i === 4){ lp = { x: m.x, y: GY + 84 }; }
+        if(labels[i]){ labels[i].setAttribute('x', lp.x.toFixed(0)); labels[i].setAttribute('y', lp.y.toFixed(0)); }
+      }
+      // where the step text sits: just under the sun's highest point
+      var pr = pin.getBoundingClientRect();
+      var offY = st.height - 760 * sc;
+      pin.style.setProperty('--apex', (st.top - pr.top + offY + (GY - RY + 64) * sc) + 'px');
+    }
+    function render(t){
+      var p = pt(t), h = Math.sin(Math.PI * t);
+      sun.setAttribute('transform', 'translate(' + p.x.toFixed(1) + ',' + p.y.toFixed(1) + ')');
+      if(glow){ glow.setAttribute('cx', p.x.toFixed(1)); glow.setAttribute('cy', p.y.toFixed(1)); }
+      lit.style.strokeDashoffset = (L * (1 - t)).toFixed(1);
+      if(horizon){ horizon.style.opacity = (0.15 + 0.75 * (1 - h)).toFixed(2); }
+      for(var k = 0; k < shadows.length; k++){
+        var s = shadows[k], x = +s.getAttribute('data-x');
+        var dx = (x - p.x) * (0.62 - 0.42 * h), len = 30 + 150 * (1 - h);
+        s.setAttribute('points', (x - 14) + ',600 ' + (x + 14) + ',600 ' + (x + 14 + dx).toFixed(1) + ',' + (600 + len).toFixed(1) + ' ' + (x - 14 + dx).toFixed(1) + ',' + (600 + len).toFixed(1));
+      }
+      if(grad){ var left = p.x < CX; grad.setAttribute('x1', left ? 0 : 1); grad.setAttribute('x2', left ? 1 : 0); }
+      if(colA){ colA.setAttribute('stop-opacity', (0.18 + 0.5 * h).toFixed(2)); }
+      var active = Math.round(t * 4);
+      for(var i = 0; i < 5; i++){
+        var passed = t >= i / 4 - 0.002;
+        if(marks[i]){ marks[i].classList.toggle('passed', passed); }
+        if(labels[i]){ labels[i].classList.toggle('active', i === active); labels[i].classList.toggle('passed', passed && i !== active); }
+        if(steps[i]){ steps[i].classList.toggle('is-active', i === active); }
+      }
+      sec.classList.toggle('is-done', t > 0.98);
+    }
+
+    if(reduce || !('requestAnimationFrame' in window)){ geometry(); render(0.5); return; }
+
+    sec.classList.add('is-live');
+    function target(){
+      var r = sec.getBoundingClientRect(), vh = window.innerHeight;
+      var total = Math.max(1, r.height - vh);
+      var p = Math.max(0, Math.min(1, -r.top / total));
+      var u = p * 4, i = Math.min(3, Math.floor(u)), f = u - i;
+      var g = Math.max(0, Math.min(1, (f - 0.2) / 0.6)); g = g * g * (3 - 2 * g);   // the sun rests at each station
+      return (i + g) / 4;
+    }
+    var cur = target(), running = false, visible = false;
+    function loop(){
+      var tg = target();
+      cur += (tg - cur) * 0.12;
+      if(Math.abs(tg - cur) < 0.0004){ cur = tg; }
+      render(cur);
+      if(visible){ requestAnimationFrame(loop); } else { running = false; }
+    }
+    function start(){ if(!running){ running = true; requestAnimationFrame(loop); } }
+    if('IntersectionObserver' in window){
+      new IntersectionObserver(function(es){ visible = es[0].isIntersecting; if(visible){ geometry(); start(); } }).observe(sec);
+    } else { visible = true; start(); }
+    window.addEventListener('resize', geometry);
+    if(document.fonts && document.fonts.ready){ document.fonts.ready.then(geometry); }
+    geometry(); render(cur);
   })();
 
   // ---------- Contact launcher (direct line to Ugo, no scripted bot) ----------
