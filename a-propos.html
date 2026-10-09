@@ -1503,6 +1503,17 @@
   .tablet-small h3{ line-height:1.2; }
   #contact .faq{ max-width:860px; margin-left:auto; margin-right:auto; }
   .contact-grid{ max-width:1180px; margin:0 auto; }
+  /* ---------- cookie consent ---------- */
+  .consent{ position:fixed; z-index:950; left:20px; bottom:20px; width:min(420px, calc(100vw - 40px)); background:var(--navy); color:var(--on-navy); padding:22px 22px 18px; box-shadow:0 30px 60px -24px rgba(0,0,0,.6); border-top:3px solid var(--accent-bright); font-family:"Jost",sans-serif; opacity:0; transform:translateY(16px); transition:opacity .4s ease, transform .5s var(--ease-out); }
+  .consent.show{ opacity:1; transform:none; }
+  .consent p{ font-size:14px; line-height:1.55; color:var(--on-navy-soft); }
+  .consent-actions{ display:flex; gap:10px; margin-top:16px; }
+  .consent-btn{ flex:1; font-family:"Jost",sans-serif; font-size:12.5px; font-weight:500; letter-spacing:.14em; text-transform:uppercase; padding:12px 14px; cursor:pointer; border:1px solid rgba(255,255,255,.35); background:transparent; color:#fff; transition:background .2s ease, border-color .2s ease, color .2s ease; }
+  .consent-btn:hover{ border-color:#fff; }
+  .consent-btn[data-c="granted"]{ background:var(--accent-bright); border-color:var(--accent-bright); color:var(--ink); }
+  .consent-btn[data-c="granted"]:hover{ background:#fff; border-color:#fff; }
+  .footer-bottom a[data-consent-open]{ color:var(--on-navy-soft); text-decoration:underline; text-underline-offset:3px; }
+  @media (max-width:640px){ .consent{ left:12px; right:12px; bottom:12px; width:auto; } }
 
 </style>
 
@@ -1673,7 +1684,7 @@
     </div>
     <div class="footer-bottom">
       <span>© <span id="yr">2026</span> Hélion · Ugo Canetti, agent commercial indépendant</span>
-      <span>France · Développement commercial B2B</span>
+      <span>France · Développement commercial B2B · <a href="#" data-consent-open>Cookies</a></span>
     </div>
   </div>
 </footer>
@@ -2292,6 +2303,50 @@
     window.addEventListener('resize', geometry);
     if(document.fonts && document.fonts.ready){ document.fonts.ready.then(geometry); }
     geometry(); render(cur);
+  })();
+
+  // ---------- Cookie consent + Google Tag Manager (loaded only after "Accepter") ----------
+  (function(){
+    var GTM_ID = 'GTM-MQBJX5ZT', KEY = 'helion-consent-v1';
+    function read(){ try{ return localStorage.getItem(KEY); }catch(e){ return null; } }
+    function save(v){ try{ localStorage.setItem(KEY, v); }catch(e){} }
+    var loaded = false;
+    function loadGTM(){
+      if(loaded){ return; } loaded = true;
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){ window.dataLayer.push(arguments); }
+      gtag('consent', 'default', { ad_storage:'denied', ad_user_data:'denied', ad_personalization:'denied', analytics_storage:'granted' });
+      window.dataLayer.push({ 'gtm.start': new Date().getTime(), event:'gtm.js' });
+      var s = document.createElement('script'); s.async = true;
+      s.src = 'https://www.googletagmanager.com/gtm.js?id=' + GTM_ID;
+      document.head.appendChild(s);
+    }
+    var bar;
+    function hide(){ if(bar){ bar.classList.remove('show'); setTimeout(function(){ if(bar){ bar.hidden = true; } }, 400); } }
+    function show(){
+      if(!bar){
+        bar = document.createElement('div');
+        bar.className = 'consent'; bar.setAttribute('role', 'dialog'); bar.setAttribute('aria-label', 'Cookies de mesure d\'audience');
+        bar.innerHTML = '<p>J\'aimerais mesurer la fréquentation du site avec Google Analytics pour l\'améliorer. Ces cookies ne sont déposés qu\'avec votre accord.</p>' +
+          '<div class="consent-actions"><button type="button" class="consent-btn" data-c="denied">Refuser</button><button type="button" class="consent-btn" data-c="granted">Accepter</button></div>';
+        document.body.appendChild(bar);
+        bar.addEventListener('click', function(e){
+          var b = e.target.closest('[data-c]'); if(!b){ return; }
+          var v = b.getAttribute('data-c'); save(v); hide();
+          if(v === 'granted'){ loadGTM(); }
+          else if(loaded){ location.reload(); }
+        });
+      }
+      bar.hidden = false;
+      requestAnimationFrame(function(){ bar.classList.add('show'); });
+    }
+    var choice = read();
+    if(choice === 'granted'){ loadGTM(); }
+    else if(choice !== 'denied'){ setTimeout(show, 1200); }
+    document.addEventListener('click', function(e){
+      var l = e.target.closest('[data-consent-open]');
+      if(l){ e.preventDefault(); show(); }
+    });
   })();
 
   // ---------- Contact launcher (direct line to Ugo, no scripted bot) ----------
