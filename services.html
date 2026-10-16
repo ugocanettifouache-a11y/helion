@@ -1521,6 +1521,16 @@
   .g-hero .g-lede strong{ color:var(--text); font-weight:600; }
   .g-hero h1{ font-size:clamp(27px,3.7vw,58px); max-width:30ch; line-height:1.08; }
   @media (max-width:640px){ .g-hero h1{ font-size:26px; } }
+  .formats{ display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:20px; width:100%; max-width:780px; margin:14px 0 4px; }
+  .format{ display:flex; flex-direction:column; align-items:center; gap:10px; padding:30px 26px 26px; border:1px solid rgba(255,255,255,.16); }
+  .format-main{ border-color:var(--accent-bright); background:rgba(251,115,10,.06); }
+  .format-time{ font-family:"Jost",sans-serif; font-size:12px; letter-spacing:.22em; text-transform:uppercase; color:var(--on-navy-soft); }
+  .format-price{ font-family:"Cinzel",serif; font-size:44px; font-weight:600; line-height:1; color:#fff; }
+  .format-desc{ font-size:15.5px; line-height:1.55; color:var(--on-navy-soft); max-width:30ch; flex:1; margin-bottom:8px; }
+  .format .btn{ margin-top:auto; }
+  @media (max-width:700px){ .formats{ grid-template-columns:1fr; } }
+  .contact-note a, #contact .prose a{ color:var(--accent-deep); }
+
 </style>
 
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
@@ -1544,7 +1554,7 @@
       <li><a href="a-propos.html">À propos</a></li>
       <li><a href="contact.html">Contact</a></li>
     </ul>
-    <a href="contact.html" class="btn btn-primary nav-cta">Prendre rendez-vous</a>
+    <a href="https://cal.com/canetti-fouache-ugo-oifue9" target="_blank" rel="noopener" class="btn btn-primary nav-cta">Prendre rendez-vous</a>
     <button class="nav-mobile-toggle" id="mobileToggle" aria-label="Ouvrir le menu" aria-expanded="false">☰</button>
   </div>
 </header>
@@ -1558,11 +1568,11 @@
     <p class="g-lede">Je développe le chiffre d'affaires que vous réalisez avec vos clients actuels. Pendant le mandat, je ne facture ni abonnement ni frais fixe&nbsp;: je suis rémunéré sur les ventes supplémentaires signées.</p>
     <p class="g-scope">Je ne fais pas de prospection de nouveaux clients.</p>
     <div class="g-ctas">
-      <a href="contact.html" class="btn btn-primary btn-lg"><span>Réserver le premier rendez-vous</span><span class="btn-arrow" aria-hidden="true">→</span></a>
+      <a href="https://cal.com/canetti-fouache-ugo-oifue9" target="_blank" rel="noopener" class="btn btn-primary btn-lg"><span>Réserver le premier rendez-vous</span><span class="btn-arrow" aria-hidden="true">→</span></a>
       <a href="tel:+33647112035" class="text-link text-link-light">06&nbsp;47&nbsp;11&nbsp;20&nbsp;35</a>
     </div>
     <ul class="g-facts g-facts-light" aria-label="Mes engagements">
-      <li><strong>49&nbsp;€</strong> le premier rendez-vous</li>
+      <li><strong>dès 30&nbsp;€</strong> le premier rendez-vous</li>
       <li><strong>100&nbsp;%</strong> à la commission ensuite</li>
       <li><strong>7&nbsp;jours</strong> pour démarrer</li>
     </ul>
@@ -1602,7 +1612,7 @@
         </dl>
       </div>
     </div>
-    <div class="g-ctas"><a href="contact.html" class="btn btn-primary btn-lg"><span>Développer mes comptes</span><span class="btn-arrow" aria-hidden="true">→</span></a></div>
+    <div class="g-ctas"><a href="https://cal.com/canetti-fouache-ugo-oifue9" target="_blank" rel="noopener" class="btn btn-primary btn-lg"><span>Développer mes comptes</span><span class="btn-arrow" aria-hidden="true">→</span></a></div>
   </div>
 </section>
 
@@ -1635,7 +1645,7 @@
         </dl>
       </div>
     </div>
-    <div class="g-ctas"><a href="contact.html" class="btn btn-primary btn-lg"><span>Réactiver mes clients</span><span class="btn-arrow" aria-hidden="true">→</span></a></div>
+    <div class="g-ctas"><a href="https://cal.com/canetti-fouache-ugo-oifue9" target="_blank" rel="noopener" class="btn btn-primary btn-lg"><span>Réactiver mes clients</span><span class="btn-arrow" aria-hidden="true">→</span></a></div>
   </div>
 </section>
 
@@ -1667,7 +1677,7 @@
         </dl>
       </div>
     </div>
-    <div class="g-ctas"><a href="contact.html" class="btn btn-primary btn-lg"><span>Parler de mes renouvellements</span><span class="btn-arrow" aria-hidden="true">→</span></a></div>
+    <div class="g-ctas"><a href="https://cal.com/canetti-fouache-ugo-oifue9" target="_blank" rel="noopener" class="btn btn-primary btn-lg"><span>Parler de mes renouvellements</span><span class="btn-arrow" aria-hidden="true">→</span></a></div>
   </div>
 </section>
 
@@ -1700,7 +1710,7 @@
         </dl>
       </div>
     </div>
-    <div class="g-ctas"><a href="contact.html" class="btn btn-primary btn-lg"><span>Confier mes grands comptes</span><span class="btn-arrow" aria-hidden="true">→</span></a></div>
+    <div class="g-ctas"><a href="https://cal.com/canetti-fouache-ugo-oifue9" target="_blank" rel="noopener" class="btn btn-primary btn-lg"><span>Confier mes grands comptes</span><span class="btn-arrow" aria-hidden="true">→</span></a></div>
   </div>
 </section>
 
@@ -1713,7 +1723,7 @@
       <h2>Trois étapes pour démarrer</h2>
     </div>
     <div class="colonnade">
-      <div class="col reveal"><span class="sun-phase sun-phase-1" aria-hidden="true"></span><h3>Le premier rendez-vous</h3><p>45 minutes avec moi, réservées et réglées en ligne (49&nbsp;€ HT), pour comprendre votre activité et vérifier qu'une collaboration a du sens.</p></div>
+      <div class="col reveal"><span class="sun-phase sun-phase-1" aria-hidden="true"></span><h3>Le premier rendez-vous</h3><p>15 ou 30 minutes avec moi, réservées et réglées en ligne (30&nbsp;€ ou 49&nbsp;€), pour comprendre votre activité et vérifier qu'une collaboration a du sens.</p></div>
       <span class="pilaster" aria-hidden="true"></span>
       <div class="col reveal" style="--i:1"><span class="sun-phase sun-phase-2" aria-hidden="true"></span><h3>Le diagnostic</h3><p>J'analyse en détail votre portefeuille clients et je vous présente les comptes à développer, les clients à réactiver et les renouvellements à venir.</p></div>
       <span class="pilaster" aria-hidden="true"></span>
@@ -1751,9 +1761,9 @@
   <div class="frieze frieze-band" aria-hidden="true"></div>
   <div class="wrap g-band-inner">
     <h2>Une représentation commerciale a-t-elle du sens pour vous&nbsp;?</h2>
-    <p class="g-lede">45 minutes pour voir où se trouvent vos prochaines ventes. 49&nbsp;€ HT, réglés à la réservation.</p>
+    <p class="g-lede">15 ou 30 minutes pour voir où se trouvent vos prochaines ventes, réglées à la réservation.</p>
     <div class="g-ctas">
-      <a href="contact.html" class="btn btn-primary btn-lg"><span>Réserver le premier rendez-vous</span><span class="btn-arrow" aria-hidden="true">→</span></a>
+      <a href="https://cal.com/canetti-fouache-ugo-oifue9" target="_blank" rel="noopener" class="btn btn-primary btn-lg"><span>Réserver le premier rendez-vous</span><span class="btn-arrow" aria-hidden="true">→</span></a>
       <a href="tel:+33647112035" class="text-link text-link-light">06&nbsp;47&nbsp;11&nbsp;20&nbsp;35</a>
     </div>
   </div>
@@ -2482,7 +2492,7 @@
           '</div>' +
           '<p class="launch-intro">Une question sur un mandat&nbsp;? Choisissez le canal qui vous arrange, je vous réponds personnellement.</p>' +
           '<ul class="launch-list">' +
-            '<li><a class="chat-option-cta" href="' + contactHref() + '"><span>Réserver le premier rendez-vous<small>45 minutes, 49 € HT</small></span><span aria-hidden="true">→</span></a></li>' +
+            '<li><a class="chat-option-cta" href="https://cal.com/canetti-fouache-ugo-oifue9" target="_blank" rel="noopener"><span>Réserver le premier rendez-vous<small>15 min (30 €) ou 30 min (49 €)</small></span><span aria-hidden="true">→</span></a></li>' +
             '<li><a href="tel:+33647112035"><span>M\'appeler<small>06 47 11 20 35 · lun–ven, 9h–18h30</small></span><span aria-hidden="true">→</span></a></li>' +
             '<li><a href="mailto:contact@helion-business.com"><span>M\'écrire<small>contact@helion-business.com</small></span><span aria-hidden="true">→</span></a></li>' +
             '<li><a href="https://www.linkedin.com/in/ugo-canetti-689666278/" target="_blank" rel="noopener"><span>LinkedIn<small>Ugo Canetti</small></span><span aria-hidden="true">→</span></a></li>' +

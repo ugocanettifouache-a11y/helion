@@ -1521,6 +1521,16 @@
   .g-hero .g-lede strong{ color:var(--text); font-weight:600; }
   .g-hero h1{ font-size:clamp(27px,3.7vw,58px); max-width:30ch; line-height:1.08; }
   @media (max-width:640px){ .g-hero h1{ font-size:26px; } }
+  .formats{ display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:20px; width:100%; max-width:780px; margin:14px 0 4px; }
+  .format{ display:flex; flex-direction:column; align-items:center; gap:10px; padding:30px 26px 26px; border:1px solid rgba(255,255,255,.16); }
+  .format-main{ border-color:var(--accent-bright); background:rgba(251,115,10,.06); }
+  .format-time{ font-family:"Jost",sans-serif; font-size:12px; letter-spacing:.22em; text-transform:uppercase; color:var(--on-navy-soft); }
+  .format-price{ font-family:"Cinzel",serif; font-size:44px; font-weight:600; line-height:1; color:#fff; }
+  .format-desc{ font-size:15.5px; line-height:1.55; color:var(--on-navy-soft); max-width:30ch; flex:1; margin-bottom:8px; }
+  .format .btn{ margin-top:auto; }
+  @media (max-width:700px){ .formats{ grid-template-columns:1fr; } }
+  .contact-note a, #contact .prose a{ color:var(--accent-deep); }
+
 </style>
 
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
@@ -1544,7 +1554,7 @@
       <li><a href="a-propos.html">À propos</a></li>
       <li><a href="#top">Contact</a></li>
     </ul>
-    <a href="#top" class="btn btn-primary nav-cta">Prendre rendez-vous</a>
+    <a href="https://cal.com/canetti-fouache-ugo-oifue9" target="_blank" rel="noopener" class="btn btn-primary nav-cta">Prendre rendez-vous</a>
     <button class="nav-mobile-toggle" id="mobileToggle" aria-label="Ouvrir le menu" aria-expanded="false">☰</button>
   </div>
 </header>
@@ -1557,7 +1567,7 @@
     <div class="section-head">
       <div class="eyebrow">Contact</div>
       <h2>Parlons de vos ventes</h2>
-      <p class="prose">Décrivez votre activité et votre portefeuille clients. Je vous réponds personnellement sous 24&nbsp;h ouvrées avec un lien pour réserver et régler le premier rendez-vous (45 minutes, 49&nbsp;€ HT).</p>
+      <p class="prose">Décrivez votre activité et votre portefeuille clients. Je vous réponds personnellement sous 24&nbsp;h ouvrées. Pour aller plus vite, <a href="https://cal.com/canetti-fouache-ugo-oifue9" target="_blank" rel="noopener">réservez directement votre premier rendez-vous en ligne</a>.</p>
     </div>
 
     <div class="contact-grid">
@@ -1595,7 +1605,7 @@
           <li><span class="info-label">Téléphone</span><span><a href="tel:+33647112035">06 47 11 20 35</a><br><span style="color:var(--text-faint); font-size:13.5px;">Lun–Ven, 9h–18h30</span></span></li>
           <li><span class="info-label">Réponse</span><span>Sous 24h ouvrées</span></li>
         </ul>
-        <p class="contact-note"><strong>Premier rendez-vous&nbsp;: 45 minutes, 49&nbsp;€ HT.</strong> Réglé à la réservation, reportable jusqu'à 24&nbsp;h avant.</p>
+        <p class="contact-note"><strong>Premier rendez-vous&nbsp;: 15 minutes (30&nbsp;€) ou 30 minutes (49&nbsp;€).</strong> Réglé à la réservation, reportable jusqu'à 24&nbsp;h avant. <a href="https://cal.com/canetti-fouache-ugo-oifue9" target="_blank" rel="noopener">Choisir un créneau →</a></p>
       </div>
     </div>
 
@@ -1606,11 +1616,11 @@
       </details>
       <details class="faq-item">
         <summary class="faq-q">Comment démarre une mission&nbsp;?<span class="plus" aria-hidden="true"></span></summary>
-        <div class="faq-a">Par un premier rendez-vous de 45 minutes (49&nbsp;€ HT). Si une collaboration a du sens, je réalise un diagnostic approfondi de votre portefeuille, puis on rédige ensemble un mandat&nbsp;: périmètre, zone, durée et taux de commission. Je démarre sous 7 jours après l'accord.</div>
+        <div class="faq-a">Par un premier rendez-vous de 15 ou 30 minutes (30&nbsp;€ ou 49&nbsp;€). Si une collaboration a du sens, je réalise un diagnostic approfondi de votre portefeuille, puis on rédige ensemble un mandat&nbsp;: périmètre, zone, durée et taux de commission. Je démarre sous 7 jours après l'accord.</div>
       </details>
       <details class="faq-item">
         <summary class="faq-q">Combien ça coûte&nbsp;?<span class="plus" aria-hidden="true"></span></summary>
-        <div class="faq-a">Le premier rendez-vous est facturé 49&nbsp;€ HT. Pendant le mandat, je suis rémunéré uniquement à la commission sur les ventes signées, à un taux fixé ensemble avant le début. Aucun abonnement, aucun fixe.</div>
+        <div class="faq-a">Le premier rendez-vous est facturé 30&nbsp;€ (15 minutes) ou 49&nbsp;€ (30 minutes). Pendant le mandat, je suis rémunéré uniquement à la commission sur les ventes signées, à un taux fixé ensemble avant le début. Aucun abonnement, aucun fixe.</div>
       </details>
       <details class="faq-item">
         <summary class="faq-q">Le mandat est-il exclusif&nbsp;?<span class="plus" aria-hidden="true"></span></summary>
@@ -2355,7 +2365,7 @@
           '</div>' +
           '<p class="launch-intro">Une question sur un mandat&nbsp;? Choisissez le canal qui vous arrange, je vous réponds personnellement.</p>' +
           '<ul class="launch-list">' +
-            '<li><a class="chat-option-cta" href="' + contactHref() + '"><span>Réserver le premier rendez-vous<small>45 minutes, 49 € HT</small></span><span aria-hidden="true">→</span></a></li>' +
+            '<li><a class="chat-option-cta" href="https://cal.com/canetti-fouache-ugo-oifue9" target="_blank" rel="noopener"><span>Réserver le premier rendez-vous<small>15 min (30 €) ou 30 min (49 €)</small></span><span aria-hidden="true">→</span></a></li>' +
             '<li><a href="tel:+33647112035"><span>M\'appeler<small>06 47 11 20 35 · lun–ven, 9h–18h30</small></span><span aria-hidden="true">→</span></a></li>' +
             '<li><a href="mailto:contact@helion-business.com"><span>M\'écrire<small>contact@helion-business.com</small></span><span aria-hidden="true">→</span></a></li>' +
             '<li><a href="https://www.linkedin.com/in/ugo-canetti-689666278/" target="_blank" rel="noopener"><span>LinkedIn<small>Ugo Canetti</small></span><span aria-hidden="true">→</span></a></li>' +
